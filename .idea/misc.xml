@@ -4,14 +4,25 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Project/NothingTeam/app/src/main/res/drawable-selector/selector_middle_view_circle.xml" value="0.156" />
+        <entry key="..\:/Project/NothingTeam/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1265" />
+        <entry key="..\:/Project/NothingTeam/app/src/main/res/drawable-v24/ningmeng.xml" value="0.1255" />
+        <entry key="..\:/Project/NothingTeam/app/src/main/res/drawable/bg_tab_panel.xml" value="0.166" />
+        <entry key="..\:/Project/NothingTeam/app/src/main/res/drawable/ic_top_background.xml" value="0.1395" />
+        <entry key="..\:/Project/NothingTeam/app/src/main/res/drawable/selector_bottombar_middlebuttom_view_circle.xml" value="0.1265" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/drawable/selector_middle_view_circle.xml" value="0.156" />
+        <entry key="..\:/Project/NothingTeam/app/src/main/res/drawable/selector_tab_text_color.xml" value="0.1395" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/activity_main.xml" value="0.2572463768115942" />
+        <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/adapter_news_card_view_list_item.xml" value="0.264" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/fragment_f1.xml" value="0.2572463768115942" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/fragment_home.xml" value="0.2572463768115942" />
+        <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/fragment_home_list_view_refresh.xml" value="0.10552536231884058" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/fragment_me.xml" value="0.2572463768115942" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/fragment_message.xml" value="0.2572463768115942" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/fragment_team.xml" value="0.2572463768115942" />
+        <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/include_recycler_view_refresh.xml" value="0.2463768115942029" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/layout_jptabbar_middle_view.xml" value="0.12588652482269502" />
+        <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/layout_news_card_item.xml" value="0.264" />
+        <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/merge_news_card_item.xml" value="0.4" />
       </map>
     </option>
   </component>

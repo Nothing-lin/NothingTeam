@@ -62,8 +62,6 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener, B
         super.onCreate(savedInstanceState);
 
         initViews();
-
-
     }
 
     private void initViews() {
