@@ -34,8 +34,8 @@
     <string name="tip_stop">停止</string>
 
     <!--底部菜单栏选项-->
-    <string name="tab1">信息</string>
-    <string name="tab2">报告</string>
-    <string name="tab3">活动</string>
-    <string name="tab4">设置</string>
+    <string name="tab1">首页</string>
+    <string name="tab2">团队</string>
+    <string name="tab3">消息</string>
+    <string name="tab4">我的</string>
 </resources>

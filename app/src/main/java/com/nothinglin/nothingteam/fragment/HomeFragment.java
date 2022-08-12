@@ -132,7 +132,7 @@ public class HomeFragment extends BaseFragment implements BaseBanner.OnItemClick
         sib_corner_rectangle();
 
         //设置沉浸式状态栏
-        getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//        getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
     }
 
 

@@ -2,4 +2,14 @@
 <resources>
     <attr format="dimension" name="xui_actionbar_height"/>
     <attr format="reference" name="xui_actionbar_ic_navigation_back"/>
+
+<!--  我的页面 ———— 弧形view  -->
+    <attr name="arcHeight" format="dimension"/>
+    <declare-styleable name="ArcView">
+        <attr name="arcHeight"/>
+        <attr name="bgColor" format="color"/>
+    </declare-styleable>
+    <declare-styleable name="ArcImageView">
+        <attr name="arcHeight"/>
+    </declare-styleable>
 </resources>

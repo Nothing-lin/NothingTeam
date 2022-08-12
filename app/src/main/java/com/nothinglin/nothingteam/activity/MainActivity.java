@@ -19,6 +19,7 @@ import com.nothinglin.nothingteam.fragment.HomeFragment;
 import com.nothinglin.nothingteam.fragment.MeFragment;
 import com.nothinglin.nothingteam.fragment.MessageFragment;
 import com.nothinglin.nothingteam.fragment.TeamFragment;
+import com.nothinglin.nothingteam.widget.StatusBarUtil;
 import com.xuexiang.xui.XUI;
 import com.xuexiang.xui.utils.WidgetUtils;
 import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog;
@@ -106,6 +107,8 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener, B
         }
 
 
+        //设置状态栏透明
+        StatusBarUtil.setTranslucentStatus(this);
     }
 
 
