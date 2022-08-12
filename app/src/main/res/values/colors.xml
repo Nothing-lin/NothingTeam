@@ -13,4 +13,6 @@
     <color name="colorPrimary">#299EE3</color>
     <color name="colorPrimaryDark">#299EE3</color>
     <color name="colorAccent">#299EE3</color>
+
+    <color name="yellow_btn_color_normal">#FCD271</color>
 </resources>

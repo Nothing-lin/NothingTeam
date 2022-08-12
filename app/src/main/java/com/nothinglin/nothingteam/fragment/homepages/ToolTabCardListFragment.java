@@ -9,10 +9,14 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.nothinglin.nothingteam.R;
 import com.nothinglin.nothingteam.adapter.CardViewListAdapter;
 import com.nothinglin.nothingteam.base.BaseFragment;
+import com.nothinglin.nothingteam.bean.ToolTabCardInfo;
 import com.nothinglin.nothingteam.widget.DemoDataProvider;
 import com.xuexiang.xrouter.annotation.AutoWired;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
 import com.yanzhenjie.recyclerview.SwipeRecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -26,6 +30,20 @@ public class ToolTabCardListFragment extends BaseFragment {
 
     private static final String KEY_IS_SPECIAL = "key_is_special";
 
+    //这里要定义构造函数才能获取传来的title，判断对应选项卡页面中的数据
+    private String tabtitle;
+
+    private List<ToolTabCardInfo> toolTabCardInfos = new ArrayList<>();
+
+    public ToolTabCardListFragment() {
+    }
+
+    public ToolTabCardListFragment(String tabtitle) {
+        this.tabtitle = tabtitle;
+    }
+
+
+    //初始化视图组件
     @BindView(R.id.recyclerView)
     SwipeRecyclerView recyclerView;
     @BindView(R.id.swipe_refresh_layout)
@@ -67,8 +85,16 @@ public class ToolTabCardListFragment extends BaseFragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         recyclerView.setAdapter(mAdapter = new CardViewListAdapter());
-        //加载数据集合
-        mAdapter.refresh(isSpecial ? DemoDataProvider.getSpecialDemoNewInfos() : DemoDataProvider.getDemoNewInfos());
+
+        //筛选标签页对应的内容
+        for (ToolTabCardInfo info : DemoDataProvider.getDemoNewInfos()){
+            if (info.getTag() == tabtitle){
+                toolTabCardInfos.add(info);
+            }
+        }
+
+        //加载数据集合，数据库获取到的数据，通过适配器的refresh传给adapeter
+        mAdapter.refresh(toolTabCardInfos);
 
         swipeRefreshLayout.setEnabled(false);
     }

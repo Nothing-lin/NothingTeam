@@ -23,7 +23,7 @@
             android:background="#F9F9F9"
             android:layout_gravity="bottom"
             app:tab_animate="Scale"
-            app:tab_middleView="@layout/bottombar_middle_button" />
+            app:tab_middleView="@layout/activity_bottombar_middle_button" />
     </FrameLayout>
 
 

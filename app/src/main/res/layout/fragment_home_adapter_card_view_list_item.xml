@@ -18,6 +18,6 @@
     app:contentPaddingTop="5dp">
 
     <!--  卡片列表的内容布局  -->
-    <include layout="@layout/layout_news_card_item" />
+    <include layout="@layout/fragment_home_layout_card_item" />
 
 </androidx.cardview.widget.CardView>

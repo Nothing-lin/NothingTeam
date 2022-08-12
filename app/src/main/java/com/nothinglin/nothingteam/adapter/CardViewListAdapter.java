@@ -23,21 +23,23 @@ public class CardViewListAdapter extends BaseRecyclerAdapter<ToolTabCardInfo> {
 
     @Override
     public int getItemLayoutId(int viewType) {
-        return R.layout.adapter_news_card_view_list_item;
+        return R.layout.fragment_home_adapter_card_view_list_item;
     }
 
     @Override
     public void bindData(@NonNull RecyclerViewHolder holder, int position, ToolTabCardInfo model) {
         if (model != null) {
             holder.text(R.id.tv_user_name, model.getUserName());
-            holder.text(R.id.tv_tag, model.getTag());
+//            holder.text(R.id.tv_tag, model.getTag());
             holder.text(R.id.tv_title, model.getTitle());
             holder.text(R.id.tv_summary, model.getSummary());
             holder.text(R.id.tv_praise, model.getPraise() == 0 ? "点赞" : String.valueOf(model.getPraise()));
             holder.text(R.id.tv_comment, model.getComment() == 0 ? "评论" : String.valueOf(model.getComment()));
-            holder.text(R.id.tv_read, "阅读量 " + model.getRead());
-            holder.image(R.id.iv_image, model.getImageUrl());
+//            holder.text(R.id.tv_read, "阅读量 " + model.getRead());
+//            holder.image(R.id.iv_image, model.getImageUrl());
         }
+
+        
     }
 
 
@@ -71,7 +73,7 @@ public class CardViewListAdapter extends BaseRecyclerAdapter<ToolTabCardInfo> {
                     holder.text(R.id.tv_comment, payload.getInt(DiffUtilCallback.PAYLOAD_COMMENT) == 0 ? "评论" : String.valueOf(payload.getInt(DiffUtilCallback.PAYLOAD_COMMENT)));
                     break;
                 case DiffUtilCallback.PAYLOAD_READ_NUMBER:
-                    holder.text(R.id.tv_read, "阅读量 " + payload.getInt(DiffUtilCallback.PAYLOAD_READ_NUMBER));
+//                    holder.text(R.id.tv_read, "阅读量 " + payload.getInt(DiffUtilCallback.PAYLOAD_READ_NUMBER));
                     break;
                 default:
                     break;

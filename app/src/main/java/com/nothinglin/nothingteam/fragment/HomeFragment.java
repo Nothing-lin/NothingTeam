@@ -13,6 +13,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 import com.nothinglin.nothingteam.R;
 import com.nothinglin.nothingteam.base.BaseFragment;
+import com.nothinglin.nothingteam.bean.ToolTabCardInfo;
 import com.nothinglin.nothingteam.fragment.homepages.ToolTabCardListFragment;
 import com.nothinglin.nothingteam.widget.DemoDataProvider;
 import com.nothinglin.nothingteam.widget.StickyNavigationLayout;
@@ -25,6 +26,8 @@ import com.xuexiang.xui.widget.banner.widget.banner.BannerItem;
 import com.xuexiang.xui.widget.banner.widget.banner.SimpleImageBanner;
 import com.xuexiang.xui.widget.banner.widget.banner.base.BaseBanner;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import butterknife.BindView;
@@ -44,7 +47,9 @@ public class HomeFragment extends BaseFragment implements BaseBanner.OnItemClick
     @BindView(R.id.top_view)
     SimpleImageBanner sib_corner_rectangle;
 
-    private String[] titles = new String[]{"咨询", "娱乐", "教育"};
+    //获取tooltab（选项卡）主题标签的标题的容器
+    private List<String> titles = new ArrayList<>();
+
 
     //mPictures是用来存放轮播图图片的
     private List<BannerItem> mPictures;
@@ -100,14 +105,18 @@ public class HomeFragment extends BaseFragment implements BaseBanner.OnItemClick
         FragmentAdapter<BaseFragment> adapter = new FragmentAdapter<>(getChildFragmentManager());
         //当tablayout数量多到超过界面时可以左右滑动来展示更多的标签 -- MODE_SCROLLABLE
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+
+        //获取选项卡的标签title，过滤重复的数据
+        String[] tabtitles = getTabTitles();
+
         //遍历标签页的数量，设置标签页的名字并且给每个标签也添加简单的list帧布局，也意味着每个标签都有自己的fragment，而他们的fragment对应他们的title
-        for (String title : titles) {
+        for (String title : tabtitles) {
             tabLayout.addTab(tabLayout.newTab().setText(title));
-            adapter.addFragment(new ToolTabCardListFragment(), title);
+            adapter.addFragment(new ToolTabCardListFragment(title), title);//注意这里给ToolTabCardListFragment传递了title参数，用户匹配数据库的对应页面对应的数据
         }
 
         //设置预加载界面数量
-        viewPager.setOffscreenPageLimit(titles.length - 1);
+        viewPager.setOffscreenPageLimit(titles.size() - 1);
         //将适配器处理的内容显示到viewpager中
         viewPager.setAdapter(adapter);
         //将view和tablayout相关联
@@ -126,6 +135,28 @@ public class HomeFragment extends BaseFragment implements BaseBanner.OnItemClick
         getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
     }
 
+
+    //获取选项卡的标签title，过滤重复的数据
+    private String[] getTabTitles(){
+        //获取数据库中选项卡的标题，标题设立在招聘infos的bean中
+        for (ToolTabCardInfo title : DemoDataProvider.getDemoNewInfos()){
+            titles.add(title.getTag());
+        }
+
+        //利用hashset过滤掉重复的数据，因为众多信息中，有属于比赛项目的item有很多，（1，1，2，2，3，3，）-->（1，2，3）
+        HashSet hashSet = new HashSet(titles);
+        titles.clear();//清空原本的titles集合中的数据
+        titles.addAll(hashSet);//把过滤重复数据后的数据集全部添加到titles集合中
+
+        String[] tabtitles = new String[titles.size()];//初始化一个数组
+        //将list转化为String[]数组
+        tabtitles = titles.toArray(new String[titles.size()]);
+
+        return tabtitles;
+
+    }
+
+
     //注册轮播图视图
     private void sib_corner_rectangle() {
         sib_corner_rectangle.setSource(mPictures).setOnItemClickListener(this).startScroll();
@@ -133,7 +164,6 @@ public class HomeFragment extends BaseFragment implements BaseBanner.OnItemClick
 
     @Override
     public void onItemClick(View view, BannerItem item, int position) {
-
         //点击轮播图中的每一项时点击事件
         Toast.makeText(getContext(), "中间点击" + position + ", item:" + item.title, Toast.LENGTH_SHORT).show();
     }

@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:paddingTop="10dp"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_title"
+                style="@style/TextStyle.Content"
+                android:ellipsize="end"
+                android:gravity="start|center_vertical"
+                android:maxLines="1"
+                android:singleLine="false"
+                android:text="新概念兼职平台app项目"
+                android:textSize="14dp"
+                android:textColor="@color/xui_config_color_pure_black" />
+
+
+            <!--  募招团体的信息入口，发布这个招募信息的作者  -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.xuexiang.xui.widget.imageview.RadiusImageView
+                        android:id="@+id/iv_avatar"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@mipmap/ic_launcher"
+                        app:riv_is_circle="true" />
+
+                    <TextView
+                        android:id="@+id/tv_user_name"
+                        style="@style/TextStyle.Explain"
+                        android:layout_gravity="end|center_vertical"
+                        android:layout_marginStart="4dp"
+                        android:maxLines="1"
+                        android:text="nothinglin团队工作室"
+                        android:textColor="@color/xui_config_color_pure_black" />
+                </LinearLayout>
+
+            </FrameLayout>
+
+
+        </LinearLayout>
+
+
+
+
+            <com.xuexiang.xui.widget.button.roundbutton.RoundButton
+                style="@style/RoundButton.Auto"
+                android:text="比赛项目"
+                android:enabled="false"
+                android:gravity="center"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/white"
+                app:rb_isRadiusAdjustBounds="true"
+                app:rb_backgroundColor="@color/yellow_btn_color_normal"
+                app:rb_borderColor="@color/yellow_btn_color_normal" />
+
+
+
+
+
+
+
+    </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_team_goal"
+                        style="@style/TextStyle.Explain"
+                        android:gravity="left"
+                        android:layout_weight="1"
+                        android:text="广州软件学院青牛杯"
+                        android:textColor="?attr/xui_config_color_content_text" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="right">
+
+                        <TextView
+                            style="@style/TextStyle.Explain"
+                            android:layout_marginStart="5dp"
+                            android:textSize="11dp"
+                            android:text="预计招募人数：" />
+
+                        <TextView
+                            style="@style/TextStyle.Explain"
+                            android:layout_marginStart="5dp"
+                            android:textSize="11dp"
+                            android:text="6" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tv_summary"
+                style="@style/TextStyle.Explain"
+                android:layout_marginTop="3dp"
+                android:ellipsize="end"
+                android:gravity="start|center_vertical"
+                android:maxLines="3"
+                android:singleLine="false"
+                android:text="我们团队需要招募一名会项目文档撰写的成员、前端UI设计、代码实现能力强的成员、ssm后端架构等，有需要的话可以踊跃报名哦~我们等你的加入"
+                android:textColor="@color/xui_config_color_pure_black" />
+
+        </LinearLayout>
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginTop="7dp">
+
+    <TextView
+        style="@style/TextStyle.Explain"
+        android:textSize="11dp"
+        android:text="目标条件：" />
+
+    <com.xuexiang.xui.widget.button.roundbutton.RoundButton
+        style="@style/RoundButton.Auto"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:text="文档编写"
+        android:textSize="10dp"
+        android:layout_marginRight="10dp"
+        android:textColor="@color/yellow_btn_color_normal"
+        app:rb_borderColor="@color/yellow_btn_color_normal"
+        app:rb_isRadiusAdjustBounds="true" />
+
+    <com.xuexiang.xui.widget.button.roundbutton.RoundButton
+        style="@style/RoundButton.Auto"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:text="前端开发"
+        android:textSize="10dp"
+        android:layout_marginRight="10dp"
+        android:textColor="@color/yellow_btn_color_normal"
+        app:rb_borderColor="@color/yellow_btn_color_normal"
+        app:rb_isRadiusAdjustBounds="true" />
+
+    <com.xuexiang.xui.widget.button.roundbutton.RoundButton
+        style="@style/RoundButton.Auto"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:text="后端开发"
+        android:textSize="10dp"
+        android:layout_marginRight="10dp"
+        android:textColor="@color/yellow_btn_color_normal"
+        app:rb_borderColor="@color/yellow_btn_color_normal"
+        app:rb_isRadiusAdjustBounds="true" />
+
+</LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_praise"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/ic_date" />
+
+        <TextView
+            android:id="@+id/tv_praise"
+            style="@style/TextStyle.Explain"
+            android:layout_marginStart="5dp"
+            android:text="2022年7月10日"
+            android:textColor="@color/black" />
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_comment"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginStart="30dp"
+            android:src="@drawable/ic_eye" />
+
+        <TextView
+            android:id="@+id/tv_comment"
+            style="@style/TextStyle.Explain"
+            android:layout_marginStart="5dp"
+            android:text="568"
+            android:textColor="@color/black" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:orientation="horizontal">
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginStart="30dp"
+                android:src="@drawable/ic_location" />
+
+            <TextView
+                style="@style/TextStyle.Explain"
+                android:layout_marginStart="5dp"
+                android:text="广州，广州软件学院"
+                android:textColor="@color/black" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
+
+
+    
