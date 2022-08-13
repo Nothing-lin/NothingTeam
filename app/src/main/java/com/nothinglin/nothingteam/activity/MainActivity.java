@@ -84,9 +84,9 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener, B
         teamFragment = new TeamFragment();
 
         list.add(homeFragment);
-        list.add(meFragment);
-        list.add(messageFragment);
         list.add(teamFragment);
+        list.add(messageFragment);
+        list.add(meFragment);
 
         //设置页面适配
         mPager.setAdapter(new ChangeNavPageAdapter(getSupportFragmentManager(), list));

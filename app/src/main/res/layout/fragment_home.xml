@@ -44,7 +44,6 @@
     <com.xuexiang.xpage.utils.TitleBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/titlebar"
-        app:tb_leftImageResource="@drawable/nav_05_pre"/>
+        android:id="@+id/titlebar"/>
 
 </FrameLayout>

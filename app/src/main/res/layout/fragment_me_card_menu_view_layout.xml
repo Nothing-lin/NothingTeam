@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:layout_marginTop="15dp"
+    android:layout_marginBottom="15dp">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="1">
+
+        <com.xuexiang.xui.widget.imageview.RadiusImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_message" />
+
+        <TextView
+            style="@style/TextStyle.Explain"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:text="公告消息" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="1">
+
+        <com.xuexiang.xui.widget.imageview.RadiusImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_invite" />
+
+        <TextView
+            style="@style/TextStyle.Explain"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:text="我的邀请" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="1">
+
+        <com.xuexiang.xui.widget.imageview.RadiusImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_application" />
+
+        <TextView
+            style="@style/TextStyle.Explain"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:text="我的申请" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="1">
+
+        <com.xuexiang.xui.widget.imageview.RadiusImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_team" />
+
+        <TextView
+            style="@style/TextStyle.Explain"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:text="我的团队" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="1">
+
+        <com.xuexiang.xui.widget.imageview.RadiusImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_create" />
+
+        <TextView
+            style="@style/TextStyle.Explain"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:text="创建团队" />
+
+    </LinearLayout>
+</LinearLayout>
