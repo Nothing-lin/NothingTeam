@@ -35,7 +35,6 @@ public class TeamFragment extends BaseFragment {
     @BindView(R.id.view_pager)
     ViewPager mViewPager;
 
-    private String[] tabTitles = new String[]{"我加入的团队","我创建的团队"};
 
     //初始化标题栏
     @Override

@@ -8,17 +8,62 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.tabs.TabLayout;
 import com.nothinglin.nothingteam.R;
+import com.nothinglin.nothingteam.base.BaseFragment;
+import com.nothinglin.nothingteam.fragment.messagepages.ChatToTeamFragment;
+import com.nothinglin.nothingteam.fragment.messagepages.SystemMessageFragment;
+import com.nothinglin.nothingteam.fragment.teampages.JoinTeamFragment;
+import com.xuexiang.xpage.annotation.Page;
+import com.xuexiang.xui.adapter.FragmentAdapter;
+import com.xuexiang.xui.widget.actionbar.TitleBar;
 
-public class MessageFragment extends Fragment {
+import butterknife.BindView;
+@Page(name = "消息")
+public class MessageFragment extends BaseFragment {
 
-    @Nullable
+    //选项标签页面
+    @BindView(R.id.tab_layout)
+    TabLayout tabLayout;
+    @BindView(R.id.view_pager)
+    ViewPager mViewPager;
+
+    //初始化标题栏
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View layout = inflater.inflate(R.layout.fragment_message,null);
+    protected TitleBar initTitle() {
+        //setImmersive是状态栏的设置，因为一开始已经取消了状态栏的样式了
+        super.initTitle().setLeftVisible(false).setImmersive(true);
+        return null;
+    }
 
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_message;
+    }
 
-        return layout;
+    @Override
+    protected void initViews() {
+
+        //初始化fragment适配器
+        FragmentAdapter<BaseFragment> adapter = new FragmentAdapter<>(getChildFragmentManager());
+        //将tabLayout设置为固定模式
+        tabLayout.setTabMode(TabLayout.MODE_FIXED);
+
+        //注册适配“系统通告”界面
+        tabLayout.addTab(tabLayout.newTab().setText("系统消息"));
+        adapter.addFragment(new SystemMessageFragment(),"系统消息");
+
+        //注册适配“联系团队”界面
+        tabLayout.addTab(tabLayout.newTab().setText("联系团队"));
+        adapter.addFragment(new ChatToTeamFragment(),"联系团队");
+
+        //设置消息页面的视图极限为2个
+        mViewPager.setOffscreenPageLimit(2);
+        //将视图和tablayout进行绑定
+        mViewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(mViewPager);
+
     }
 }
