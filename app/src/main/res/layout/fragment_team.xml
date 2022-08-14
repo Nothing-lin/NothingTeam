@@ -5,15 +5,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.xuexiang.xui.widget.tabbar.EasyIndicator
-        android:id="@+id/easy_indicator"
+    <!--TabLayout-->
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
+        style="@style/TabLayoutStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        app:indicator_height="42dp"
-        app:indicator_line_height="3dp"
-        app:indicator_line_show="true"
-        app:indicator_textSize="14sp" />
+        android:layout_height="?attr/xui_actionbar_height" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
