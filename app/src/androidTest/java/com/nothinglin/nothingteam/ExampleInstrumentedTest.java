@@ -10,6 +10,18 @@ import org.junit.runner.RunWith;
 
 import static org.junit.Assert.*;
 
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.Statement;
+import com.nothinglin.nothingteam.bean.HiresInfos;
+import com.nothinglin.nothingteam.dao.HiresInfosDao;
+import com.nothinglin.nothingteam.dao.table.HiresInfosTable;
+import com.nothinglin.nothingteam.db.DBOpenHelper;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Instrumented test, which will execute on an Android device.
  *
@@ -22,5 +34,16 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         assertEquals("com.nothinglin.nothingteam", appContext.getPackageName());
+    }
+    
+    @Test
+    public void testMysql(){
+
+        HiresInfosDao hiresInfosDao = new HiresInfosDao();
+        List<HiresInfos> list = hiresInfosDao.getHiresInfoAll();
+        for (HiresInfos hiresInfos : list){
+            System.out.println(hiresInfos.getProject_name());
+        }
+
     }
 }

@@ -9,7 +9,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.nothinglin.nothingteam.R;
 import com.nothinglin.nothingteam.adapter.CardViewListAdapter;
 import com.nothinglin.nothingteam.base.BaseFragment;
+import com.nothinglin.nothingteam.bean.HiresInfos;
 import com.nothinglin.nothingteam.bean.ToolTabCardInfo;
+import com.nothinglin.nothingteam.dao.HiresInfosDao;
 import com.nothinglin.nothingteam.widget.DemoDataProvider;
 import com.xuexiang.xrouter.annotation.AutoWired;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
@@ -32,14 +34,16 @@ public class ToolTabCardListFragment extends BaseFragment {
 
     //这里要定义构造函数才能获取传来的title，判断对应选项卡页面中的数据
     private String tabtitle;
+    private List<HiresInfos> hiresInfosList = new ArrayList<>();
 
-    private List<ToolTabCardInfo> toolTabCardInfos = new ArrayList<>();
+    private List<HiresInfos> toolTabCardInfos = new ArrayList<>();
 
     public ToolTabCardListFragment() {
     }
 
-    public ToolTabCardListFragment(String tabtitle) {
+    public ToolTabCardListFragment(String tabtitle,List<HiresInfos> hiresInfosList) {
         this.tabtitle = tabtitle;
+        this.hiresInfosList = hiresInfosList;
     }
 
 
@@ -87,8 +91,8 @@ public class ToolTabCardListFragment extends BaseFragment {
         recyclerView.setAdapter(mAdapter = new CardViewListAdapter());
 
         //筛选标签页对应的内容
-        for (ToolTabCardInfo info : DemoDataProvider.getDemoNewInfos()){
-            if (info.getTag() == tabtitle){
+        for (HiresInfos info : hiresInfosList){
+            if (info.getProject_type() == tabtitle){
                 toolTabCardInfos.add(info);
             }
         }

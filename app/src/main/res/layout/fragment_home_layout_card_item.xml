@@ -127,6 +127,7 @@
                             android:text="预计招募人数：" />
 
                         <TextView
+                            android:id="@+id/tv_menbers"
                             style="@style/TextStyle.Explain"
                             android:layout_marginStart="5dp"
                             android:textSize="11dp"
@@ -211,6 +212,7 @@
             android:src="@drawable/ic_date" />
 
         <TextView
+            android:textSize="10dp"
             android:id="@+id/tv_praise"
             style="@style/TextStyle.Explain"
             android:layout_marginStart="5dp"
@@ -226,6 +228,7 @@
             android:src="@drawable/ic_eye" />
 
         <TextView
+            android:textSize="10dp"
             android:id="@+id/tv_comment"
             style="@style/TextStyle.Explain"
             android:layout_marginStart="5dp"
@@ -249,6 +252,8 @@
                 android:src="@drawable/ic_location" />
 
             <TextView
+                android:textSize="10dp"
+                android:id="@+id/tv_position"
                 style="@style/TextStyle.Explain"
                 android:layout_marginStart="5dp"
                 android:text="广州，广州软件学院"
