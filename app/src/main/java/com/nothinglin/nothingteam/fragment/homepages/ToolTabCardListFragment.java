@@ -92,7 +92,8 @@ public class ToolTabCardListFragment extends BaseFragment {
 
         //筛选标签页对应的内容
         for (HiresInfos info : hiresInfosList){
-            if (info.getProject_type() == tabtitle){
+            //注意这里值的比较不要使用 == 要使用equals方法
+            if (info.getProject_type().equals(tabtitle)){
                 toolTabCardInfos.add(info);
             }
         }

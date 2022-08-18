@@ -69,6 +69,7 @@
 
 
             <com.xuexiang.xui.widget.button.roundbutton.RoundButton
+                android:id="@+id/rb_project_type"
                 style="@style/RoundButton.Auto"
                 android:text="比赛项目"
                 android:enabled="false"
@@ -159,42 +160,37 @@
     android:layout_marginTop="7dp">
 
     <TextView
+        android:layout_gravity="center_vertical"
         style="@style/TextStyle.Explain"
         android:textSize="11dp"
         android:text="目标条件：" />
 
-    <com.xuexiang.xui.widget.button.roundbutton.RoundButton
-        style="@style/RoundButton.Auto"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:text="文档编写"
-        android:textSize="10dp"
-        android:layout_marginRight="10dp"
-        android:textColor="@color/yellow_btn_color_normal"
-        app:rb_borderColor="@color/yellow_btn_color_normal"
-        app:rb_isRadiusAdjustBounds="true" />
+    <com.donkingliang.labels.LabelsView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/labels"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:minHeight="25dp"
+        android:padding="0dp"
+        app:labelBackground="@drawable/card_list_label_bg"
+        app:labelTextColor="@color/yellow_btn_color_normal"
+        app:labelTextHeight="wrap_content"
+        app:labelTextPaddingBottom="3dp"
+        app:labelTextPaddingLeft="10dp"
+        app:labelTextPaddingRight="10dp"
+        app:labelTextPaddingTop="3dp"
+        app:labelTextSize="10dp"
+        app:labelTextWidth="wrap_content"
+        app:lineMargin="0dp"
+        app:maxSelect="0"
+        app:minSelect="1"
+        app:maxLines="1"
+        app:maxColumns="3"
+        app:selectType="MULTI"
+        app:wordMargin="10dp"
+        app:isTextBold="true" />
 
-    <com.xuexiang.xui.widget.button.roundbutton.RoundButton
-        style="@style/RoundButton.Auto"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:text="前端开发"
-        android:textSize="10dp"
-        android:layout_marginRight="10dp"
-        android:textColor="@color/yellow_btn_color_normal"
-        app:rb_borderColor="@color/yellow_btn_color_normal"
-        app:rb_isRadiusAdjustBounds="true" />
 
-    <com.xuexiang.xui.widget.button.roundbutton.RoundButton
-        style="@style/RoundButton.Auto"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:text="后端开发"
-        android:textSize="10dp"
-        android:layout_marginRight="10dp"
-        android:textColor="@color/yellow_btn_color_normal"
-        app:rb_borderColor="@color/yellow_btn_color_normal"
-        app:rb_isRadiusAdjustBounds="true" />
 
 </LinearLayout>
 

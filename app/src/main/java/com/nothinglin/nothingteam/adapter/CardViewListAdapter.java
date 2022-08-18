@@ -4,8 +4,10 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 
+import com.donkingliang.labels.LabelsView;
 import com.nothinglin.nothingteam.R;
 import com.nothinglin.nothingteam.bean.HiresInfos;
+import com.nothinglin.nothingteam.bean.HiresInfosTabs;
 import com.nothinglin.nothingteam.bean.ToolTabCardInfo;
 import com.nothinglin.nothingteam.dao.HiresInfosDao;
 import com.nothinglin.nothingteam.widget.DiffUtilCallback;
@@ -15,6 +17,7 @@ import com.xuexiang.xui.utils.WidgetUtils;
 import com.xuexiang.xutil.common.CollectionUtils;
 import com.xuexiang.xutil.common.logger.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,6 +41,31 @@ public class CardViewListAdapter extends BaseRecyclerAdapter<HiresInfos> {
             holder.text(R.id.tv_menbers, model.getHire_numbers());
             holder.text(R.id.tv_position, model.getProject_position());
             holder.text(R.id.tv_summary, model.getProject_introdution());
+            holder.text(R.id.rb_project_type,model.getProject_type());
+
+            LabelsView labelsView = holder.findViewById(R.id.labels);
+
+            ArrayList<String> tablist = new ArrayList<>();
+
+            /**
+             * 注意这里比较不能model.getProject_id() == model.getTabs().get(i).getProject_id()
+             * 这两个数值虽然是一样，但是映射机制不一样，== 是表示全部都一样，映射机制都要一样
+             * 而使用x.equals()方法，只是比较值是否一样，不考虑映射机制
+             * 这里是一个坑，让我 思考了很久
+             */
+
+            for (int i =0;i < model.getTabs().size();i++){
+                if (model.getProject_id().equals(model.getTabs().get(i).getProject_id())){
+                    tablist.add(model.getTabs().get(i).getAbility_requirements());
+                }
+            }
+
+
+            labelsView.setLabels(tablist);
+            labelsView.setSelectType(LabelsView.SelectType.NONE);
+
+
+//            holder.visible(R.id.rb_tab1,-1);
 //            holder.text(R.id.tv_praise, model.getPraise() == 0 ? "点赞" : String.valueOf(model.getPraise()));
 //            holder.text(R.id.tv_comment, model.getComment() == 0 ? "评论" : String.valueOf(model.getComment()));
 //            holder.text(R.id.tv_read, "阅读量 " + model.getRead());

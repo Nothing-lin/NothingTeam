@@ -9,7 +9,9 @@ import androidx.annotation.NonNull;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
 import com.nothinglin.nothingteam.bean.HiresInfos;
+import com.nothinglin.nothingteam.bean.HiresInfosTabs;
 import com.nothinglin.nothingteam.dao.table.HiresInfosTable;
+import com.nothinglin.nothingteam.dao.table.HiresInfosTabsTable;
 import com.nothinglin.nothingteam.db.DBOpenHelper;
 
 import java.sql.ResultSet;
@@ -46,7 +48,7 @@ public class HiresInfosDao {
 
                 //将数据库的每条数据放到hireInfo bean中保存，再统一加入list列表中（多条数据）
                 hiresInfo.setId(rs.getInt(HiresInfosTable.COL_ID));
-                hiresInfo.setProject_id(rs.getInt(HiresInfosTable.COL_PROJECT_ID));
+                hiresInfo.setProject_id(rs.getString(HiresInfosTable.COL_PROJECT_ID));
                 hiresInfo.setProject_name(rs.getString(HiresInfosTable.COL_PROJECT_NAME));
                 hiresInfo.setProject_owner_team_name(rs.getString(HiresInfosTable.COL_PROJECT_OWNER_TEAM_NAME));
                 hiresInfo.setProject_type(rs.getString(HiresInfosTable.COL_PROJECT_TYPE));
@@ -73,4 +75,38 @@ public class HiresInfosDao {
 
         return hiresInfos;
     }
+
+
+
+    //获取招聘信息标签中的全部内容
+    public List<HiresInfosTabs> getHiresInfoTabsAll(){
+        String sql = "select * from project_requirements";
+        Connection connection = DBOpenHelper.getConnection();
+        List<HiresInfosTabs> hiresInfosTabs = new ArrayList<>();
+
+        try {
+            Statement statement = (Statement) connection.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+
+            while (rs.next()){
+                HiresInfosTabs hiresInfosTab = new HiresInfosTabs();
+
+                hiresInfosTab.setId(rs.getInt(HiresInfosTabsTable.COL_ID));
+                hiresInfosTab.setProject_id(rs.getString(HiresInfosTabsTable.COL_PROJECT_ID));
+                hiresInfosTab.setAbility_requirements(rs.getString(HiresInfosTabsTable.COL_ABILITY_REQUIREMENTS));
+
+                hiresInfosTabs.add(hiresInfosTab);
+
+            }
+
+            rs.close();
+            connection.close();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return hiresInfosTabs;
+    }
+
 }

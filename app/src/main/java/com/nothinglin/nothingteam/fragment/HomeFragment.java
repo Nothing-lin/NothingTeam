@@ -18,6 +18,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.nothinglin.nothingteam.R;
 import com.nothinglin.nothingteam.base.BaseFragment;
 import com.nothinglin.nothingteam.bean.HiresInfos;
+import com.nothinglin.nothingteam.bean.HiresInfosTabs;
 import com.nothinglin.nothingteam.dao.HiresInfosDao;
 import com.nothinglin.nothingteam.fragment.homepages.ToolTabCardListFragment;
 import com.nothinglin.nothingteam.utils.GlobalThreadPool;
@@ -61,6 +62,8 @@ public class HomeFragment extends BaseFragment implements BaseBanner.OnItemClick
     HiresInfosDao hiresInfosDao = new HiresInfosDao();
     //handler是线程信息传递的重要工具，用来接收子线程中的数据
     public Handler handler;
+
+    private List<HiresInfosTabs> hiresInfosTabsList = new ArrayList<>();
 
 
     //mPictures是用来存放轮播图图片的
@@ -159,6 +162,13 @@ public class HomeFragment extends BaseFragment implements BaseBanner.OnItemClick
             public void run() {
                 //调用数据库操作类方法
                 hiresInfosList = hiresInfosDao.getHiresInfoAll();
+                hiresInfosTabsList = hiresInfosDao.getHiresInfoTabsAll();
+
+                //将标签送入信息列表中，这样后面ToolTabCardListFragment --> CardViewListAdapter 循环传值的时候才方便
+                for (HiresInfos info : hiresInfosList){
+                    info.setTabs(hiresInfosTabsList);
+                }
+
                 //通过message方法把联网获取到的MySQL中的数据从子线程传递到主线程中去
                 Message message = new Message();
                 message.obj = hiresInfosList;
@@ -185,7 +195,7 @@ public class HomeFragment extends BaseFragment implements BaseBanner.OnItemClick
 
         try {
             // thread --> handler --> thread.sleep
-            Thread.sleep(500);
+            Thread.sleep(1500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

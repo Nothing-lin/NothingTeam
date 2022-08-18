@@ -1,10 +1,12 @@
 package com.nothinglin.nothingteam.bean;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class HiresInfos {
     private int id;
-    private int project_id;
+    private String project_id;
     private String project_name;
     private String project_owner_team_name;
     private String project_type;
@@ -15,6 +17,16 @@ public class HiresInfos {
     private int is_team_full;
     private int is_hide;
     private String project_introdution;
+    //装载标签的list
+    private List<HiresInfosTabs> tabs;
+
+    public List<HiresInfosTabs> getTabs() {
+        return tabs;
+    }
+
+    public void setTabs(List<HiresInfosTabs> tabs) {
+        this.tabs = tabs;
+    }
 
     public String getHire_numbers() {
         return hire_numbers;
@@ -40,11 +52,11 @@ public class HiresInfos {
         this.id = id;
     }
 
-    public int getProject_id() {
+    public String getProject_id() {
         return project_id;
     }
 
-    public void setProject_id(int project_id) {
+    public void setProject_id(String project_id) {
         this.project_id = project_id;
     }
 
