@@ -19,9 +19,11 @@ import com.nothinglin.nothingteam.fragment.HomeFragment;
 import com.nothinglin.nothingteam.fragment.MeFragment;
 import com.nothinglin.nothingteam.fragment.MessageFragment;
 import com.nothinglin.nothingteam.fragment.TeamFragment;
+import com.nothinglin.nothingteam.utils.XToastUtils;
 import com.nothinglin.nothingteam.widget.StatusBarUtil;
 import com.xuexiang.xui.XUI;
 import com.xuexiang.xui.utils.WidgetUtils;
+import com.xuexiang.xui.widget.dialog.bottomsheet.BottomSheet;
 import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog;
 
 import java.util.ArrayList;
@@ -101,7 +103,8 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener, B
             mTabbar.getMiddleView().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(MainActivity.this, "中间点击", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(MainActivity.this, "中间点击", Toast.LENGTH_SHORT).show();
+                    showBottomSheetGrid();
                 }
             });
         }
@@ -109,6 +112,30 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener, B
 
         //设置状态栏透明
         StatusBarUtil.setTranslucentStatus(this);
+    }
+
+    private void showBottomSheetGrid(){
+        //表格排列的顺序
+        final int TAG_SHARE_WECHAT_FRIEND = 0;
+        final int TAG_SHARE_WECHAT_MOMENT = 1;
+        final int TAG_SHARE_WEIBO = 2;
+        final int TAG_SHARE_CHAT = 3;
+        final int TAG_SHARE_LOCAL = 4;
+
+        BottomSheet.BottomGridSheetBuilder builder = new BottomSheet.BottomGridSheetBuilder(this);
+        builder.addItem(R.drawable.icon_more_operation_share_friend,"分享到微信",TAG_SHARE_WECHAT_FRIEND,BottomSheet.BottomGridSheetBuilder.FIRST_LINE)
+                .addItem(R.drawable.icon_more_operation_share_moment,"分享到朋友圈",TAG_SHARE_WECHAT_MOMENT,BottomSheet.BottomGridSheetBuilder.FIRST_LINE)
+                .addItem(R.drawable.icon_more_operation_share_weibo,"分享到微博",TAG_SHARE_WEIBO,BottomSheet.BottomGridSheetBuilder.FIRST_LINE)
+                .addItem(R.drawable.icon_more_operation_share_chat,"分享到私信",TAG_SHARE_CHAT,BottomSheet.BottomGridSheetBuilder.FIRST_LINE)
+                .addItem(R.drawable.icon_more_operation_save,"保存到本地",TAG_SHARE_LOCAL,BottomSheet.BottomGridSheetBuilder.SECOND_LINE)
+                .setOnSheetItemClickListener(((dialog, itemView) -> {
+                    //点击之后退出底部弹窗
+                    dialog.dismiss();
+                    int tag = (int) itemView.getTag();
+                    XToastUtils.toast("tag:" + tag + ", content:" + itemView.toString());
+                })).build().show();
+
+
     }
 
 
