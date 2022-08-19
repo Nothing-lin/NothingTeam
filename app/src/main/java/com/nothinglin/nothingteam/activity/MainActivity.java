@@ -1,10 +1,13 @@
 package com.nothinglin.nothingteam.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.Toast;
 
@@ -15,10 +18,14 @@ import com.jpeng.jptabbar.OnTabSelectListener;
 import com.nothinglin.nothingteam.R;
 import com.nothinglin.nothingteam.adapter.ChangeNavPageAdapter;
 import com.nothinglin.nothingteam.base.BaseActivity;
+import com.nothinglin.nothingteam.bean.HiresInfos;
+import com.nothinglin.nothingteam.bean.HiresInfosTabs;
+import com.nothinglin.nothingteam.dao.HiresInfosDao;
 import com.nothinglin.nothingteam.fragment.HomeFragment;
 import com.nothinglin.nothingteam.fragment.MeFragment;
 import com.nothinglin.nothingteam.fragment.MessageFragment;
 import com.nothinglin.nothingteam.fragment.TeamFragment;
+import com.nothinglin.nothingteam.utils.GlobalThreadPool;
 import com.nothinglin.nothingteam.utils.XToastUtils;
 import com.nothinglin.nothingteam.widget.StatusBarUtil;
 import com.xuexiang.xui.XUI;
@@ -52,6 +59,15 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener, B
     MessageFragment messageFragment;
     TeamFragment teamFragment;
 
+    //-------------------------获取homepage列表信息的声明---------------------------------
+    //hiresInfosList装满了全部的募招内容，获取数据库中招募信息的全部数据
+    private List<HiresInfos> hiresInfosList = new ArrayList<>();
+    //定义募招信息的数据库操作类
+    HiresInfosDao hiresInfosDao = new HiresInfosDao();
+    //handler是线程信息传递的重要工具，用来接收子线程中的数据
+    public Handler handler;
+    private List<HiresInfosTabs> hiresInfosTabsList = new ArrayList<>();
+    //----------------------------------------------------------
 
     //setContentView(R.layout.activity_main);指向需要展示的界面的布局文件
     @Override
@@ -63,6 +79,8 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener, B
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //获取homepage列表信息，赋值到hiresInfosList集合中，再传递给homepage
+        getHiresInfosList();
 
         initViews();
     }
@@ -80,7 +98,7 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener, B
         mTabbar.setTabListener(this);
 
         //实例化fragment界面
-        homeFragment = new HomeFragment();
+        homeFragment = new HomeFragment(hiresInfosList);
         meFragment = new MeFragment();
         messageFragment = new MessageFragment();
         teamFragment = new TeamFragment();
@@ -158,5 +176,53 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener, B
     @Override
     public void onDismiss(int position) {
 
+    }
+
+
+    private void getHiresInfosList(){
+
+        //开启一个子线程thread，获取数据库中的hiresinfos，全部数据！
+        GlobalThreadPool.getInstance().getGlobalThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                //调用数据库操作类方法
+                hiresInfosList = hiresInfosDao.getHiresInfoAll();
+                hiresInfosTabsList = hiresInfosDao.getHiresInfoTabsAll();
+
+                //将标签送入信息列表中，这样后面ToolTabCardListFragment --> CardViewListAdapter 循环传值的时候才方便
+                for (HiresInfos info : hiresInfosList){
+                    info.setTabs(hiresInfosTabsList);
+                }
+
+                //通过message方法把联网获取到的MySQL中的数据从子线程传递到主线程中去
+                Message message = new Message();
+                message.obj = hiresInfosList;
+                //主线程通过handler来响应和接收子线程传来的数据
+                handler.sendMessage(message);
+            }
+        });
+
+        //上面handler发送了信息，这里需要立刻接收，并且赋值给全局变量
+        handler = new Handler(){
+            @Override
+            public void handleMessage(@NonNull Message msg) {
+                super.handleMessage(msg);
+                hiresInfosList = (List<HiresInfos>) msg.obj;
+            }
+        };
+
+        /**
+         * 上面的数据过程是子线程，由于下面立刻就要用到了hiresInfosList，但是开启子线程之后就分两条路来走了
+         * 子线程和主线程不同步，主线程要获取hiresInfosList，但是子线程没有从数据库中拿到且返回给主线程
+         * 这样主线程由于跑得快，就没有拿到数据，报错就报空指针，应该让主线程等一等子线程，等子线程获取数据后再
+         * 获取子线程的数据处理下一步，初步使用thread.sleep方法让主线程睡眠
+         */
+
+        try {
+            // thread --> handler --> thread.sleep
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

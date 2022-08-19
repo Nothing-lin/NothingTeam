@@ -58,13 +58,10 @@ public class HomeFragment extends BaseFragment implements BaseBanner.OnItemClick
     private List<String> titles = new ArrayList<>();
     //hiresInfosList装满了全部的募招内容，获取数据库中招募信息的全部数据
     private List<HiresInfos> hiresInfosList = new ArrayList<>();
-    //定义募招信息的数据库操作类
-    HiresInfosDao hiresInfosDao = new HiresInfosDao();
-    //handler是线程信息传递的重要工具，用来接收子线程中的数据
-    public Handler handler;
 
-    private List<HiresInfosTabs> hiresInfosTabsList = new ArrayList<>();
-
+    public HomeFragment(List<HiresInfos> hiresInfosList) {
+        this.hiresInfosList = hiresInfosList;
+    }
 
     //mPictures是用来存放轮播图图片的
     private List<BannerItem> mPictures;
@@ -128,7 +125,7 @@ public class HomeFragment extends BaseFragment implements BaseBanner.OnItemClick
         for (String title : tabtitles) {
             tabLayout.addTab(tabLayout.newTab().setText(title));
             //把获取到的数据直接传入ToolTabCardListFragment，不用再开启子线程来重新获取数据了
-            adapter.addFragment(new ToolTabCardListFragment(title,hiresInfosList), title);//注意这里给ToolTabCardListFragment传递了title参数，用户匹配数据库的对应页面对应的数据
+            adapter.addFragment(new ToolTabCardListFragment(title, hiresInfosList), title);//注意这里给ToolTabCardListFragment传递了title参数，用户匹配数据库的对应页面对应的数据
         }
 
         //设置预加载界面数量
@@ -155,51 +152,6 @@ public class HomeFragment extends BaseFragment implements BaseBanner.OnItemClick
     //获取选项卡的标签title，过滤重复的数据
     @SuppressLint("HandlerLeak")
     private String[] getTabTitles() {
-
-        //开启一个子线程thread，获取数据库中的hiresinfos，全部数据！
-        GlobalThreadPool.getInstance().getGlobalThreadPool().execute(new Runnable() {
-            @Override
-            public void run() {
-                //调用数据库操作类方法
-                hiresInfosList = hiresInfosDao.getHiresInfoAll();
-                hiresInfosTabsList = hiresInfosDao.getHiresInfoTabsAll();
-
-                //将标签送入信息列表中，这样后面ToolTabCardListFragment --> CardViewListAdapter 循环传值的时候才方便
-                for (HiresInfos info : hiresInfosList){
-                    info.setTabs(hiresInfosTabsList);
-                }
-
-                //通过message方法把联网获取到的MySQL中的数据从子线程传递到主线程中去
-                Message message = new Message();
-                message.obj = hiresInfosList;
-                //主线程通过handler来响应和接收子线程传来的数据
-                handler.sendMessage(message);
-            }
-        });
-
-        //上面handler发送了信息，这里需要立刻接收，并且赋值给全局变量
-        handler = new Handler(){
-            @Override
-            public void handleMessage(@NonNull Message msg) {
-                super.handleMessage(msg);
-                hiresInfosList = (List<HiresInfos>) msg.obj;
-            }
-        };
-
-        /**
-         * 上面的数据过程是子线程，由于下面立刻就要用到了hiresInfosList，但是开启子线程之后就分两条路来走了
-         * 子线程和主线程不同步，主线程要获取hiresInfosList，但是子线程没有从数据库中拿到且返回给主线程
-         * 这样主线程由于跑得快，就没有拿到数据，报错就报空指针，应该让主线程等一等子线程，等子线程获取数据后再
-         * 获取子线程的数据处理下一步，初步使用thread.sleep方法让主线程睡眠
-         */
-
-        try {
-            // thread --> handler --> thread.sleep
-            Thread.sleep(1500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
 
         //获取数据库中选项卡的标题，标题设立在招聘infos的bean中
         //使用项目类型作为标签标题
