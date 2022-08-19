@@ -25,7 +25,7 @@ import butterknife.BindView;
 /**
  * 这里是homepage中的tooltab部分的卡片列表中的内容显示中的数据处理和显示的部分
  * 每个tab页在这里进行设置，这个页面只负责tabview下的卡片列表的处理
- *
+ * <p>
  * ！！下面只是测试数据，后期连接数据库要对该页面进行重写
  */
 public class ToolTabCardListFragment extends BaseFragment {
@@ -41,7 +41,7 @@ public class ToolTabCardListFragment extends BaseFragment {
     public ToolTabCardListFragment() {
     }
 
-    public ToolTabCardListFragment(String tabtitle,List<HiresInfos> hiresInfosList) {
+    public ToolTabCardListFragment(String tabtitle, List<HiresInfos> hiresInfosList) {
         this.tabtitle = tabtitle;
         this.hiresInfosList = hiresInfosList;
     }
@@ -91,10 +91,19 @@ public class ToolTabCardListFragment extends BaseFragment {
         recyclerView.setAdapter(mAdapter = new CardViewListAdapter());
 
         //筛选标签页对应的内容
-        for (HiresInfos info : hiresInfosList){
+        for (HiresInfos info : hiresInfosList) {
             //注意这里值的比较不要使用 == 要使用equals方法
-            if (info.getProject_type().equals(tabtitle)){
+            if (info.getProject_type().equals(tabtitle)) {
                 toolTabCardInfos.add(info);
+            }
+        }
+
+        //过滤重复数据
+        for (int i = 0; i < toolTabCardInfos.size() - 1; i++) {
+            for (int j = toolTabCardInfos.size() - 1; j > i; j--) {
+                if (toolTabCardInfos.get(j).equals(toolTabCardInfos.get(i))) {
+                    toolTabCardInfos.remove(j);
+                }
             }
         }
 
