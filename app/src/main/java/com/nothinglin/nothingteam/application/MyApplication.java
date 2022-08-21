@@ -11,11 +11,14 @@ import com.xuexiang.xpage.model.PageInfo;
 
 import java.util.List;
 
+import cn.jpush.im.android.api.JMessageClient;
+
 
 public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        //xpage初始化
         PageConfig.getInstance().init(this);
         PageConfig.getInstance()
                 .setPageConfiguration(new PageConfiguration() { //页面注册
@@ -28,5 +31,10 @@ public class MyApplication extends Application {
                 .debug("PageLog")       //开启调试
                 .setContainActivityClazz(XPageActivity.class) //设置默认的容器Activity
                 .init(this);            //初始化页面配置
+
+
+        //极光SDK初始化
+        JMessageClient.setDebugMode(true);
+        JMessageClient.init(this);
     }
 }

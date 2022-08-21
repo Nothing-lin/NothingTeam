@@ -31,6 +31,14 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    //初始化极光SDK的so文件
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
 }
 
 dependencies {
@@ -81,5 +89,9 @@ dependencies {
 
     //标签流布局
     implementation 'com.github.donkingliang:LabelsView:1.6.5'
+
+    //极光IM SDK
+    implementation files('libs\\jbasic-android-3.1.0.jar')
+    implementation files('libs\\jmessage-sdk-android-2.9.2.jar')
 
 }
