@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
+
+        <!--团队信息-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <!--    团队信息栏头像    -->
+                    <com.xuexiang.xui.widget.imageview.RadiusImageView
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="15dp"
+                        android:src="@drawable/ic_cat"
+                        app:riv_border_color="@color/xui_config_color_gray_6"
+                        app:riv_border_width="1px"
+                        app:riv_corner_radius="10dp"
+                        app:riv_is_circle="true"
+                        app:riv_selected_border_color="@color/xui_config_color_gray_4"
+                        app:riv_selected_border_width="1px"
+                        app:riv_selected_mask_color="@color/xui_config_color_gray_8" />
+
+                    <TextView
+                        style="@style/TextStyle.Explain"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="10dp"
+                        android:maxLines="1"
+                        android:text="Nothinglin团队工作室"
+                        android:textColor="@color/black"
+                        android:textSize="20dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/TextStyle.Explain"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="10dp"
+                        android:text="团队简介："
+                        android:textColor="@color/black"
+                        android:textSize="13dp" />
+
+                    <TextView
+                        style="@style/TextStyle.Explain"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="left"
+                        android:maxLines="5"
+                        android:singleLine="false"
+                        android:text="一个新团队的产生，往往伴随着一个奇特的构思和策划。我们孕育着同一个理想、目标，出发点不同但目的一样，年轻的心在这一刻相聚、团结一致、折破风浪，勇敢起航。我们的成员全部是95后，拥有着全新的思想和理念。将打造全新的方案。"
+                        android:textSize="13dp" />
+
+                </LinearLayout>
+
+
+                <TextView
+                    style="@style/TextStyle.Explain"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="10dp"
+                    android:text="团队技术储备："
+                    android:textColor="@color/black"
+                    android:textSize="13dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:orientation="horizontal">
+
+                    <com.donkingliang.labels.LabelsView xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/labels"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:minHeight="25dp"
+                        android:padding="0dp"
+                        app:isTextBold="true"
+                        app:labelBackground="@drawable/card_list_label_bg"
+                        app:labelTextColor="@color/yellow_btn_color_normal"
+                        app:labelTextHeight="wrap_content"
+                        app:labelTextPaddingBottom="3dp"
+                        app:labelTextPaddingLeft="10dp"
+                        app:labelTextPaddingRight="10dp"
+                        app:labelTextPaddingTop="3dp"
+                        app:labelTextSize="10dp"
+                        app:labelTextWidth="wrap_content"
+                        app:lineMargin="10dp"
+                        app:maxColumns="6"
+                        app:maxLines="2"
+                        app:maxSelect="0"
+                        app:minSelect="1"
+                        app:selectType="MULTI"
+                        app:wordMargin="10dp" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bt_normal"
+                    android:text="申请加入" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bt_normal"
+                    android:text="联系团队" />
+
+            </LinearLayout>
+
+            <com.xuexiang.xui.widget.tabbar.TabSegment
+                android:id="@+id/tabSegment"
+                android:layout_width="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_tab_panel"/>
+
+            <!--主要内容显示-->
+            <!--ViewPager-->
+<!--            <androidx.viewpager.widget.ViewPager-->
+<!--                android:id="@+id/view_pager"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="1000dp"-->
+<!--                android:background="#fff" />-->
+
+            <com.nothinglin.nothingteam.widget.ViewPagerForScrollView
+                android:id="@+id/view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

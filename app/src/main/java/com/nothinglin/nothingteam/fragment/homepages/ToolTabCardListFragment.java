@@ -1,5 +1,6 @@
 package com.nothinglin.nothingteam.fragment.homepages;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -7,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.nothinglin.nothingteam.R;
+import com.nothinglin.nothingteam.activity.CardDetailActivity;
 import com.nothinglin.nothingteam.adapter.CardViewListAdapter;
 import com.nothinglin.nothingteam.base.BaseFragment;
 import com.nothinglin.nothingteam.bean.HiresInfos;
@@ -115,6 +117,10 @@ public class ToolTabCardListFragment extends BaseFragment {
 
     @Override
     protected void initListeners() {
-        mAdapter.setOnItemClickListener(null);
+        mAdapter.setOnItemClickListener(((itemView, item, position) -> {
+            Intent intent = new Intent();
+            intent.setClass(getContext(), CardDetailActivity.class);
+            startActivity(intent);
+        }));
     }
 }
