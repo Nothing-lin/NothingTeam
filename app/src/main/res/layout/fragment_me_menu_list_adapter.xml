@@ -46,6 +46,7 @@
 
         <com.xuexiang.xui.widget.textview.supertextview.SuperTextView
             style="@style/Account"
+            android:id="@+id/loginout"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             app:sLeftTextString="退出登录"
