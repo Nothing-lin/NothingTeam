@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 
 import com.nothinglin.nothingteam.R;
 import com.nothinglin.nothingteam.base.BaseActivity;
+import com.nothinglin.nothingteam.controller.LoginController;
 import com.nothinglin.nothingteam.utils.ClearWriteEditText;
 
 import butterknife.BindView;
@@ -22,14 +23,18 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
 
     public ClearWriteEditText mLogin_userName;//用户名输入框
     public ClearWriteEditText mLogin_passWord;//密码输入框
-    Button mBtn_login;//登录按钮
-    TextView mLogin_register;//注册文本，用于替换登录按钮中的“登录”
-    RelativeLayout mTitleBar;//标题栏
-    RelativeLayout mBackground;//背景颜色
-    public ImageView mLogin_userLogo;
-    public ImageView mLogin_pswLogo;
-    public View mUserLine;
-    public View mPswLine;
+    public Button mBtn_login;//登录按钮
+    public TextView mLogin_register;//注册文本，用于替换登录按钮中的“登录”
+    public RelativeLayout mTitleBar;//标题栏
+    public RelativeLayout mBackground;//背景颜色
+    public ImageView mLogin_userLogo;//输入框用户名图标
+    public ImageView mLogin_pswLogo;//密码输入框图标
+    public View mUserLine;//用户名输入框底部线
+    public View mPswLine;//密码输入框底部线
+    //登录控制器，控制登录的行为
+    public LoginController mLoginController;
+    public TextView mNewUser;
+    public TextView mLogin_desc;
 
 
     @Override
@@ -41,6 +46,11 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
 
         initListener();
 
+        mLoginController = new LoginController(this);
+        //是否为新用户的点击事件，传到登录控制器中去处理
+        mNewUser.setOnClickListener(mLoginController);
+        mLogin_register.setOnClickListener(mLoginController);
+        mBtn_login.setOnClickListener(mLoginController);
 
 
     }
@@ -57,6 +67,10 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
         mLogin_pswLogo = findViewById(R.id.login_pswLogo);
         mUserLine = findViewById(R.id.user_line);
         mPswLine = findViewById(R.id.psw_line);
+        mNewUser = findViewById(R.id.new_user);
+        mLogin_desc = findViewById(R.id.login_desc);
+        mBtn_login = findViewById(R.id.btn_login);
+        mLogin_register = findViewById(R.id.login_register);
     }
 
 
@@ -85,4 +99,14 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
                 break;
         }
     }
+
+    //------------------------------------获取输入框内容方法---------------------------------
+    public String getUserId() {
+        return mLogin_userName.getText().toString().trim();
+    }
+
+    public String getPassword() {
+        return mLogin_passWord.getText().toString().trim();
+    }
+    //-----------------------------------------------------------------------------------
 }
