@@ -15,4 +15,7 @@
     <color name="colorAccent">#299EE3</color>
 
     <color name="yellow_btn_color_normal">#FCD271</color>
+
+    <color name="line_press">#57D9D9</color>
+    <color name="line_normal">#BCBCBC</color>
 </resources>

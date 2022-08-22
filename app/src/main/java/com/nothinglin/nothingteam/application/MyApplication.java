@@ -35,6 +35,6 @@ public class MyApplication extends Application {
 
         //极光SDK初始化
         JMessageClient.setDebugMode(true);
-        JMessageClient.init(this);
+//        JMessageClient.init(this);
     }
 }
