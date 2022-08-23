@@ -44,16 +44,51 @@
                         app:riv_selected_border_width="1px"
                         app:riv_selected_mask_color="@color/xui_config_color_gray_8" />
 
-                    <TextView
-                        style="@style/TextStyle.Explain"
-                        android:layout_width="wrap_content"
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="10dp"
-                        android:maxLines="1"
-                        android:text="Nothinglin团队工作室"
-                        android:textColor="@color/black"
-                        android:textSize="20dp" />
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/detail_team_name"
+                            style="@style/TextStyle.Explain"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:maxLines="1"
+                            android:text="Nothinglin团队工作室"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+
+                        <LinearLayout
+                            android:layout_marginTop="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginStart="10dp">
+
+                            <ImageView
+                                android:layout_marginEnd="5dp"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:src="@drawable/ic_location"/>
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="所属学校："
+                                android:textSize="12dp"/>
+
+                            <TextView
+                                android:id="@+id/detail_school"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="广州软件学院"
+                                android:textSize="12dp"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
 
                 </LinearLayout>
 
@@ -72,6 +107,7 @@
                         android:textSize="13dp" />
 
                     <TextView
+                        android:id="@+id/detail_team_intro"
                         style="@style/TextStyle.Explain"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="15dp"

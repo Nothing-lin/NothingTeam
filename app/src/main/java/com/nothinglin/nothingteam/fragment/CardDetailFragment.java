@@ -1,11 +1,17 @@
 package com.nothinglin.nothingteam.fragment;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.TextView;
+
 import androidx.viewpager.widget.ViewPager;
 
 import com.donkingliang.labels.LabelsView;
 import com.google.android.material.tabs.TabLayout;
 import com.nothinglin.nothingteam.R;
+import com.nothinglin.nothingteam.activity.CardDetailActivity;
 import com.nothinglin.nothingteam.base.BaseFragment;
+import com.nothinglin.nothingteam.bean.HiresInfos;
 import com.nothinglin.nothingteam.fragment.carddetail.CardDetailCommentFragment;
 import com.nothinglin.nothingteam.fragment.carddetail.ProjectDetailFragment;
 import com.nothinglin.nothingteam.fragment.messagepages.ChatToTeamFragment;
@@ -16,14 +22,24 @@ import com.xuexiang.xui.widget.actionbar.TitleBar;
 import com.xuexiang.xui.widget.tabbar.TabSegment;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
 @Page(name = "项目详情页")
 public class CardDetailFragment extends BaseFragment {
 
+    public ArrayList<HiresInfos> detailCardInfo = new ArrayList<>();
+    public HiresInfos hiresInfos = new HiresInfos();
+    
     @BindView(R.id.labels)
     LabelsView labelsView;
+    @BindView(R.id.detail_team_name)
+    TextView mDetailTeamName;
+    @BindView(R.id.detail_school)
+    TextView mDetailSchool;
+    @BindView(R.id.detail_team_intro)
+    TextView mDetailTeamIntro;
 
     //选项标签页面
     @BindView(R.id.tabSegment)
@@ -48,8 +64,38 @@ public class CardDetailFragment extends BaseFragment {
 
     @Override
     protected void initViews() {
+        
 
+        //获取CardDetailActivity传来的数据
+        getdetailCardInfo();
+        
+        //初始化团队信息栏
+        initTeamInfo();
+
+        //初始话（项目详情-留言）标签栏
+        initTabSegment();
+
+        //初始化团队技术储备标签
         setTeamLabel();
+
+    }
+
+    private void initTeamInfo() {
+        hiresInfos = detailCardInfo.get(0);
+        //设置团队信息栏的信息
+        mDetailTeamName.setText(hiresInfos.getProject_owner_team_name());
+        mDetailSchool.setText(hiresInfos.getTeam_school());
+        mDetailTeamIntro.setText(hiresInfos.getTeam_intro());
+
+    }
+
+    private void getdetailCardInfo() {
+        Bundle bundle = getArguments();
+        detailCardInfo = (ArrayList<HiresInfos>) bundle.getSerializable("detailCardInfo");
+        System.out.println(detailCardInfo);
+    }
+
+    private void initTabSegment() {
 
         //初始化fragment适配器
         FragmentAdapter<BaseFragment> adapter = new FragmentAdapter<>(getChildFragmentManager());
@@ -69,7 +115,6 @@ public class CardDetailFragment extends BaseFragment {
         //将视图和tablayout进行绑定
         mViewPager.setAdapter(adapter);
         tabSegment.setupWithViewPager(mViewPager);
-
     }
 
     private void setTeamLabel() {
@@ -86,6 +131,7 @@ public class CardDetailFragment extends BaseFragment {
         tablist.add("PHP");
         tablist.add("Python");
         tablist.add("Swift");
+
 
         labelsView.setLabels(tablist);
         labelsView.setSelectType(LabelsView.SelectType.NONE);

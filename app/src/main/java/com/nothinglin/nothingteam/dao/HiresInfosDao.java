@@ -47,7 +47,6 @@ public class HiresInfosDao {
                 HiresInfos hiresInfo = new HiresInfos();
 
                 //将数据库的每条数据放到hireInfo bean中保存，再统一加入list列表中（多条数据）
-                hiresInfo.setId(rs.getInt(HiresInfosTable.COL_ID));
                 hiresInfo.setProject_id(rs.getString(HiresInfosTable.COL_PROJECT_ID));
                 hiresInfo.setProject_name(rs.getString(HiresInfosTable.COL_PROJECT_NAME));
                 hiresInfo.setProject_owner_team_name(rs.getString(HiresInfosTable.COL_PROJECT_OWNER_TEAM_NAME));
@@ -59,6 +58,10 @@ public class HiresInfosDao {
                 hiresInfo.setIs_team_full(rs.getInt(HiresInfosTable.COL_IS_TEAM_FULL));
                 hiresInfo.setIs_hide(rs.getInt(HiresInfosTable.COL_IS_HIDE));
                 hiresInfo.setProject_introdution(rs.getString(HiresInfosTable.COL_PROJECT_INTRODUCTION));
+                hiresInfo.setTeam_avatar(rs.getString(HiresInfosTable.COL_TEAM_AVATAR));
+                hiresInfo.setTeam_school(rs.getString(HiresInfosTable.COL_TEAM_SCHOOL));
+                hiresInfo.setTeam_intro(rs.getString(HiresInfosTable.COL_TEAM_INTRO));
+                hiresInfo.setTeam_manager_userid(rs.getString(HiresInfosTable.COL_TEAM_MANAGER_USERID));
 
 
                 hiresInfos.add(hiresInfo);
@@ -91,7 +94,6 @@ public class HiresInfosDao {
             while (rs.next()){
                 HiresInfosTabs hiresInfosTab = new HiresInfosTabs();
 
-                hiresInfosTab.setId(rs.getInt(HiresInfosTabsTable.COL_ID));
                 hiresInfosTab.setProject_id(rs.getString(HiresInfosTabsTable.COL_PROJECT_ID));
                 hiresInfosTab.setAbility_requirements(rs.getString(HiresInfosTabsTable.COL_ABILITY_REQUIREMENTS));
 

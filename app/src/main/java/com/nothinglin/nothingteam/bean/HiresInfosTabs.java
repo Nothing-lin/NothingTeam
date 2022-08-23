@@ -1,6 +1,8 @@
 package com.nothinglin.nothingteam.bean;
 
-public class HiresInfosTabs {
+import java.io.Serializable;
+
+public class HiresInfosTabs implements Serializable {
     private int id;
     private String project_id;
     private String ability_requirements;

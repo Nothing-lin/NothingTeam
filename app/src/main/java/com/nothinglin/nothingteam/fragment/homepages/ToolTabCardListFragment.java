@@ -2,6 +2,7 @@ package com.nothinglin.nothingteam.fragment.homepages;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -9,6 +10,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.nothinglin.nothingteam.R;
 import com.nothinglin.nothingteam.activity.CardDetailActivity;
+import com.nothinglin.nothingteam.activity.MainActivity;
 import com.nothinglin.nothingteam.adapter.CardViewListAdapter;
 import com.nothinglin.nothingteam.base.BaseFragment;
 import com.nothinglin.nothingteam.bean.HiresInfos;
@@ -19,6 +21,7 @@ import com.xuexiang.xrouter.annotation.AutoWired;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
 import com.yanzhenjie.recyclerview.SwipeRecyclerView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -118,7 +121,15 @@ public class ToolTabCardListFragment extends BaseFragment {
     @Override
     protected void initListeners() {
         mAdapter.setOnItemClickListener(((itemView, item, position) -> {
+            ArrayList<HiresInfos> detailCardInfo = new ArrayList<>();
+            //筛选被选中的信息
+            for (HiresInfos info : toolTabCardInfos){
+                if (info.getProject_id().equals(item.getProject_id())){
+                    detailCardInfo.add(info);
+                }
+            }
             Intent intent = new Intent();
+            intent.putExtra("detailCardInfo",detailCardInfo);
             intent.setClass(getContext(), CardDetailActivity.class);
             startActivity(intent);
         }));

@@ -15,4 +15,8 @@ public class HiresInfosTable {
     public static final String COL_IS_TEAM_FULL = "is_team_full";
     public static final String COL_IS_HIDE = "is_hide";
     public static final String COL_PROJECT_INTRODUCTION = "project_introduction";
+    public static final String COL_TEAM_AVATAR = "team_avatar";
+    public static final String COL_TEAM_SCHOOL = "team_school";
+    public static final String COL_TEAM_INTRO = "team_intro";
+    public static final String COL_TEAM_MANAGER_USERID = "team_manager_userid";
 }

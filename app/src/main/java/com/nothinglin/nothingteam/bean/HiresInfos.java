@@ -1,10 +1,11 @@
 package com.nothinglin.nothingteam.bean;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class HiresInfos {
+public class HiresInfos implements Serializable {
     private int id;
     private String project_id;
     private String project_name;
@@ -17,6 +18,11 @@ public class HiresInfos {
     private int is_team_full;
     private int is_hide;
     private String project_introdution;
+    private String team_avatar;
+    private String team_school;
+    private String team_intro;
+    private String team_manager_userid;
+
     //装载标签的list
     private List<HiresInfosTabs> tabs;
 
@@ -124,21 +130,58 @@ public class HiresInfos {
         this.is_hide = is_hide;
     }
 
+    public String getTeam_avatar() {
+        return team_avatar;
+    }
+
+    public void setTeam_avatar(String team_avatar) {
+        this.team_avatar = team_avatar;
+    }
+
+    public String getTeam_school() {
+        return team_school;
+    }
+
+    public void setTeam_school(String team_school) {
+        this.team_school = team_school;
+    }
+
+    public String getTeam_intro() {
+        return team_intro;
+    }
+
+    public void setTeam_intro(String team_intro) {
+        this.team_intro = team_intro;
+    }
+
+    public String getTeam_manager_userid() {
+        return team_manager_userid;
+    }
+
+    public void setTeam_manager_userid(String team_manager_userid) {
+        this.team_manager_userid = team_manager_userid;
+    }
 
     @Override
     public String toString() {
         return "HiresInfos{" +
                 "id=" + id +
-                ", project_id=" + project_id +
+                ", project_id='" + project_id + '\'' +
                 ", project_name='" + project_name + '\'' +
                 ", project_owner_team_name='" + project_owner_team_name + '\'' +
                 ", project_type='" + project_type + '\'' +
                 ", competition_type='" + competition_type + '\'' +
-                ", hire_numbers=" + hire_numbers +
+                ", hire_numbers='" + hire_numbers + '\'' +
                 ", project_position='" + project_position + '\'' +
                 ", project_create_date=" + project_create_date +
                 ", is_team_full=" + is_team_full +
                 ", is_hide=" + is_hide +
+                ", project_introdution='" + project_introdution + '\'' +
+                ", team_avatar='" + team_avatar + '\'' +
+                ", team_school='" + team_school + '\'' +
+                ", team_intro='" + team_intro + '\'' +
+                ", team_manager_userid='" + team_manager_userid + '\'' +
+                ", tabs=" + tabs +
                 '}';
     }
 }
