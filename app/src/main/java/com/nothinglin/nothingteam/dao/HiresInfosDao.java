@@ -10,8 +10,10 @@ import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
 import com.nothinglin.nothingteam.bean.HiresInfos;
 import com.nothinglin.nothingteam.bean.HiresInfosTabs;
+import com.nothinglin.nothingteam.bean.TeamLabel;
 import com.nothinglin.nothingteam.dao.table.HiresInfosTable;
 import com.nothinglin.nothingteam.dao.table.HiresInfosTabsTable;
+import com.nothinglin.nothingteam.dao.table.TeamLabelsTable;
 import com.nothinglin.nothingteam.db.DBOpenHelper;
 
 import java.sql.ResultSet;
@@ -109,6 +111,37 @@ public class HiresInfosDao {
         }
 
         return hiresInfosTabs;
+    }
+
+
+    //获取团队标签中的全部内容
+    public List<TeamLabel> getTeamLabelsAll(){
+        String sql = "select * from team_skill_label";
+        Connection connection = DBOpenHelper.getConnection();
+        List<TeamLabel> teamLabels = new ArrayList<>();
+
+        try {
+            Statement statement = (Statement) connection.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+
+            while (rs.next()){
+                TeamLabel teamLabel = new TeamLabel();
+
+                teamLabel.setProject_id(rs.getString(TeamLabelsTable.COL_PROJECT_ID));
+                teamLabel.setTeam_label(rs.getString(TeamLabelsTable.COL_TEAM_LABEL));
+
+                teamLabels.add(teamLabel);
+
+            }
+
+            rs.close();
+            connection.close();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return teamLabels;
     }
 
 }

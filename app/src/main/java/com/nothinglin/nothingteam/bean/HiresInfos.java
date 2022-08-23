@@ -26,6 +26,10 @@ public class HiresInfos implements Serializable {
     //装载标签的list
     private List<HiresInfosTabs> tabs;
 
+    //团队标签list--详情页中的标签
+    private List<TeamLabel> teamLabels;
+
+
     public List<HiresInfosTabs> getTabs() {
         return tabs;
     }
@@ -160,6 +164,14 @@ public class HiresInfos implements Serializable {
 
     public void setTeam_manager_userid(String team_manager_userid) {
         this.team_manager_userid = team_manager_userid;
+    }
+
+    public List<TeamLabel> getTeamLabels() {
+        return teamLabels;
+    }
+
+    public void setTeamLabels(List<TeamLabel> teamLabels) {
+        this.teamLabels = teamLabels;
     }
 
     @Override

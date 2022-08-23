@@ -20,6 +20,7 @@ import com.nothinglin.nothingteam.adapter.ChangeNavPageAdapter;
 import com.nothinglin.nothingteam.base.BaseActivity;
 import com.nothinglin.nothingteam.bean.HiresInfos;
 import com.nothinglin.nothingteam.bean.HiresInfosTabs;
+import com.nothinglin.nothingteam.bean.TeamLabel;
 import com.nothinglin.nothingteam.dao.HiresInfosDao;
 import com.nothinglin.nothingteam.fragment.HomeFragment;
 import com.nothinglin.nothingteam.fragment.MeFragment;
@@ -67,6 +68,7 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener, B
     //handler是线程信息传递的重要工具，用来接收子线程中的数据
     public Handler handler;
     private List<HiresInfosTabs> hiresInfosTabsList = new ArrayList<>();
+    private List<TeamLabel> teamLabelsList = new ArrayList<>();
     //----------------------------------------------------------
 
     //setContentView(R.layout.activity_main);指向需要展示的界面的布局文件
@@ -188,10 +190,15 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener, B
                 //调用数据库操作类方法
                 hiresInfosList = hiresInfosDao.getHiresInfoAll();
                 hiresInfosTabsList = hiresInfosDao.getHiresInfoTabsAll();
+                teamLabelsList = hiresInfosDao.getTeamLabelsAll();
 
                 //将标签送入信息列表中，这样后面ToolTabCardListFragment --> CardViewListAdapter 循环传值的时候才方便
                 for (HiresInfos info : hiresInfosList){
                     info.setTabs(hiresInfosTabsList);
+                }
+
+                for (HiresInfos info : hiresInfosList){
+                    info.setTeamLabels(teamLabelsList);
                 }
 
                 //通过message方法把联网获取到的MySQL中的数据从子线程传递到主线程中去

@@ -12,6 +12,7 @@ import com.nothinglin.nothingteam.R;
 import com.nothinglin.nothingteam.activity.CardDetailActivity;
 import com.nothinglin.nothingteam.base.BaseFragment;
 import com.nothinglin.nothingteam.bean.HiresInfos;
+import com.nothinglin.nothingteam.bean.TeamLabel;
 import com.nothinglin.nothingteam.fragment.carddetail.CardDetailCommentFragment;
 import com.nothinglin.nothingteam.fragment.carddetail.ProjectDetailFragment;
 import com.nothinglin.nothingteam.fragment.messagepages.ChatToTeamFragment;
@@ -118,19 +119,21 @@ public class CardDetailFragment extends BaseFragment {
     }
 
     private void setTeamLabel() {
+
         ArrayList<String> tablist = new ArrayList<>();
-        tablist.add("Android");
-        tablist.add("IOS");
-        tablist.add("前端");
-        tablist.add("后台");
-        tablist.add("微信开发");
-        tablist.add("游戏开发");
-        tablist.add("JavaScript");
-        tablist.add("C++");
-        tablist.add("Java");
-        tablist.add("PHP");
-        tablist.add("Python");
-        tablist.add("Swift");
+
+//        for (int i =0;i < model.getTabs().size();i++){
+//            if (model.getProject_id().equals(model.getTabs().get(i).getProject_id())){
+//                tablist.add(model.getTabs().get(i).getAbility_requirements());
+//            }
+//        }
+
+        for (TeamLabel teamLabel : detailCardInfo.get(0).getTeamLabels()){
+            if (teamLabel.getProject_id().equals(detailCardInfo.get(0).getProject_id())){
+                tablist.add(teamLabel.getTeam_label());
+            }
+        }
+
 
 
         labelsView.setLabels(tablist);
