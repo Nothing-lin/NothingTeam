@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.nothinglin.nothingteam.R;
+import com.nothinglin.nothingteam.activity.SingleChatActivity;
 import com.nothinglin.nothingteam.adapter.MessageListAdapter;
 import java.util.ArrayList;
 import java.util.List;
@@ -138,7 +139,7 @@ public class ChatToTeamFragment extends Fragment {
                             i.putExtra("name", userInfo.getUserName());
                         }
 
-//                        i.setClass(getActivity(), SingleChatActivity.class);
+                        i.setClass(getActivity(), SingleChatActivity.class);
                         startActivity(i);
                         System.out.println("kk");
                         break;

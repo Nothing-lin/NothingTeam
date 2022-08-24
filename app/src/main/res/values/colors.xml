@@ -20,4 +20,7 @@
     <color name="line_normal">#BCBCBC</color>
 
     <color name="colorClarity">#0000</color>
+
+    <color name="colorDown">#eeeeee</color>>
+    <color name="colorWhite">#ffffff</color>
 </resources>
