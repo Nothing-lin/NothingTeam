@@ -16,3 +16,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "NothingTeam"
 include ':app'
+include ':qqEmoji'

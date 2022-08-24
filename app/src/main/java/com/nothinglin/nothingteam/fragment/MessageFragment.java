@@ -47,7 +47,7 @@ public class MessageFragment extends BaseFragment {
     protected void initViews() {
 
         //初始化fragment适配器
-        FragmentAdapter<BaseFragment> adapter = new FragmentAdapter<>(getChildFragmentManager());
+        FragmentAdapter<Fragment> adapter = new FragmentAdapter<>(getChildFragmentManager());
         //将tabLayout设置为固定模式
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
 
