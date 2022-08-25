@@ -146,24 +146,7 @@ public class SingleChatAdapter extends BaseAdapter {
             }
         });
 
-        //设置消息文字背景状态
-        switch (message.getStatus()) {
-            //成功发送消息，接收端也成功接收的话设置背景颜色为默认
-            case send_success:
-            case receive_success:
-                viewHolder.mFL.setBackgroundResource(R.drawable.jmui_msg_receive_bg);
-                break;
 
-            case send_going:
-            case receive_going:
-                viewHolder.mFL.setBackgroundResource(R.drawable.jmui_msg_receive_bg);
-                break;
-
-            case send_fail:
-            case receive_fail:
-                viewHolder.mFL.setBackgroundResource(R.drawable.jmui_msg_receive_bg);
-                break;
-        }
 
 
         //消息内容

@@ -67,9 +67,18 @@ public class SingleChatActivity extends AppCompatActivity {
 
         //数据传递
         Intent i = getIntent();
-        username = i.getStringExtra("username");//用户名
+        String n = null;
 
-        String n = i.getStringExtra("name");
+        if (i.getStringExtra("username") != null){
+            username = i.getStringExtra("username");//消息列表用户名
+            n = i.getStringExtra("name");
+        }
+        if (i.getStringExtra("teamUserName") != null){
+            username = i.getStringExtra("teamUserId");//联系团队的用户名
+            n = i.getStringExtra("teamUserName");
+        }
+
+
         mToolbar.setTitle(n);//显示对话用户名称
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

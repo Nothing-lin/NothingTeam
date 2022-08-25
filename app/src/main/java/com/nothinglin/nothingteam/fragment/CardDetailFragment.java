@@ -2,6 +2,8 @@ package com.nothinglin.nothingteam.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.viewpager.widget.ViewPager;
@@ -10,6 +12,7 @@ import com.donkingliang.labels.LabelsView;
 import com.google.android.material.tabs.TabLayout;
 import com.nothinglin.nothingteam.R;
 import com.nothinglin.nothingteam.activity.CardDetailActivity;
+import com.nothinglin.nothingteam.activity.SingleChatActivity;
 import com.nothinglin.nothingteam.base.BaseFragment;
 import com.nothinglin.nothingteam.bean.HiresInfos;
 import com.nothinglin.nothingteam.bean.TeamLabel;
@@ -26,6 +29,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.callback.GetUserInfoCallback;
+import cn.jpush.im.android.api.model.UserInfo;
 
 @Page(name = "项目详情页")
 public class CardDetailFragment extends BaseFragment {
@@ -41,6 +47,8 @@ public class CardDetailFragment extends BaseFragment {
     TextView mDetailSchool;
     @BindView(R.id.detail_team_intro)
     TextView mDetailTeamIntro;
+    @BindView(R.id.bt_chat_to_team)
+    Button mChatToTeamButtom;
 
     //选项标签页面
     @BindView(R.id.tabSegment)
@@ -79,6 +87,31 @@ public class CardDetailFragment extends BaseFragment {
         //初始化团队技术储备标签
         setTeamLabel();
 
+        //初始化监听器
+        initListener();
+
+    }
+
+    private void initListener() {
+        mChatToTeamButtom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+
+                JMessageClient.getUserInfo(detailCardInfo.get(0).getTeam_manager_userid(), null, new GetUserInfoCallback() {
+                    @Override
+                    public void gotResult(int i, String s, UserInfo userInfo) {
+                        if (i == 0){
+                            intent.putExtra("teamUserId",detailCardInfo.get(0).getTeam_manager_userid());
+                            intent.putExtra("teamUserName",userInfo.getUserName());
+                            intent.setClass(getActivity(), SingleChatActivity.class);
+                            startActivity(intent);
+                        }
+                    }
+                });
+
+            }
+        });
     }
 
     private void initTeamInfo() {

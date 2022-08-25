@@ -182,6 +182,7 @@
                     android:text="申请加入" />
 
                 <Button
+                    android:id="@+id/bt_chat_to_team"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
