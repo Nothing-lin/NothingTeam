@@ -25,6 +25,7 @@ import com.nothinglin.nothingteam.adapter.SingleMessageListAdapter;
 import java.util.ArrayList;
 import java.util.List;
 import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.enums.ConversationType;
 import cn.jpush.im.android.api.event.MessageEvent;
 import cn.jpush.im.android.api.model.Conversation;
 import cn.jpush.im.android.api.model.GroupInfo;
@@ -87,7 +88,9 @@ public class ChatToTeamFragment extends Fragment {
                 //ConversationList是对话列表，Conversation是对话列表item
                 mConversationList = JMessageClient.getConversationList();
                 for (Conversation conversation : mConversationList) {
-                    mData.add(conversation);
+                    if (conversation.getType() == ConversationType.single){
+                        mData.add(conversation);
+                    }
                 }
 
                 //通知消息更新
@@ -182,7 +185,9 @@ public class ChatToTeamFragment extends Fragment {
 
             //遍历每个对话列表的item到mData中
             for (Conversation conversation : mConversationList){
-                mData.add(conversation);
+                if (conversation.getType() == ConversationType.single){
+                    mData.add(conversation);
+                }
             }
 
             mAdapter.notifyDataSetChanged();//通知全局数据发生改变

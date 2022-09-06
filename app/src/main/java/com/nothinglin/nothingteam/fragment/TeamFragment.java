@@ -59,11 +59,11 @@ public class TeamFragment extends BaseFragment {
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
 
         //注册适配“我加入的团队”界面
-        tabLayout.addTab(tabLayout.newTab().setText("我加入的团队"));
-        adapter.addFragment(new JoinTeamFragment(),"我加入的团队");
+        tabLayout.addTab(tabLayout.newTab().setText("团队消息"));
+        adapter.addFragment(new JoinTeamFragment(),"团队消息");
         //注册适配“我创建的团队”界面
-        tabLayout.addTab(tabLayout.newTab().setText("我创建的团队"));
-        adapter.addFragment(new MyTeamFragment(),"我创建的团队");
+        tabLayout.addTab(tabLayout.newTab().setText("我的团队"));
+        adapter.addFragment(new MyTeamFragment(),"我的团队");
 
         //设置团队页面的视图极限为2个
         mViewPager.setOffscreenPageLimit(2);

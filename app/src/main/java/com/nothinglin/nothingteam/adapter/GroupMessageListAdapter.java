@@ -164,89 +164,43 @@ public class GroupMessageListAdapter extends BaseAdapter {
         //获取默认头像资源
         final Bitmap mbitmap = BitmapFactory.decodeResource(mInflater.getContext().getResources(), R.drawable.ic_cat);
 
-        //判断对话是单聊还是群聊
-        switch (conversation.getType()) {
 
-            //如果聊天类型为单聊的话
-            case single:
-                UserInfo info = (UserInfo) conversation.getTargetInfo();//获取对话的用户信息
-                //获取对方用户的用户名
-                if (!TextUtils.isEmpty(info.getNotename())) {
-                    name = info.getNotename();
-                } else if (!TextUtils.isEmpty(info.getNickname())) {
-                    name = info.getNickname();
-                } else {
-                    name = info.getUserName();
-                }
+        //JMessage的类对象
+        GroupInfo groupInfo = (GroupInfo) conversation.getTargetInfo();
+        //设置群名称
+        viewHolder.mName.setText(groupInfo.getGroupName());
+        //设置群头像，找到对应的操作对象
+        viewHolder.mImage.setTag(position);
 
-                //显示聊天对象的用户名
-                viewHolder.mName.setText(name);
+        final List<Bitmap> bitmapList1 = new ArrayList<Bitmap>();
+        final GroupMessageListAdapter.ViewHolder finalViewHolder1 = viewHolder;
 
-                //设置聊天对象的头像
-                viewHolder.mImage.setTag(position);
+        //获取群成员的数量
+        final int m = groupInfo.getGroupMembers().size();
 
-                final List<Bitmap> bitmapList = new ArrayList<Bitmap>();
+        for (int i = 0; i < m && i < 5; i++) {
+            //初始化群头像列表，最多五个
+            bitmapList1.add(null);
+        }
 
-                final GroupMessageListAdapter.ViewHolder finalViewHolder = viewHolder;
+        //设置群头像
+        for (int i = 0; i < m && i < 5; i++) {
 
-                info.getAvatarBitmap(new GetAvatarBitmapCallback() {
-                    @Override
-                    public void gotResult(int i, String s, Bitmap bitmap) {
-
-                        //如果远程服务器中有头像了，那么就调用，如果没有就调用本地默认的头像
-                        if (bitmap != null) {
-                            bitmapList.add(bitmap);
-                        } else {
-                            bitmapList.add(mbitmap);
-                        }
-
-                        //设置message_item的头像
-                        finalViewHolder.mImage.setImageResource(R.drawable.ic_cat);
+            final int p = i;
+            groupInfo.getGroupMembers().get(p).getAvatarBitmap(new GetAvatarBitmapCallback() {
+                @Override
+                public void gotResult(int i, String s, Bitmap bitmap) {
+                    //如果存在远程服务器中设置过的头像直接调用，如果没有就使用本地的默认头像
+                    if (bitmap != null) {
+                        bitmapList1.set(p, bitmap);
+                    } else {
+                        bitmapList1.set(p, mbitmap);
                     }
-                });
 
-                break;
-
-            //如果聊天类型为群组的话
-            case group:
-                //JMessage的类对象
-                GroupInfo groupInfo = (GroupInfo) conversation.getTargetInfo();
-                //设置群名称
-                viewHolder.mName.setText(groupInfo.getGroupName());
-                //设置群头像，找到对应的操作对象
-                viewHolder.mImage.setTag(position);
-
-                final List<Bitmap> bitmapList1 = new ArrayList<Bitmap>();
-                final GroupMessageListAdapter.ViewHolder finalViewHolder1 = viewHolder;
-
-                //获取群成员的数量
-                final int m = groupInfo.getGroupMembers().size();
-
-                for (int i = 0; i < m && i < 5; i++) {
-                    //初始化群头像列表，最多五个
-                    bitmapList1.add(null);
+                    //设置头像
+                    finalViewHolder1.mImage.setImageResource(R.drawable.ic_cat);
                 }
-
-                //设置群头像
-                for (int i = 0; i < m && i < 5; i++) {
-
-                    final int p = i;
-                    groupInfo.getGroupMembers().get(p).getAvatarBitmap(new GetAvatarBitmapCallback() {
-                        @Override
-                        public void gotResult(int i, String s, Bitmap bitmap) {
-                            //如果存在远程服务器中设置过的头像直接调用，如果没有就使用本地的默认头像
-                            if (bitmap != null) {
-                                bitmapList1.set(p, bitmap);
-                            } else {
-                                bitmapList1.set(p, mbitmap);
-                            }
-
-                            //设置头像
-                            finalViewHolder1.mImage.setImageResource(R.drawable.ic_cat);
-                        }
-                    });
-                }
-                break;
+            });
         }
 
         return convertView;
