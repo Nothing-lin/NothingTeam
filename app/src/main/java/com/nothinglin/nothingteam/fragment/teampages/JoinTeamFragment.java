@@ -21,10 +21,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.nothinglin.nothingteam.R;
 import com.nothinglin.nothingteam.activity.SingleChatActivity;
-import com.nothinglin.nothingteam.adapter.MessageListAdapter;
-import com.nothinglin.nothingteam.base.BaseFragment;
-import com.nothinglin.nothingteam.fragment.messagepages.ChatToTeamFragment;
-import com.xuexiang.xui.widget.actionbar.TitleBar;
+import com.nothinglin.nothingteam.adapter.GroupMessageListAdapter;
+import com.nothinglin.nothingteam.adapter.SingleMessageListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,8 +40,8 @@ public class JoinTeamFragment extends Fragment {
     private ListView mList;//消息列表容器
     private TextView mTextView;
 
-    private List<Conversation> mData, mConversationList;
-    private MessageListAdapter mAdapter;
+    private List<Conversation> mData, mGroupConversationList;
+    private GroupMessageListAdapter mAdapter;
     //事件处理
     private Handler handler = new Handler();
     private JoinTeamFragment.MyRunnable myRunnable = new JoinTeamFragment.MyRunnable();
@@ -90,8 +88,8 @@ public class JoinTeamFragment extends Fragment {
                 mData.clear();
                 //获取远程服务器中的对话列表
                 //ConversationList是对话列表，Conversation是对话列表item
-                mConversationList = JMessageClient.getConversationList();
-                for (Conversation conversation : mConversationList) {
+                mGroupConversationList = JMessageClient.getConversationList();
+                for (Conversation conversation : mGroupConversationList) {
                     mData.add(conversation);
                 }
 
@@ -159,9 +157,9 @@ public class JoinTeamFragment extends Fragment {
         //初始化用户数据容器
         mData = new ArrayList<>();
         //初始化消息列表容器
-        mConversationList = new ArrayList<>();
+        mGroupConversationList = new ArrayList<>();
 
-        mAdapter = new MessageListAdapter(this.getActivity(), mData);
+        mAdapter = new GroupMessageListAdapter(this.getActivity(), mData);
 
         mList.setAdapter(mAdapter);//封装群信息列表到视图中
 
@@ -183,10 +181,10 @@ public class JoinTeamFragment extends Fragment {
         @Override
         public void run() {
             mData.clear();//清空原有的消息列表数据
-            mConversationList = JMessageClient.getConversationList();//重新获取对话列表
+            mGroupConversationList = JMessageClient.getConversationList();//重新获取对话列表
 
             //遍历每个对话列表的item到mData中
-            for (Conversation conversation : mConversationList){
+            for (Conversation conversation : mGroupConversationList){
                 mData.add(conversation);
             }
 
@@ -266,16 +264,16 @@ public class JoinTeamFragment extends Fragment {
 
             case 1:
                 //删除选中的对话框中全部内容
-                mConversationList.get(p).deleteAllMessage();
+                mGroupConversationList.get(p).deleteAllMessage();
                 //判断要删除的对话框是单聊还是群聊
-                switch (mConversationList.get(p).getType()){
+                switch (mGroupConversationList.get(p).getType()){
                     case single:
                         //获取聊天的目标对象且删除和其的对话消息
-                        UserInfo userInfo = (UserInfo) mConversationList.get(p).getTargetInfo();
+                        UserInfo userInfo = (UserInfo) mGroupConversationList.get(p).getTargetInfo();
                         JMessageClient.deleteSingleConversation(userInfo.getUserName());
                         break;
                     case group:
-                        GroupInfo groupInfo =(GroupInfo) mConversationList.get(p).getTargetInfo();
+                        GroupInfo groupInfo =(GroupInfo) mGroupConversationList.get(p).getTargetInfo();
                         JMessageClient.deleteGroupConversation(groupInfo.getGroupID());
                         break;
                 }

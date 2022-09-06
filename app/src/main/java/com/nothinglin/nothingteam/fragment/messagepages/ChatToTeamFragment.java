@@ -21,7 +21,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.nothinglin.nothingteam.R;
 import com.nothinglin.nothingteam.activity.SingleChatActivity;
-import com.nothinglin.nothingteam.adapter.MessageListAdapter;
+import com.nothinglin.nothingteam.adapter.SingleMessageListAdapter;
 import java.util.ArrayList;
 import java.util.List;
 import cn.jpush.im.android.api.JMessageClient;
@@ -38,7 +38,7 @@ public class ChatToTeamFragment extends Fragment {
     private TextView mTextView;
 
     private List<Conversation> mData, mConversationList;
-    private MessageListAdapter mAdapter;
+    private SingleMessageListAdapter mAdapter;
     //事件处理
     private Handler handler = new Handler();
     private MyRunnable myRunnable = new MyRunnable();
@@ -156,7 +156,7 @@ public class ChatToTeamFragment extends Fragment {
         //初始化消息列表容器
         mConversationList = new ArrayList<>();
 
-        mAdapter = new MessageListAdapter(this.getActivity(), mData);
+        mAdapter = new SingleMessageListAdapter(this.getActivity(), mData);
 
         mList.setAdapter(mAdapter);//封装群信息列表到视图中
 

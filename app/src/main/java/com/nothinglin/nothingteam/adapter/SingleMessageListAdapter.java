@@ -30,12 +30,12 @@ import cn.jpush.im.android.api.model.UserInfo;
 /**
  * 消息列表适配器
  */
-public class MessageListAdapter extends BaseAdapter {
+public class SingleMessageListAdapter extends BaseAdapter {
 
     private LayoutInflater mInflater;//动态视图布局
     private List<Conversation> mData;//消息列表数据组
 
-    public MessageListAdapter(Context context, List<Conversation> data) {
+    public SingleMessageListAdapter(Context context, List<Conversation> data) {
         mInflater = LayoutInflater.from(context);//获取动态布局的上下文
         this.mData = data;
     }
@@ -186,7 +186,7 @@ public class MessageListAdapter extends BaseAdapter {
 
                 final List<Bitmap> bitmapList = new ArrayList<Bitmap>();
 
-                final MessageListAdapter.ViewHolder finalViewHolder = viewHolder;
+                final SingleMessageListAdapter.ViewHolder finalViewHolder = viewHolder;
 
                 info.getAvatarBitmap(new GetAvatarBitmapCallback() {
                     @Override
@@ -216,7 +216,7 @@ public class MessageListAdapter extends BaseAdapter {
                 viewHolder.mImage.setTag(position);
 
                 final List<Bitmap> bitmapList1 = new ArrayList<Bitmap>();
-                final MessageListAdapter.ViewHolder finalViewHolder1 = viewHolder;
+                final SingleMessageListAdapter.ViewHolder finalViewHolder1 = viewHolder;
 
                 //获取群成员的数量
                 final int m = groupInfo.getGroupMembers().size();
