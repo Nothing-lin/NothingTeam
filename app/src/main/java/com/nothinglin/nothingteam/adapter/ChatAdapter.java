@@ -31,14 +31,14 @@ import cn.jpush.im.android.api.enums.MessageDirect;
 import cn.jpush.im.android.api.model.Message;
 import cn.jpush.im.android.api.model.UserInfo;
 
-public class SingleChatAdapter extends BaseAdapter {
+public class ChatAdapter extends BaseAdapter {
 
     private LayoutInflater mInflater;//动态界面布局
     private List<Message> mData;//消息容器
 
     private MyClickListener mListener;//自定义事件监听器
 
-    public SingleChatAdapter(Context context, List<Message> data, MyClickListener listener) {
+    public ChatAdapter(Context context, List<Message> data, MyClickListener listener) {
         mInflater = LayoutInflater.from(context);
         this.mData = data;
         mListener = listener;

@@ -2,17 +2,20 @@ package com.nothinglin.nothingteam.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.nothinglin.nothingteam.R;
-import com.nothinglin.nothingteam.adapter.SingleChatAdapter;
+import com.nothinglin.nothingteam.adapter.ChatAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,19 +26,20 @@ import cn.jpush.im.android.api.event.MessageEvent;
 import cn.jpush.im.android.api.model.Conversation;
 import cn.jpush.im.android.api.model.GroupInfo;
 import cn.jpush.im.android.api.model.Message;
+import cn.jpush.im.api.BasicCallback;
 
 public class GroupChatActivity extends AppCompatActivity {
 
     private Toolbar mToolbar;//聊天界面标题栏
     private ListView mList;//聊天界面中的item
-    private SingleChatAdapter mAdapter;//聊天界面消息适配器
+    private ChatAdapter mAdapter;//聊天界面消息适配器
     private List<Message> mData;//消息容器
     private EditText mEt_input;//聊天界面中的输入框
     private Button mBt_send;//聊天界面中的消息发送按钮
     private long GroupId;
 
     //数据传递监听器
-    private SingleChatAdapter.MyClickListener mListener = new SingleChatAdapter.MyClickListener(){
+    private ChatAdapter.MyClickListener mListener = new ChatAdapter.MyClickListener(){
         @Override
         public void myOnClick(int p, View w) {
 //            String u = mData.get(p).getFromUser().getUserName();
@@ -64,6 +68,53 @@ public class GroupChatActivity extends AppCompatActivity {
         //注册数据
         initData();
 
+        //注册监听事件
+        initListener();
+
+    }
+
+    private void initListener() {
+        //发送按钮的监听事件
+        mBt_send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                final String text = mEt_input.getText().toString();
+                //如果输入框中有值，输入框不为空
+                if (!TextUtils.isEmpty(text)){
+                    //群聊信息通道
+                    Message message = JMessageClient.createGroupTextMessage(GroupId,text);
+                    //调用极光服务器的回调方法
+                    message.setOnSendCompleteCallback(new BasicCallback() {
+                        @Override
+                        public void gotResult(int i, String s) {
+                            //发送成功
+                            if (i == 0){
+                                mAdapter.notifyDataSetChanged();
+                            }else {
+                                Toast.makeText(getApplicationContext(),"发送失败"+s,Toast.LENGTH_SHORT).show();
+                                mAdapter.notifyDataSetChanged();
+                            }
+                        }
+                    });
+
+                    //发送信息
+                    JMessageClient.sendMessage(message);
+                    mData.add(message);
+                    mAdapter.notifyDataSetChanged();
+                    mEt_input.setText("");
+                    //?重置list数量？
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mList.setSelection(mAdapter.getCount());
+                        }
+                    },100);
+                }
+
+            }
+        });
+
     }
 
     private void initData() {
@@ -86,7 +137,7 @@ public class GroupChatActivity extends AppCompatActivity {
         });
 
         mData = new ArrayList<>();
-        mAdapter = new SingleChatAdapter(this,mData,mListener);//自动监听信息变化mlistener
+        mAdapter = new ChatAdapter(this,mData,mListener);//自动监听信息变化mlistener
         mList.setAdapter(mAdapter);//封装适配的消息布局到内容列表上
 
         //获取历史聊天记录
@@ -169,7 +220,7 @@ public class GroupChatActivity extends AppCompatActivity {
             return;
         }
         mData.add(message);
-        mAdapter = new SingleChatAdapter(this, mData, mListener);
+        mAdapter = new ChatAdapter(this, mData, mListener);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
