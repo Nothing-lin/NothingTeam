@@ -38,6 +38,7 @@
         <entry key="..\:/Project/NothingTeam/app/src/main/res/drawable/xui_round_btn_green_bg.xml" value="0.1915" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout-w1240dp/activity_login.xml" value="0.16" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout-w1240dp/activity_register_login.xml" value="0.194140625" />
+        <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/activity_bottombar_middle_button.xml" value="0.193359375" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/activity_card_detail.xml" value="0.264" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/activity_chat.xml" value="0.194140625" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/activity_chat_item_he.xml" value="0.194140625" />
@@ -72,6 +73,8 @@
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/fragment_message_team.xml" value="0.11458333333333333" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/fragment_team.xml" value="0.2572463768115942" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/fragment_team_create.xml" value="0.14114583333333333" />
+        <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/fragment_team_group_list.xml" value="0.2" />
+        <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/fragment_team_group_list_item.xml" value="0.193359375" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/fragment_team_join.xml" value="0.1421875" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/include_recycler_view_refresh.xml" value="0.2463768115942029" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/layout_jptabbar_middle_view.xml" value="0.12588652482269502" />
