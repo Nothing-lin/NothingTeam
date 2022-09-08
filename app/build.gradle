@@ -96,4 +96,5 @@ dependencies {
     implementation files('libs\\jbasic-android-3.1.0.jar')
     implementation files('libs\\jmessage-sdk-android-2.9.2.jar')
 
+    implementation 'org.greenrobot:eventbus:3.1.1'
 }

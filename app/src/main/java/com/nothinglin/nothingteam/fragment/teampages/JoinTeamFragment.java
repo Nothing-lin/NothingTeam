@@ -20,9 +20,8 @@ import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.nothinglin.nothingteam.R;
-import com.nothinglin.nothingteam.activity.SingleChatActivity;
+import com.nothinglin.nothingteam.activity.GroupChatActivity;
 import com.nothinglin.nothingteam.adapter.GroupMessageListAdapter;
-import com.nothinglin.nothingteam.adapter.SingleMessageListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -130,26 +129,13 @@ public class JoinTeamFragment extends Fragment {
                 mAdapter.notifyDataSetChanged();
 
                 Intent i = new Intent();
-                //传递数据到SingleChatActivity.class页面
-                switch (mData.get(position).getType()) {
-                    case single:
-                        //获取目标用户信息
-                        UserInfo userInfo = (UserInfo) mData.get(position).getTargetInfo();
+                //传递数据到GroupChatActivity.class页面
+                GroupInfo groupInfo = (GroupInfo) mData.get(position).getTargetInfo();
+                i.putExtra("GroupId", groupInfo.getGroupID());
+                i.putExtra("GroupName", groupInfo.getGroupName());
+                i.setClass(getActivity(), GroupChatActivity.class);
+                startActivity(i);
 
-                        i.putExtra("username", userInfo.getUserName());
-                        if (!TextUtils.isEmpty(userInfo.getNotename())) {
-                            i.putExtra("name", userInfo.getNotename());
-                        } else if (!TextUtils.isEmpty(userInfo.getNickname())) {
-                            i.putExtra("name", userInfo.getNickname());
-                        } else {
-                            i.putExtra("name", userInfo.getUserName());
-                        }
-
-                        i.setClass(getActivity(), SingleChatActivity.class);
-                        startActivity(i);
-                        System.out.println("kk");
-                        break;
-                }
 
             }
         });

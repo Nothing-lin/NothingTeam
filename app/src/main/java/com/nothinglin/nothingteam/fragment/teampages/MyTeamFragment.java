@@ -2,10 +2,14 @@ package com.nothinglin.nothingteam.fragment.teampages;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.nothinglin.nothingteam.R;
+import com.nothinglin.nothingteam.activity.GroupChatActivity;
 import com.nothinglin.nothingteam.adapter.GroupListAdapter;
 import com.nothinglin.nothingteam.base.BaseFragment;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
@@ -17,6 +21,8 @@ import butterknife.BindView;
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.callback.GetGroupIDListCallback;
 import cn.jpush.im.android.api.callback.GetGroupInfoCallback;
+import cn.jpush.im.android.api.enums.ConversationType;
+import cn.jpush.im.android.api.model.Conversation;
 import cn.jpush.im.android.api.model.GroupInfo;
 
 public class MyTeamFragment extends BaseFragment {
@@ -24,6 +30,7 @@ public class MyTeamFragment extends BaseFragment {
 
     private GroupListAdapter mGroupListAdapter;
     private Context mContext;
+    private List<Conversation> mData, mGroupConversationList;
 
     @BindView(R.id.group_list)
     ListView mGroupList;
@@ -73,6 +80,31 @@ public class MyTeamFragment extends BaseFragment {
                 } else {
                     Toast.makeText(getContext(), "出错："+responseMessage, Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+
+        mGroupList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                mGroupConversationList = JMessageClient.getConversationList();//重新获取对话列表
+
+                //遍历每个对话列表的item到mData中
+                for (Conversation conversation : mGroupConversationList){
+                    if (conversation.getType() == ConversationType.group){
+                        mData.add(conversation);
+                    }
+                }
+
+                Intent i = new Intent();
+                //传递数据到GroupChatActivity.class页面
+                GroupInfo groupInfo = (GroupInfo) mData.get(position).getTargetInfo();
+                i.putExtra("GroupId", groupInfo.getGroupID());
+                i.putExtra("GroupName", groupInfo.getGroupName());
+                i.setClass(getActivity(), GroupChatActivity.class);
+                startActivity(i);
+
             }
         });
     }

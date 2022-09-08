@@ -2,6 +2,7 @@ package com.nothinglin.nothingteam.adapter;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -12,10 +13,20 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.nothinglin.nothingteam.R;
+import com.nothinglin.nothingteam.activity.GroupChatActivity;
+import com.nothinglin.nothingteam.activity.WelcomeActivity;
+import com.nothinglin.nothingteam.utils.Event;
+import com.nothinglin.nothingteam.utils.EventType;
+
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.callback.GetAvatarBitmapCallback;
+import cn.jpush.im.android.api.enums.ConversationType;
+import cn.jpush.im.android.api.model.Conversation;
 import cn.jpush.im.android.api.model.GroupInfo;
 import cn.jpush.im.android.api.model.UserInfo;
 
@@ -29,6 +40,7 @@ public class GroupListAdapter extends BaseAdapter {
     private String groupName;
     private Map<Long, String> mGroupName = new HashMap<>();
     private List<GroupInfo> mGroupInfo;
+    private List<Conversation> mData, mGroupConversationList;
 
     public GroupListAdapter(Context context, List<GroupInfo> groupInfo) {
         this.mContext = context;
@@ -105,26 +117,28 @@ public class GroupListAdapter extends BaseAdapter {
             }
         });
 
+        //群列表跳转进群聊天
+        holder.itemLl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-//        holder.itemLl.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Conversation groupConversation = JMessageClient.getGroupConversation(groupInfo.getGroupID());
-//                if (groupConversation == null) {
-//                    groupConversation = Conversation.createGroupConversation(groupInfo.getGroupID());
-//                    EventBus.getDefault().post(new Event.Builder()
-//                            .setType(EventType.createConversation)
-//                            .setConversation(groupConversation)
-//                            .build());
-//                }
-//
-//                Intent intent = new Intent(mContext, ChatActivity.class);
-//                intent.putExtra(JGApplication.CONV_TITLE, mGroupName.get(groupInfo.getGroupID()));
-//                intent.putExtra(JGApplication.GROUP_ID, groupInfo.getGroupID());
-//                mContext.startActivity(intent);
-//
-//            }
-//        });
+                Conversation groupConversation = JMessageClient.getGroupConversation(groupInfo.getGroupID());
+                if (groupConversation == null) {
+                    groupConversation = Conversation.createGroupConversation(groupInfo.getGroupID());
+                    EventBus.getDefault().post(new Event.Builder()
+                            .setType(EventType.createConversation)
+                            .setConversation(groupConversation)
+                            .build());
+                }
+
+                Intent intent = new Intent(mContext, GroupChatActivity.class);
+                intent.putExtra("GroupName", mGroupName.get(groupInfo.getGroupID()));
+                intent.putExtra("GroupId", groupInfo.getGroupID());
+                mContext.startActivity(intent);
+
+
+            }
+        });
 
         return convertView;
     }
