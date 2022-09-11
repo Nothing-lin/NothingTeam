@@ -9,21 +9,17 @@ import android.widget.TextView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.donkingliang.labels.LabelsView;
-import com.google.android.material.tabs.TabLayout;
 import com.nothinglin.nothingteam.R;
-import com.nothinglin.nothingteam.activity.CardDetailActivity;
 import com.nothinglin.nothingteam.activity.SingleChatActivity;
 import com.nothinglin.nothingteam.base.BaseFragment;
 import com.nothinglin.nothingteam.bean.HiresInfos;
 import com.nothinglin.nothingteam.bean.TeamLabel;
-import com.nothinglin.nothingteam.fragment.carddetail.CardDetailCommentFragment;
-import com.nothinglin.nothingteam.fragment.carddetail.ProjectDetailFragment;
-import com.nothinglin.nothingteam.fragment.messagepages.ChatToTeamFragment;
-import com.nothinglin.nothingteam.fragment.messagepages.SystemMessageFragment;
+import com.nothinglin.nothingteam.widget.DemoDataProvider;
+import com.nothinglin.nothingteam.widget.RadiusImageBanner;
 import com.xuexiang.xpage.annotation.Page;
-import com.xuexiang.xui.adapter.FragmentAdapter;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
-import com.xuexiang.xui.widget.tabbar.TabSegment;
+import com.xuexiang.xui.widget.banner.widget.banner.BannerItem;
+import com.xuexiang.xui.widget.banner.widget.banner.SimpleImageBanner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,11 +46,11 @@ public class CardDetailFragment extends BaseFragment {
     @BindView(R.id.bt_chat_to_team)
     Button mChatToTeamButtom;
 
-    //选项标签页面
-    @BindView(R.id.tabSegment)
-    TabSegment tabSegment;
-    @BindView(R.id.view_pager)
-    ViewPager mViewPager;
+
+    @BindView(R.id.rib_simple_usage)
+    RadiusImageBanner rib_simple_usage;
+    //mPictures是用来存放轮播图图片的
+    private List<BannerItem> mPictures;
 
 
 
@@ -81,8 +77,10 @@ public class CardDetailFragment extends BaseFragment {
         //初始化团队信息栏
         initTeamInfo();
 
-        //初始话（项目详情-留言）标签栏
-        initTabSegment();
+        //轮播图
+        mPictures = DemoDataProvider.getBannerList();
+        sib_simple_usage();
+
 
         //初始化团队技术储备标签
         setTeamLabel();
@@ -90,6 +88,10 @@ public class CardDetailFragment extends BaseFragment {
         //初始化监听器
         initListener();
 
+    }
+
+    private void sib_simple_usage() {
+        rib_simple_usage.setSource(mPictures).startScroll();
     }
 
     private void initListener() {
@@ -129,27 +131,6 @@ public class CardDetailFragment extends BaseFragment {
         System.out.println(detailCardInfo);
     }
 
-    private void initTabSegment() {
-
-        //初始化fragment适配器
-        FragmentAdapter<BaseFragment> adapter = new FragmentAdapter<>(getChildFragmentManager());
-        //将tabLayout设置为固定模式
-        tabSegment.setMode(TabSegment.MODE_FIXED);
-
-        //注册适配“系统通告”界面
-        tabSegment.addTab(new TabSegment.Tab("项目详情"));
-        adapter.addFragment(new ProjectDetailFragment(),"项目详情");
-
-        //注册适配“联系团队”界面
-        tabSegment.addTab(new TabSegment.Tab("留言"));
-        adapter.addFragment(new CardDetailCommentFragment(),"留言");
-
-        //设置消息页面的视图极限为2个
-        mViewPager.setOffscreenPageLimit(2);
-        //将视图和tablayout进行绑定
-        mViewPager.setAdapter(adapter);
-        tabSegment.setupWithViewPager(mViewPager);
-    }
 
     private void setTeamLabel() {
 
