@@ -19,4 +19,6 @@ public class HiresInfosTable {
     public static final String COL_TEAM_SCHOOL = "team_school";
     public static final String COL_TEAM_INTRO = "team_intro";
     public static final String COL_TEAM_MANAGER_USERID = "team_manager_userid";
+    public static final String COL_PROJECT_DETAIL = "project_detail";
+    public static final String COL_HIRE_DETAIL = "hire_detail";
 }

@@ -1,169 +1,189 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:layout_height="match_parent">
 
-        <RelativeLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#2d2d2d">
+            android:fillViewport="true">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_back"/>
-
-                <TextView
-                    android:layout_gravity="center_vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:gravity="center_horizontal"
-                    android:text="校园跑腿助手项目"
-                    android:textSize="16dp"/>
-            </LinearLayout>
-
-
-            <!--团队信息-->
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="100dp"
-                android:paddingTop="10dp"
-                android:background="@drawable/shape_top_corner"
-                android:orientation="vertical">
+                android:background="#2d2d2d">
 
 
+
+                <!--团队信息-->
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="50dp"
+                    android:paddingTop="10dp"
+                    android:background="@drawable/shape_top_corner"
                     android:orientation="vertical">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:orientation="horizontal">
-
-                        <!--    团队信息栏头像    -->
-                        <com.xuexiang.xui.widget.imageview.RadiusImageView
-                            android:layout_width="50dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginStart="15dp"
-                            android:src="@drawable/ic_cat"
-                            app:riv_border_color="@color/xui_config_color_gray_6"
-                            app:riv_border_width="1px"
-                            app:riv_corner_radius="10dp"
-                            app:riv_is_circle="true"
-                            app:riv_selected_border_color="@color/xui_config_color_gray_4"
-                            app:riv_selected_border_width="1px"
-                            app:riv_selected_mask_color="@color/xui_config_color_gray_8" />
-
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="15dp"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/detail_team_name"
-                                style="@style/TextStyle.Explain"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
-                                android:maxLines="1"
-                                android:text="Nothinglin团队工作室"
-                                android:textColor="@color/black"
-                                android:textSize="16dp" />
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
-                                android:layout_marginTop="5dp"
-                                android:orientation="horizontal">
-
-                                <ImageView
-                                    android:layout_width="15dp"
-                                    android:layout_height="15dp"
-                                    android:layout_marginEnd="5dp"
-                                    android:src="@drawable/ic_location" />
-
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="所属学校："
-                                    android:textSize="12dp" />
-
-                                <TextView
-                                    android:id="@+id/detail_school"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="广州软件学院"
-                                    android:textSize="12dp" />
-                            </LinearLayout>
-                        </LinearLayout>
-
-
-                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal">
+
+                            <!--    团队信息栏头像    -->
+                            <com.xuexiang.xui.widget.imageview.RadiusImageView
+                                android:layout_width="50dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="15dp"
+                                android:src="@drawable/ic_cat"
+                                app:riv_border_color="@color/xui_config_color_gray_6"
+                                app:riv_border_width="1px"
+                                app:riv_corner_radius="10dp"
+                                app:riv_is_circle="true"
+                                app:riv_selected_border_color="@color/xui_config_color_gray_4"
+                                app:riv_selected_border_width="1px"
+                                app:riv_selected_mask_color="@color/xui_config_color_gray_8" />
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="15dp"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/detail_team_name"
+                                    style="@style/TextStyle.Explain"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:maxLines="1"
+                                    android:text="Nothinglin团队工作室"
+                                    android:textColor="@color/black"
+                                    android:textSize="16dp" />
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginTop="5dp"
+                                    android:orientation="horizontal">
+
+                                    <ImageView
+                                        android:layout_width="15dp"
+                                        android:layout_height="15dp"
+                                        android:layout_marginEnd="5dp"
+                                        android:src="@drawable/ic_location" />
+
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="所属学校："
+                                        android:textSize="12dp" />
+
+                                    <TextView
+                                        android:id="@+id/detail_school"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="广州软件学院"
+                                        android:textSize="12dp" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/TextStyle.Explain"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="15dp"
+                                android:layout_marginTop="10dp"
+                                android:text="团队简介："
+                                android:textColor="@color/black"
+                                android:textSize="13dp" />
+
+                            <TextView
+                                android:id="@+id/detail_team_intro"
+                                style="@style/TextStyle.Explain"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="15dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginEnd="15dp"
+                                android:gravity="left"
+                                android:maxLines="5"
+                                android:singleLine="false"
+                                android:textColor="#757575"
+                                android:text="一个新团队的产生，往往伴随着一个奇特的构思和策划。我们孕育着同一个理想、目标，出发点不同但目的一样，年轻的心在这一刻相聚、团结一致、折破风浪，勇敢起航。我们的成员全部是95后，拥有着全新的思想和理念。将打造全新的方案。"
+                                android:textSize="13dp" />
+
+                        </LinearLayout>
+
+
                         <TextView
                             style="@style/TextStyle.Explain"
                             android:layout_gravity="center_vertical"
                             android:layout_marginStart="15dp"
                             android:layout_marginTop="10dp"
-                            android:text="团队简介："
+                            android:text="团队技术储备："
                             android:textColor="@color/black"
                             android:textSize="13dp" />
 
-                        <TextView
-                            android:id="@+id/detail_team_intro"
-                            style="@style/TextStyle.Explain"
-                            android:layout_gravity="center_vertical"
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_marginStart="15dp"
-                            android:layout_marginTop="10dp"
                             android:layout_marginEnd="15dp"
-                            android:gravity="left"
-                            android:maxLines="5"
-                            android:singleLine="false"
-                            android:text="一个新团队的产生，往往伴随着一个奇特的构思和策划。我们孕育着同一个理想、目标，出发点不同但目的一样，年轻的心在这一刻相聚、团结一致、折破风浪，勇敢起航。我们的成员全部是95后，拥有着全新的思想和理念。将打造全新的方案。"
-                            android:textSize="13dp" />
+                            android:orientation="horizontal">
+
+                            <com.donkingliang.labels.LabelsView xmlns:app="http://schemas.android.com/apk/res-auto"
+                                android:id="@+id/labels"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:minHeight="25dp"
+                                android:padding="0dp"
+                                app:isTextBold="true"
+                                app:labelBackground="@drawable/card_list_label_bg"
+                                app:labelTextColor="@color/yellow_btn_color_normal"
+                                app:labelTextHeight="wrap_content"
+                                app:labelTextPaddingBottom="3dp"
+                                app:labelTextPaddingLeft="10dp"
+                                app:labelTextPaddingRight="10dp"
+                                app:labelTextPaddingTop="3dp"
+                                app:labelTextSize="10dp"
+                                app:labelTextWidth="wrap_content"
+                                app:lineMargin="10dp"
+                                app:maxColumns="6"
+                                app:maxLines="2"
+                                app:maxSelect="0"
+                                app:minSelect="1"
+                                app:selectType="MULTI"
+                                app:wordMargin="10dp" />
+
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
-
-                    <TextView
-                        style="@style/TextStyle.Explain"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginTop="10dp"
-                        android:text="团队技术储备："
-                        android:textColor="@color/black"
-                        android:textSize="13dp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -172,263 +192,257 @@
                         android:layout_marginEnd="15dp"
                         android:orientation="horizontal">
 
-                        <com.donkingliang.labels.LabelsView xmlns:app="http://schemas.android.com/apk/res-auto"
-                            android:id="@+id/labels"
+                        <Button
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:minHeight="25dp"
-                            android:padding="0dp"
-                            app:isTextBold="true"
-                            app:labelBackground="@drawable/card_list_label_bg"
-                            app:labelTextColor="@color/yellow_btn_color_normal"
-                            app:labelTextHeight="wrap_content"
-                            app:labelTextPaddingBottom="3dp"
-                            app:labelTextPaddingLeft="10dp"
-                            app:labelTextPaddingRight="10dp"
-                            app:labelTextPaddingTop="3dp"
-                            app:labelTextSize="10dp"
-                            app:labelTextWidth="wrap_content"
-                            app:lineMargin="10dp"
-                            app:maxColumns="6"
-                            app:maxLines="2"
-                            app:maxSelect="0"
-                            app:minSelect="1"
-                            app:selectType="MULTI"
-                            app:wordMargin="10dp" />
+                            android:layout_margin="10dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bt_normal"
+                            android:text="申请加入" />
 
+                        <Button
+                            android:id="@+id/bt_chat_to_team"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bt_normal"
+                            android:text="联系团队" />
 
                     </LinearLayout>
 
-                </LinearLayout>
 
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:orientation="horizontal">
-
-                    <Button
+                    <!--  项目相关图片展示 -->
+                    <com.nothinglin.nothingteam.widget.RadiusImageBanner
+                        android:id="@+id/rib_simple_usage"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/bt_normal"
-                        android:text="申请加入" />
+                        app:bb_barPaddingBottom="10dp"
+                        app:bb_scale="0.4317" />
 
-                    <Button
-                        android:id="@+id/bt_chat_to_team"
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/bt_normal"
-                        android:text="联系团队" />
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="15dp"
+                        android:orientation="horizontal">
 
-                </LinearLayout>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/project" />
 
+                        <TextView
+                            style="@style/TextStyle.Explain"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:text="项目介绍"
+                            android:textColor="@color/black"
+                            android:textSize="15dp" />
 
-                <!--  项目相关图片展示 -->
-                <com.nothinglin.nothingteam.widget.RadiusImageBanner
-                    android:id="@+id/rib_simple_usage"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:bb_barPaddingBottom="10dp"
-                    app:bb_scale="0.4317" />
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="15dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:src="@drawable/project" />
+                    </LinearLayout>
 
                     <TextView
+                        android:id="@+id/detail_project"
                         style="@style/TextStyle.Explain"
-                        android:layout_width="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="15dp"
+                        android:gravity="left"
+                        android:singleLine="false"
+                        android:text="一个新团队的产生，往往伴随着一个奇特的构思和策划。我们孕育着同一个理想、目标，出发点不同但目的一样，年轻的心在这一刻相聚、团结一致、折破风浪，勇敢起航。我们的成员全部是95后，拥有着全新的思想和理念。将打造全新的方案。"
+                        android:textColor="#757575"
+                        android:textSize="13dp" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:text="项目介绍"
-                        android:textColor="@color/black"
-                        android:textSize="15dp" />
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="15dp"
+                        android:orientation="horizontal">
 
-                </LinearLayout>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/competition" />
 
-                <TextView
-                    style="@style/TextStyle.Explain"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="15dp"
-                    android:gravity="left"
-                    android:maxLines="5"
-                    android:singleLine="false"
-                    android:text="一个新团队的产生，往往伴随着一个奇特的构思和策划。我们孕育着同一个理想、目标，出发点不同但目的一样，年轻的心在这一刻相聚、团结一致、折破风浪，勇敢起航。我们的成员全部是95后，拥有着全新的思想和理念。将打造全新的方案。"
-                    android:textColor="#757575"
-                    android:textSize="13dp" />
+                        <TextView
+                            style="@style/TextStyle.Explain"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:text="比赛目标"
+                            android:textColor="@color/black"
+                            android:textSize="15dp" />
 
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="15dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:src="@drawable/numbers" />
+                    </LinearLayout>
 
                     <TextView
+                        android:id="@+id/competiton_goal"
                         style="@style/TextStyle.Explain"
-                        android:layout_width="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="15dp"
+                        android:gravity="left"
+                        android:singleLine="false"
+                        android:text="一个新团队的产生，往往伴随着一个奇特的构思和策划。我们孕育着同一个理想、目标，出发点不同但目的一样，年轻的心在这一刻相聚、团结一致、折破风浪，勇敢起航。我们的成员全部是95后，拥有着全新的思想和理念。将打造全新的方案。"
+                        android:textColor="#757575"
+                        android:textSize="13dp" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:text="招募要求"
-                        android:textColor="@color/black"
-                        android:textSize="15dp" />
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="15dp"
+                        android:orientation="horizontal">
 
-                </LinearLayout>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/numbers" />
 
-                <TextView
-                    style="@style/TextStyle.Explain"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="15dp"
-                    android:gravity="left"
-                    android:maxLines="5"
-                    android:singleLine="false"
-                    android:text="一个新团队的产生，往往伴随着一个奇特的构思和策划。我们孕育着同一个理想、目标，出发点不同但目的一样，年轻的心在这一刻相聚、团结一致、折破风浪，勇敢起航。我们的成员全部是95后，拥有着全新的思想和理念。将打造全新的方案。"
-                    android:textColor="#757575"
-                    android:textSize="13dp" />
+                        <TextView
+                            style="@style/TextStyle.Explain"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:text="招募要求"
+                            android:textColor="@color/black"
+                            android:textSize="15dp" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="15dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:src="@drawable/comments" />
+                    </LinearLayout>
 
                     <TextView
+                        android:id="@+id/hire_detail"
                         style="@style/TextStyle.Explain"
-                        android:layout_width="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="15dp"
+                        android:gravity="left"
+                        android:singleLine="false"
+                        android:text="一个新团队的产生，往往伴随着一个奇特的构思和策划。我们孕育着同一个理想、目标，出发点不同但目的一样，年轻的心在这一刻相聚、团结一致、折破风浪，勇敢起航。我们的成员全部是95后，拥有着全新的思想和理念。将打造全新的方案。"
+                        android:textColor="#757575"
+                        android:textSize="13dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:text="留言"
-                        android:textColor="@color/black"
-                        android:textSize="15dp" />
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="15dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/comments" />
+
+                        <TextView
+                            style="@style/TextStyle.Explain"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:text="留言"
+                            android:textColor="@color/black"
+                            android:textSize="15dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/detail_page_comment_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_below="@+id/detail_page_above_container"
+                        android:layout_marginTop="20dp"
+                        android:orientation="vertical">
+
+                        <com.nothinglin.nothingteam.widget.CommentExpandableListView
+                            android:id="@+id/detail_page_lv_comment"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="64dp"
+                            android:divider="@null"
+                            android:listSelector="@android:color/transparent"
+                            android:scrollbars="none" />
+
+                    </LinearLayout>
+
 
                 </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+            </RelativeLayout>
 
 
-            </LinearLayout>
+        </ScrollView>
 
-        </RelativeLayout>
-
-
-    </ScrollView>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="58dp"
-        android:layout_alignParentBottom="true"
-        android:background="@android:color/white"
-        android:elevation="2dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/detail_page_do_comment"
-            android:layout_width="0dp"
-            android:layout_height="34dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="22dp"
-            android:layout_weight="1"
-            android:background="@drawable/comment_bt_selector"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:layout_alignParentBottom="true"
+            android:background="@android:color/white"
+            android:elevation="2dp"
             android:gravity="center_vertical"
-            android:paddingLeft="18dp"
-            android:text="说点什么吧..."
-            android:textColor="#B6B6B6"
-            android:textSize="12sp" />
+            android:orientation="horizontal">
 
-        <ImageView
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:src="@drawable/icon_collect" />
+            <TextView
+                android:id="@+id/detail_page_do_comment"
+                android:layout_width="0dp"
+                android:layout_height="34dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="22dp"
+                android:layout_weight="1"
+                android:background="@drawable/comment_bt_selector"
+                android:gravity="center_vertical"
+                android:paddingLeft="18dp"
+                android:text="说点什么吧..."
+                android:textColor="#B6B6B6"
+                android:textSize="12sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="32"
-            android:textColor="#9A9A9A"
-            android:textSize="14sp" />
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/icon_collect" />
 
-        <ImageView
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:layout_marginLeft="20dp"
-            android:src="@drawable/icon_work_like" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="32"
+                android:textColor="#9A9A9A"
+                android:textSize="14sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="14dp"
-            android:text="66"
-            android:textColor="#9A9A9A"
-            android:textSize="14sp" />
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/icon_work_like" />
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="14dp"
+                android:text="66"
+                android:textColor="#9A9A9A"
+                android:textSize="14sp" />
 
+        </LinearLayout>
 
-</RelativeLayout>
+    </RelativeLayout>
+</LinearLayout>

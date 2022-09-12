@@ -96,5 +96,9 @@ dependencies {
     implementation files('libs\\jbasic-android-3.1.0.jar')
     implementation files('libs\\jmessage-sdk-android-2.9.2.jar')
 
+    //evnetbus
     implementation 'org.greenrobot:eventbus:3.1.1'
+
+    //circleimageview
+    implementation 'de.hdodenhof:circleimageview:2.1.0'
 }

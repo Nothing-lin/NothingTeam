@@ -2,18 +2,26 @@ package com.nothinglin.nothingteam.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.viewpager.widget.ViewPager;
 
 import com.donkingliang.labels.LabelsView;
 import com.nothinglin.nothingteam.R;
 import com.nothinglin.nothingteam.activity.SingleChatActivity;
+import com.nothinglin.nothingteam.adapter.CommentExpandAdapter;
 import com.nothinglin.nothingteam.base.BaseFragment;
+import com.nothinglin.nothingteam.bean.CommentBean;
+import com.nothinglin.nothingteam.bean.CommentDetailBean;
 import com.nothinglin.nothingteam.bean.HiresInfos;
 import com.nothinglin.nothingteam.bean.TeamLabel;
+import com.nothinglin.nothingteam.widget.CommentExpandableListView;
 import com.nothinglin.nothingteam.widget.DemoDataProvider;
 import com.nothinglin.nothingteam.widget.RadiusImageBanner;
 import com.xuexiang.xpage.annotation.Page;
@@ -25,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import cn.jmessage.support.google.gson.Gson;
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.callback.GetUserInfoCallback;
 import cn.jpush.im.android.api.model.UserInfo;
@@ -45,6 +54,12 @@ public class CardDetailFragment extends BaseFragment {
     TextView mDetailTeamIntro;
     @BindView(R.id.bt_chat_to_team)
     Button mChatToTeamButtom;
+    @BindView(R.id.competiton_goal)
+    TextView mCompetitonGoal;
+    @BindView(R.id.detail_project)
+    TextView mProjectIntroduction;
+    @BindView(R.id.hire_detail)
+    TextView mHireDetail;
 
 
     @BindView(R.id.rib_simple_usage)
@@ -52,6 +67,11 @@ public class CardDetailFragment extends BaseFragment {
     //mPictures是用来存放轮播图图片的
     private List<BannerItem> mPictures;
 
+    private CommentExpandableListView expandableListView;
+    private CommentExpandAdapter adapter;
+    private CommentBean commentBean;
+    private List<CommentDetailBean> commentsList;
+    private String testJson = new DemoDataProvider().testJson;
 
 
     @Override
@@ -62,8 +82,10 @@ public class CardDetailFragment extends BaseFragment {
     //初始化标题栏
     @Override
     protected TitleBar initTitle() {
+        //获取CardDetailActivity传来的数据
+        getdetailCardInfo();
         //setImmersive是状态栏的设置，因为一开始已经取消了状态栏的样式了
-        super.initTitle().setLeftVisible(true);
+        super.initTitle().setLeftVisible(true).setTitle("项目详情");
         return null;
     }
 
@@ -88,7 +110,46 @@ public class CardDetailFragment extends BaseFragment {
         //初始化监听器
         initListener();
 
+
+        //初始化评论模块
+        initComments();
+
     }
+
+    private void initComments() {
+        expandableListView = (CommentExpandableListView) findViewById(R.id.detail_page_lv_comment);
+        commentsList = generateTestData();
+        initExpandableListView(commentsList);
+    }
+
+    /**
+     * by moos on 2018/04/20
+     * func:生成测试数据
+     * @return 评论数据
+     */
+    private List<CommentDetailBean> generateTestData(){
+        Gson gson = new Gson();
+        commentBean = gson.fromJson(testJson, CommentBean.class);
+        List<CommentDetailBean> commentList = commentBean.getData().getList();
+        return commentList;
+    }
+
+    /**
+     * 初始化评论和回复列表
+     */
+    private void initExpandableListView(final List<CommentDetailBean> commentList){
+        expandableListView.setGroupIndicator(null);
+        //默认展开所有回复
+        adapter = new CommentExpandAdapter(getContext(), commentList);
+        expandableListView.setAdapter(adapter);
+        for(int i = 0; i<commentList.size(); i++){
+            expandableListView.expandGroup(i);
+        }
+
+
+    }
+
+
 
     private void sib_simple_usage() {
         rib_simple_usage.setSource(mPictures).startScroll();
@@ -122,6 +183,11 @@ public class CardDetailFragment extends BaseFragment {
         mDetailTeamName.setText(hiresInfos.getProject_owner_team_name());
         mDetailSchool.setText(hiresInfos.getTeam_school());
         mDetailTeamIntro.setText(hiresInfos.getTeam_intro());
+        mCompetitonGoal.setText(hiresInfos.getCompetition_type());
+        mProjectIntroduction.setText(hiresInfos.getProject_detail());
+        mHireDetail.setText(hiresInfos.getHire_detail());
+
+        new TitleBar(getContext()).setTitle(hiresInfos.getProject_name());
 
     }
 

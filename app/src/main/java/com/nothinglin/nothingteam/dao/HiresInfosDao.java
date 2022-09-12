@@ -64,6 +64,8 @@ public class HiresInfosDao {
                 hiresInfo.setTeam_school(rs.getString(HiresInfosTable.COL_TEAM_SCHOOL));
                 hiresInfo.setTeam_intro(rs.getString(HiresInfosTable.COL_TEAM_INTRO));
                 hiresInfo.setTeam_manager_userid(rs.getString(HiresInfosTable.COL_TEAM_MANAGER_USERID));
+                hiresInfo.setProject_detail(rs.getString(HiresInfosTable.COL_PROJECT_DETAIL));
+                hiresInfo.setHire_detail(rs.getString(HiresInfosTable.COL_HIRE_DETAIL));
 
 
                 hiresInfos.add(hiresInfo);

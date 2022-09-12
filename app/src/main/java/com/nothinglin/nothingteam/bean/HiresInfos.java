@@ -22,6 +22,8 @@ public class HiresInfos implements Serializable {
     private String team_school;
     private String team_intro;
     private String team_manager_userid;
+    private String project_detail;
+    private String hire_detail;
 
     //装载标签的list
     private List<HiresInfosTabs> tabs;
@@ -172,6 +174,22 @@ public class HiresInfos implements Serializable {
 
     public void setTeamLabels(List<TeamLabel> teamLabels) {
         this.teamLabels = teamLabels;
+    }
+
+    public String getProject_detail() {
+        return project_detail;
+    }
+
+    public void setProject_detail(String project_detail) {
+        this.project_detail = project_detail;
+    }
+
+    public String getHire_detail() {
+        return hire_detail;
+    }
+
+    public void setHire_detail(String hire_detail) {
+        this.hire_detail = hire_detail;
     }
 
     @Override
