@@ -1,6 +1,7 @@
 package com.nothinglin.nothingteam.dao;
 
 import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 import com.nothinglin.nothingteam.bean.CommentDetail;
 import com.nothinglin.nothingteam.dao.table.CommentDetailTable;
@@ -9,6 +10,7 @@ import com.nothinglin.nothingteam.db.DBOpenHelper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class DetailCommentDao {
@@ -41,5 +43,29 @@ public class DetailCommentDao {
         }
 
         return commentDetails;
+    }
+
+
+    //插入评论到数据库中
+    public void InsetComment(String project_id, String username, Date time,String content){
+        String sql = "insert into detail_comment(project_id,user_name,comment_time,comment_content) value(?,?,?,?)";
+        Connection connection = DBOpenHelper.getConnection();
+        PreparedStatement pst;
+
+        try {
+            pst = (PreparedStatement) connection.prepareStatement(sql);
+            pst.setString(1,project_id);
+            pst.setString(2,username);
+            pst.setDate(3,null);
+            pst.setString(4,content);
+
+            pst.executeUpdate();
+
+            pst.close();
+            connection.close();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 }

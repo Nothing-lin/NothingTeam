@@ -211,6 +211,34 @@ public class CardDetailFragment extends BaseFragment {
                 dialog.setContentView(commentView);
                 dialog.show();
 
+                //确定评论
+                bt_comment.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String commentContent = commentText.getText().toString().trim();
+                        CommentDetail testDetail = new CommentDetail();
+                        testDetail.setUser_name("Nothinglin");
+                        testDetail.setComment_content(commentContent);
+
+                        Thread insertCommentThread = new InsetCommentThread(hiresInfos.getProject_id(),"Nothinglin",commentContent);
+
+                        try {
+
+                            insertCommentThread.start();
+                            insertCommentThread.join();
+
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                        commentsList.add(testDetail);
+                        adapter.notifyDataSetChanged();
+                        dialog.dismiss();
+
+
+                    }
+                });
+
             }
         });
 
@@ -269,6 +297,25 @@ public class CardDetailFragment extends BaseFragment {
                     commentsList.add(commentDetail);
                 }
             }
+        }
+    }
+
+    public class InsetCommentThread extends Thread{
+        private String project_id;
+        private String user_name;
+        private String content;
+
+        InsetCommentThread(String project_id,String user_name,String content){
+            this.project_id = project_id;
+            this.user_name = user_name;
+            this.content = content;
+        }
+
+        @Override
+        public void run() {
+
+            new DetailCommentDao().InsetComment(project_id,user_name,null,content);
+
         }
     }
 }
