@@ -2,25 +2,33 @@ package com.nothinglin.nothingteam.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.viewpager.widget.ViewPager;
 
 import com.donkingliang.labels.LabelsView;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.nothinglin.nothingteam.R;
 import com.nothinglin.nothingteam.activity.SingleChatActivity;
 import com.nothinglin.nothingteam.adapter.CommentExpandAdapter;
 import com.nothinglin.nothingteam.base.BaseFragment;
 import com.nothinglin.nothingteam.bean.CommentBean;
+import com.nothinglin.nothingteam.bean.CommentDetail;
 import com.nothinglin.nothingteam.bean.CommentDetailBean;
 import com.nothinglin.nothingteam.bean.HiresInfos;
 import com.nothinglin.nothingteam.bean.TeamLabel;
+import com.nothinglin.nothingteam.dao.DetailCommentDao;
 import com.nothinglin.nothingteam.widget.CommentExpandableListView;
 import com.nothinglin.nothingteam.widget.DemoDataProvider;
 import com.nothinglin.nothingteam.widget.RadiusImageBanner;
@@ -43,7 +51,7 @@ public class CardDetailFragment extends BaseFragment {
 
     public ArrayList<HiresInfos> detailCardInfo = new ArrayList<>();
     public HiresInfos hiresInfos = new HiresInfos();
-    
+
     @BindView(R.id.labels)
     LabelsView labelsView;
     @BindView(R.id.detail_team_name)
@@ -60,6 +68,10 @@ public class CardDetailFragment extends BaseFragment {
     TextView mProjectIntroduction;
     @BindView(R.id.hire_detail)
     TextView mHireDetail;
+    @BindView(R.id.project_name)
+    TextView mProjecName;
+    @BindView(R.id.detail_page_do_comment)
+    TextView mBt_comment;
 
 
     @BindView(R.id.rib_simple_usage)
@@ -69,9 +81,11 @@ public class CardDetailFragment extends BaseFragment {
 
     private CommentExpandableListView expandableListView;
     private CommentExpandAdapter adapter;
-    private CommentBean commentBean;
-    private List<CommentDetailBean> commentsList;
+    private List<CommentDetail> AllCommentsList = new ArrayList<>();
+    private List<CommentDetail> commentsList = new ArrayList<>();
     private String testJson = new DemoDataProvider().testJson;
+    private BottomSheetDialog dialog;
+
 
 
     @Override
@@ -91,11 +105,11 @@ public class CardDetailFragment extends BaseFragment {
 
     @Override
     protected void initViews() {
-        
+
 
         //获取CardDetailActivity传来的数据
         getdetailCardInfo();
-        
+
         //初始化团队信息栏
         initTeamInfo();
 
@@ -118,37 +132,46 @@ public class CardDetailFragment extends BaseFragment {
 
     private void initComments() {
         expandableListView = (CommentExpandableListView) findViewById(R.id.detail_page_lv_comment);
-        commentsList = generateTestData();
+        try {
+            //初始化评论区的数据
+            generateData();
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         initExpandableListView(commentsList);
+
     }
 
     /**
      * by moos on 2018/04/20
      * func:生成测试数据
+     *
      * @return 评论数据
      */
-    private List<CommentDetailBean> generateTestData(){
-        Gson gson = new Gson();
-        commentBean = gson.fromJson(testJson, CommentBean.class);
-        List<CommentDetailBean> commentList = commentBean.getData().getList();
-        return commentList;
+    private void generateData() throws InterruptedException {
+
+        MyThread myThread = new MyThread();
+        myThread.start();
+        myThread.join();
+
+
     }
 
     /**
      * 初始化评论和回复列表
      */
-    private void initExpandableListView(final List<CommentDetailBean> commentList){
+    private void initExpandableListView(final List<CommentDetail> commentList) {
         expandableListView.setGroupIndicator(null);
         //默认展开所有回复
         adapter = new CommentExpandAdapter(getContext(), commentList);
         expandableListView.setAdapter(adapter);
-        for(int i = 0; i<commentList.size(); i++){
+        for (int i = 0; i < commentList.size(); i++) {
             expandableListView.expandGroup(i);
         }
 
 
     }
-
 
 
     private void sib_simple_usage() {
@@ -164,9 +187,9 @@ public class CardDetailFragment extends BaseFragment {
                 JMessageClient.getUserInfo(detailCardInfo.get(0).getTeam_manager_userid(), null, new GetUserInfoCallback() {
                     @Override
                     public void gotResult(int i, String s, UserInfo userInfo) {
-                        if (i == 0){
-                            intent.putExtra("teamUserId",detailCardInfo.get(0).getTeam_manager_userid());
-                            intent.putExtra("teamUserName",userInfo.getUserName());
+                        if (i == 0) {
+                            intent.putExtra("teamUserId", detailCardInfo.get(0).getTeam_manager_userid());
+                            intent.putExtra("teamUserName", userInfo.getUserName());
                             intent.setClass(getActivity(), SingleChatActivity.class);
                             startActivity(intent);
                         }
@@ -175,6 +198,22 @@ public class CardDetailFragment extends BaseFragment {
 
             }
         });
+
+        //弹出回复编辑窗口
+        mBt_comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //初始化底部弹窗内容
+                dialog = new BottomSheetDialog(getContext());
+                View commentView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_detail_comment_dialog_layout, null);
+                final EditText commentText = commentView.findViewById(R.id.dialog_comment_et);
+                final Button bt_comment = commentView.findViewById(R.id.dialog_comment_bt);
+                dialog.setContentView(commentView);
+                dialog.show();
+
+            }
+        });
+
     }
 
     private void initTeamInfo() {
@@ -186,6 +225,7 @@ public class CardDetailFragment extends BaseFragment {
         mCompetitonGoal.setText(hiresInfos.getCompetition_type());
         mProjectIntroduction.setText(hiresInfos.getProject_detail());
         mHireDetail.setText(hiresInfos.getHire_detail());
+        mProjecName.setText(hiresInfos.getProject_name());
 
         new TitleBar(getContext()).setTitle(hiresInfos.getProject_name());
 
@@ -208,15 +248,27 @@ public class CardDetailFragment extends BaseFragment {
 //            }
 //        }
 
-        for (TeamLabel teamLabel : detailCardInfo.get(0).getTeamLabels()){
-            if (teamLabel.getProject_id().equals(detailCardInfo.get(0).getProject_id())){
+        for (TeamLabel teamLabel : detailCardInfo.get(0).getTeamLabels()) {
+            if (teamLabel.getProject_id().equals(detailCardInfo.get(0).getProject_id())) {
                 tablist.add(teamLabel.getTeam_label());
             }
         }
 
 
-
         labelsView.setLabels(tablist);
         labelsView.setSelectType(LabelsView.SelectType.NONE);
+    }
+
+    public class MyThread extends Thread{
+        @Override
+        public void run() {
+            AllCommentsList = new DetailCommentDao().getAllComment();
+
+            for (CommentDetail commentDetail : AllCommentsList){
+                if (commentDetail.getProject_id().equals(hiresInfos.getProject_id())){
+                    commentsList.add(commentDetail);
+                }
+            }
+        }
     }
 }

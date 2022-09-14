@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.nothinglin.nothingteam.R;
+import com.nothinglin.nothingteam.bean.CommentDetail;
 import com.nothinglin.nothingteam.bean.CommentDetailBean;
 
 import java.util.List;
@@ -28,11 +29,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CommentExpandAdapter extends BaseExpandableListAdapter {
     private static final String TAG = "CommentExpandAdapter";
-    private List<CommentDetailBean> commentBeanList;
+    private List<CommentDetail> commentBeanList;
     private Context context;
     private int pageIndex = 1;
 
-    public CommentExpandAdapter(Context context, List<CommentDetailBean> commentBeanList) {
+    public CommentExpandAdapter(Context context, List<CommentDetail> commentBeanList) {
         this.context = context;
         this.commentBeanList = commentBeanList;
     }
@@ -89,9 +90,9 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
                 .error(R.mipmap.ic_launcher)
                 .centerCrop()
                 .into(groupHolder.logo);
-        groupHolder.tv_name.setText(commentBeanList.get(groupPosition).getNickName());
-        groupHolder.tv_time.setText(commentBeanList.get(groupPosition).getCreateDate());
-        groupHolder.tv_content.setText(commentBeanList.get(groupPosition).getContent());
+        groupHolder.tv_name.setText(commentBeanList.get(groupPosition).getUser_name());
+//        groupHolder.tv_time.setText(commentBeanList.get(groupPosition).getCreateDate());
+        groupHolder.tv_content.setText(commentBeanList.get(groupPosition).getComment_content());
 
         return convertView;
     }
@@ -122,12 +123,12 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
     /**
      * by moos on 2018/04/20
      * func:评论成功后插入一条数据
-     * @param commentDetailBean 新的评论数据
+     * @param commentDetail 新的评论数据
      */
-    public void addTheCommentData(CommentDetailBean commentDetailBean){
-        if(commentDetailBean!=null){
+    public void addTheCommentData(CommentDetail commentDetail){
+        if(commentDetail!=null){
 
-            commentBeanList.add(commentDetailBean);
+            commentBeanList.add(commentDetail);
             notifyDataSetChanged();
         }else {
             throw new IllegalArgumentException("评论数据为空!");

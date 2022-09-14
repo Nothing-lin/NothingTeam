@@ -26,9 +26,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="50dp"
-                    android:paddingTop="10dp"
                     android:background="@drawable/shape_top_corner"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingTop="10dp">
 
 
                     <LinearLayout
@@ -131,8 +131,8 @@
                                 android:gravity="left"
                                 android:maxLines="5"
                                 android:singleLine="false"
-                                android:textColor="#757575"
                                 android:text="一个新团队的产生，往往伴随着一个奇特的构思和策划。我们孕育着同一个理想、目标，出发点不同但目的一样，年轻的心在这一刻相聚、团结一致、折破风浪，勇敢起航。我们的成员全部是95后，拥有着全新的思想和理念。将打造全新的方案。"
+                                android:textColor="#757575"
                                 android:textSize="13dp" />
 
                         </LinearLayout>
@@ -211,6 +211,19 @@
 
                     </LinearLayout>
 
+
+                    <TextView
+                        android:id="@+id/project_name"
+                        style="@style/TextStyle.Explain"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:text="项目介绍"
+                        android:textColor="@color/black"
+                        android:textSize="18dp" />
 
                     <!--  项目相关图片展示 -->
                     <com.nothinglin.nothingteam.widget.RadiusImageBanner
@@ -366,10 +379,10 @@
                         android:id="@+id/detail_page_comment_container"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginEnd="15dp"
                         android:layout_below="@+id/detail_page_above_container"
+                        android:layout_marginStart="15dp"
                         android:layout_marginTop="20dp"
+                        android:layout_marginEnd="15dp"
                         android:orientation="vertical">
 
                         <com.nothinglin.nothingteam.widget.CommentExpandableListView
