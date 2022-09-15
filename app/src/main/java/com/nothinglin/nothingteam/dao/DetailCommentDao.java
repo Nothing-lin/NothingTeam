@@ -68,4 +68,21 @@ public class DetailCommentDao {
             throwables.printStackTrace();
         }
     }
+
+    //删除对应的评论
+    public void DeleteComment(String project_id, String username,String content){
+        String sql = "delete from detail_comment where project_id='"+project_id+"'and user_name='"+username+"'and comment_content='"+content+"'";
+        Connection connection = DBOpenHelper.getConnection();
+        PreparedStatement pst;
+        try {
+            pst = (PreparedStatement) connection.prepareStatement(sql);
+            pst.executeUpdate();
+
+            pst.close();
+            connection.close();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
 }

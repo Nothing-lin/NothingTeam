@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.nothinglin.nothingteam.R;
 import com.nothinglin.nothingteam.bean.CommentDetail;
 import com.nothinglin.nothingteam.bean.CommentDetailBean;
+import com.nothinglin.nothingteam.dao.DetailCommentDao;
 
 import java.util.List;
 
@@ -105,6 +106,21 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
         groupHolder.comment_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                String projectId = commentBeanList.get(groupPosition).getProject_id();
+                String userName = commentBeanList.get(groupPosition).getUser_name();
+                String content = commentBeanList.get(groupPosition).getComment_content();
+
+                DeleteCommentThread deleteComment = new DeleteCommentThread(projectId,userName,content);
+
+                try {
+
+                    deleteComment.start();
+                    deleteComment.join();
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 commentBeanList.remove(commentBeanList.get(groupPosition));
                 notifyDataSetChanged();
             }
@@ -155,5 +171,23 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
 
     }
 
+    public class DeleteCommentThread extends Thread{
+        private String project_id;
+        private String user_name;
+        private String content;
+
+        DeleteCommentThread(String project_id,String user_name,String content){
+            this.project_id = project_id;
+            this.user_name = user_name;
+            this.content = content;
+        }
+
+        @Override
+        public void run() {
+
+            new DetailCommentDao().DeleteComment(project_id,user_name,content);
+
+        }
+    }
 
 }
