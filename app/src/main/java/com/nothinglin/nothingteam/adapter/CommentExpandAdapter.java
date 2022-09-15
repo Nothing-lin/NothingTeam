@@ -73,17 +73,18 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
     public boolean hasStableIds() {
         return true;
     }
+
     boolean isLike = false;
 
     @Override
     public View getGroupView(final int groupPosition, boolean isExpand, View convertView, ViewGroup viewGroup) {
         final GroupHolder groupHolder;
 
-        if(convertView == null){
+        if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.fragment_detail_comment_item_layout, viewGroup, false);
             groupHolder = new GroupHolder(convertView);
             convertView.setTag(groupHolder);
-        }else {
+        } else {
             groupHolder = (GroupHolder) convertView.getTag();
         }
         Glide.with(context).load(R.drawable.ic_cat)
@@ -93,6 +94,21 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
         groupHolder.tv_name.setText(commentBeanList.get(groupPosition).getUser_name());
 //        groupHolder.tv_time.setText(commentBeanList.get(groupPosition).getCreateDate());
         groupHolder.tv_content.setText(commentBeanList.get(groupPosition).getComment_content());
+
+        //评论的删除
+        if (commentBeanList.get(groupPosition).getUser_name().equals("Nothinglin")) {
+            groupHolder.comment_delete.setVisibility(View.VISIBLE);
+        } else {
+            groupHolder.comment_delete.setVisibility(View.GONE);
+        }
+
+        groupHolder.comment_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                commentBeanList.remove(commentBeanList.get(groupPosition));
+                notifyDataSetChanged();
+            }
+        });
 
         return convertView;
     }
@@ -107,15 +123,17 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
         return true;
     }
 
-    private class GroupHolder{
+    private class GroupHolder {
         private CircleImageView logo;
         private TextView tv_name, tv_content, tv_time;
-        private ImageView iv_like;
+        private TextView comment_delete;
+
         public GroupHolder(View view) {
             logo = (CircleImageView) view.findViewById(R.id.comment_item_logo);
             tv_content = (TextView) view.findViewById(R.id.comment_item_content);
             tv_name = (TextView) view.findViewById(R.id.comment_item_userName);
             tv_time = (TextView) view.findViewById(R.id.comment_item_time);
+            comment_delete = view.findViewById(R.id.comment_delete);
         }
     }
 
@@ -123,14 +141,15 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
     /**
      * by moos on 2018/04/20
      * func:评论成功后插入一条数据
+     *
      * @param commentDetail 新的评论数据
      */
-    public void addTheCommentData(CommentDetail commentDetail){
-        if(commentDetail!=null){
+    public void addTheCommentData(CommentDetail commentDetail) {
+        if (commentDetail != null) {
 
             commentBeanList.add(commentDetail);
             notifyDataSetChanged();
-        }else {
+        } else {
             throw new IllegalArgumentException("评论数据为空!");
         }
 

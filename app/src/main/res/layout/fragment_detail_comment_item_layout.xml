@@ -40,6 +40,15 @@
                 android:textColor="#989898"/>
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/comment_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="删除"
+            android:layout_marginEnd="15dp"
+            android:textColor="@color/gallery_red"
+            android:visibility="gone"/>
+
     </LinearLayout>
     <TextView
         android:id="@+id/comment_item_content"
