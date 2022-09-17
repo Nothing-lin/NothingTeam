@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.InputType;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +22,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.donkingliang.labels.LabelsView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.nothinglin.nothingteam.R;
+import com.nothinglin.nothingteam.activity.MainActivity;
 import com.nothinglin.nothingteam.activity.SingleChatActivity;
 import com.nothinglin.nothingteam.adapter.CommentExpandAdapter;
 import com.nothinglin.nothingteam.base.BaseFragment;
@@ -36,6 +39,8 @@ import com.xuexiang.xpage.annotation.Page;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
 import com.xuexiang.xui.widget.banner.widget.banner.BannerItem;
 import com.xuexiang.xui.widget.banner.widget.banner.SimpleImageBanner;
+import com.xuexiang.xui.widget.dialog.materialdialog.DialogAction;
+import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +50,7 @@ import cn.jmessage.support.google.gson.Gson;
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.callback.GetUserInfoCallback;
 import cn.jpush.im.android.api.model.UserInfo;
+import cn.jpush.im.api.BasicCallback;
 
 @Page(name = "项目详情页")
 public class CardDetailFragment extends BaseFragment {
@@ -72,6 +78,8 @@ public class CardDetailFragment extends BaseFragment {
     TextView mProjecName;
     @BindView(R.id.detail_page_do_comment)
     TextView mBt_comment;
+    @BindView(R.id.bt_group_apply)
+    Button mBtGroupApply;
 
 
     @BindView(R.id.rib_simple_usage)
@@ -239,6 +247,51 @@ public class CardDetailFragment extends BaseFragment {
                     }
                 });
 
+            }
+        });
+
+        //申请入群带输入框的弹窗
+        mBtGroupApply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new MaterialDialog.Builder(getContext())
+                        .iconRes(R.drawable.ic_cat)
+                        .title("入群申请")
+                        .content("请输入您的入群申请原因")
+                        .inputType(InputType.TYPE_CLASS_TEXT)
+                        .input("请输入您的申请入群请求", "", true, new MaterialDialog.InputCallback() {
+                            @Override
+                            public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
+                                //发送加入群组验证消息
+                                String verification = dialog.getInputEditText().getText().toString();
+
+                                JMessageClient.applyJoinGroup(75514999, verification, new BasicCallback() {
+                                    @Override
+                                    public void gotResult(int i, String s) {
+                                        //发送群申请成功 、发送的信息到极光服务器中进行处理
+                                        if (i == 0){
+                                            Toast.makeText(getActivity(), "申请已发出,等待审核", Toast.LENGTH_SHORT).show();
+                                            getActivity().finish();
+                                        }else {
+                                            dialog.dismiss();
+                                            Toast.makeText(getActivity(), "您已是该群成员，请勿再次申请！", Toast.LENGTH_SHORT).show();
+
+                                        }
+                                    }
+                                });
+                            }
+                        })
+                        .positiveText("确定申请")
+                        .negativeText("取消")
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+//                                Toast.makeText(getActivity(), "这是onPositive触发的弹窗:" + dialog.getInputEditText().getText().toString(), Toast.LENGTH_SHORT).show();
+
+                            }
+                        })
+                        .cancelable(false)
+                        .show();
             }
         });
 
