@@ -12,10 +12,15 @@
 
     <!-- 自定义主题样式 -->
     <style name="XUITheme" parent="XUIBaseTheme">
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
 
         <item name="xui_actionbar_color">@color/colorPrimary</item>
-        <item name="xui_actionbar_text_color">@color/xui_config_color_primary_text</item>
+        <item name="xui_actionbar_text_color">@color/white</item>
         <item name="xui_actionbar_immersive">true</item>
+
+        <item name="android:textColorPrimary">@color/colorPrimary</item>
 
         <!--自定义标题栏样式方法2-->
         <item name="TitleBarStyle">@style/NothingTeam</item>
