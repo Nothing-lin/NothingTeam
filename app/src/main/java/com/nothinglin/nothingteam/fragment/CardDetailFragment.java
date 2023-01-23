@@ -1,6 +1,8 @@
 package com.nothinglin.nothingteam.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -252,10 +254,11 @@ public class CardDetailFragment extends BaseFragment {
 
         //申请入群带输入框的弹窗
         mBtGroupApply.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ResourceAsColor")
             @Override
             public void onClick(View v) {
                 new MaterialDialog.Builder(getContext())
-                        .iconRes(R.drawable.ic_cat)
+                        .iconRes(R.drawable.ic_cat).titleColor(Color.BLACK).backgroundColor(Color.WHITE)
                         .title("入群申请")
                         .content("请输入您的入群申请原因")
                         .inputType(InputType.TYPE_CLASS_TEXT)

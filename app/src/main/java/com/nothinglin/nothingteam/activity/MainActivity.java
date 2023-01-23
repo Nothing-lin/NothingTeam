@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -92,6 +93,7 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener, B
 
     }
 
+    @SuppressLint("ResourceAsColor")
     private void initViews() {
         //给底部导航栏置入文字的图标
         mTabbar.setTitles(mTitles);

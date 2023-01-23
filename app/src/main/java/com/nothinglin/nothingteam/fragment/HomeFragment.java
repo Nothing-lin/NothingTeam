@@ -4,14 +4,9 @@ import android.animation.ArgbEvaluator;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.viewpager.widget.ViewPager;
 
@@ -19,10 +14,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.nothinglin.nothingteam.R;
 import com.nothinglin.nothingteam.base.BaseFragment;
 import com.nothinglin.nothingteam.bean.HiresInfos;
-import com.nothinglin.nothingteam.bean.HiresInfosTabs;
-import com.nothinglin.nothingteam.dao.HiresInfosDao;
 import com.nothinglin.nothingteam.fragment.homepages.ToolTabCardListFragment;
-import com.nothinglin.nothingteam.utils.GlobalThreadPool;
 import com.nothinglin.nothingteam.widget.DemoDataProvider;
 import com.nothinglin.nothingteam.widget.StickyNavigationLayout;
 import com.xuexiang.xpage.utils.TitleBar;
@@ -55,6 +47,8 @@ public class HomeFragment extends BaseFragment implements BaseBanner.OnItemClick
     @BindView(R.id.top_view)
     SimpleImageBanner sib_corner_rectangle;
 
+
+
     //获取tooltab（选项卡）主题标签的标题的容器
     private List<String> titles = new ArrayList<>();
     //hiresInfosList装满了全部的募招内容，获取数据库中招募信息的全部数据
@@ -85,6 +79,17 @@ public class HomeFragment extends BaseFragment implements BaseBanner.OnItemClick
         titlebar.setLeftVisible(true);
         //初始化标题栏
         initTitleBar(0);
+        titlebar.setLeftText("广州软件学院");
+        titlebar.setLeftTextSize(35);
+
+        //首页左按钮设置点击事件监听
+        titlebar.setLeftClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "事件触发成功", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         return null;
     }
 
@@ -96,9 +101,9 @@ public class HomeFragment extends BaseFragment implements BaseBanner.OnItemClick
         //颜色渐变值类，下拉过程的颜色渐变
         ArgbEvaluator argbEvaluator = new ArgbEvaluator();
         //标题栏上的文字、图标在渐变的过程中的颜色变化，只显示轮播图时图标和文字为白色，下拉显示了标题栏后，图标和文字的颜色 变成黑色
-        int backColor = (int) argbEvaluator.evaluate(moveRatio, Color.WHITE, Color.BLACK);
+        int backColor = (int) argbEvaluator.evaluate(moveRatio, Color.WHITE,Color.WHITE);
         //设置标题栏图标资源
-        Drawable wrapDrawable = DrawableCompat.wrap(ResUtils.getDrawable(getContext(), R.drawable.ningmeng));
+        Drawable wrapDrawable = DrawableCompat.wrap(ResUtils.getDrawable(getContext(), R.drawable.position));
         DrawableCompat.setTint(wrapDrawable, backColor);
         int bgColor = (int) argbEvaluator.evaluate(moveRatio, Color.TRANSPARENT, ThemeUtils.resolveColor(getContext(), com.xuexiang.xui.R.attr.xui_actionbar_color));
 
