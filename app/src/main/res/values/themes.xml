@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Theme.NothingTeam" parent="XUITheme.Phone">
+
+    <style name="NothingTeam" parent="XUITheme.Phone">
         <!-- 自定义自己的主题样式 -->
         <!--标题栏的配色-->
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -8,6 +8,17 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <!--光标、按钮等配色-->
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!-- 自定义主题样式 -->
+    <style name="XUITheme" parent="XUIBaseTheme">
+
+        <item name="xui_actionbar_color">@color/colorPrimary</item>
+        <item name="xui_actionbar_text_color">@color/xui_config_color_primary_text</item>
+        <item name="xui_actionbar_immersive">true</item>
+
+        <!--自定义标题栏样式方法2-->
+        <item name="TitleBarStyle">@style/NothingTeam</item>
     </style>
 
     <!--home也标签布局-->

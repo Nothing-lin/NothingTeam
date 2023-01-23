@@ -48,14 +48,15 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.NothingTeam"
+        android:theme="@style/NothingTeam"
         tools:targetApi="31">
 
         <!--    注册activity    -->
         <activity
             android:name=".activity.CardDetailActivity"
             android:exported="true" />
-        <activity android:name=".activity.MainActivity"/>
+        <activity android:name=".activity.MainActivity"
+            android:theme="@style/NothingTeam"/>
         <activity android:name=".activity.LoginActivity"/>
         <activity android:name=".activity.SingleChatActivity"/>
         <activity android:name=".activity.GroupChatActivity"/>

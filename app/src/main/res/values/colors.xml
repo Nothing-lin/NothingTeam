@@ -10,13 +10,13 @@
     <color name="white">#FFFFFFFF</color>
 
     //XUI的基本配色
-    <color name="colorPrimary">#299EE3</color>
-    <color name="colorPrimaryDark">#299EE3</color>
-    <color name="colorAccent">#299EE3</color>
+    <color name="colorPrimary">#FCD271</color>
+    <color name="colorPrimaryDark">#FCD271</color>
+    <color name="colorAccent">#FCD271</color>
 
     <color name="yellow_btn_color_normal">#FCD271</color>
 
-    <color name="line_press">#57D9D9</color>
+    <color name="line_press">#FCD271</color>
     <color name="line_normal">#BCBCBC</color>
 
     <color name="colorClarity">#0000</color>

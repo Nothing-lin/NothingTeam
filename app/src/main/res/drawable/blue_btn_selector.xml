@@ -3,7 +3,7 @@
     <item android:state_pressed="true">
         <shape>
             <corners android:radius="2dp"/>
-            <solid android:color="#02BDBC"/>
+            <solid android:color="#FCD271"/>
         </shape>
     </item>
 
@@ -11,7 +11,7 @@
     <item android:state_enabled="true">
         <shape>
             <corners android:radius="2dp"/>
-            <solid android:color="#2DD0CF"/>
+            <solid android:color="#FCD271"/>
         </shape>
     </item>
 
@@ -19,7 +19,7 @@
     <item android:state_enabled="false">
         <shape>
             <corners android:radius="2dp"/>
-            <solid android:color="#6CDEDD"/>
+            <solid android:color="#FCD271"/>
         </shape>
     </item>
 </selector>

@@ -11,7 +11,7 @@
         android:id="@+id/titlebar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#2DD0CF">
+        android:background="#FCD271">
 
         <TextView
             android:layout_width="wrap_content"
@@ -50,7 +50,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="78.67dp"
             android:orientation="vertical">
-
 
 
             <View
@@ -98,7 +97,7 @@
                     android:layout_height="0.67dp"
                     android:layout_below="@id/login_userName"
                     android:layout_marginTop="10dp"
-                    android:background="#57D9D9" />
+                    android:background="#FCD271" />
 
 
             </RelativeLayout>
@@ -140,7 +139,7 @@
                     android:layout_height="0.67dp"
                     android:layout_below="@id/login_passWord"
                     android:layout_marginTop="10dp"
-                    android:background="#57D9D9" />
+                    android:background="#FCD271" />
 
             </RelativeLayout>
 
@@ -181,7 +180,7 @@
             android:layout_height="wrap_content"
             android:clickable="true"
             android:text="立即注册"
-            android:textColor="#57D9D9"
+            android:textColor="#FCD271"
             android:textSize="12sp" />
 
     </LinearLayout>

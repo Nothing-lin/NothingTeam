@@ -2,6 +2,7 @@ package com.nothinglin.nothingteam.activity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -51,6 +52,11 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
         mNewUser.setOnClickListener(mLoginController);
         mLogin_register.setOnClickListener(mLoginController);
         mBtn_login.setOnClickListener(mLoginController);
+
+
+        //隐藏状态栏
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
 
 
     }

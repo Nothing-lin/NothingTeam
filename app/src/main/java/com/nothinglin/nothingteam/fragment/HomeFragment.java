@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -77,7 +78,7 @@ public class HomeFragment extends BaseFragment implements BaseBanner.OnItemClick
     @Override
     protected com.xuexiang.xui.widget.actionbar.TitleBar initTitle() {
         //设置标题栏的标题
-        titlebar.setTitle("这里是HomePage");
+        titlebar.setTitle("首页");
         //标题栏沉浸式，没有的话标题栏会遮挡不住轮播图
         titlebar.setImmersive(true);
         //设置标题栏左部的部件是否显示

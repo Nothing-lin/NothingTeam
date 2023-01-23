@@ -3,6 +3,11 @@
     <attr format="dimension" name="xui_actionbar_height"/>
     <attr format="reference" name="xui_actionbar_ic_navigation_back"/>
 
+    <attr name="colorPrimary" format="color"/>
+    <attr name="colorAccent" format="color"/>
+    <attr name="colorPrimaryDark" format="color"/>
+
+
 <!--  我的页面 ———— 弧形view  -->
     <attr name="arcHeight" format="dimension"/>
     <declare-styleable name="ArcView">
