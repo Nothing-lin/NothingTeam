@@ -60,6 +60,7 @@
         <activity android:name=".activity.LoginActivity"/>
         <activity android:name=".activity.SingleChatActivity"/>
         <activity android:name=".activity.GroupChatActivity"/>
+        <activity android:name=".activity.CreateInfosActivity"/>
         <activity
             android:name=".activity.WelcomeActivity"
             android:exported="true">

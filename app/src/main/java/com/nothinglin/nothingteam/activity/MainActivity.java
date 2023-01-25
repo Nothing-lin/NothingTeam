@@ -6,9 +6,11 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.InputType;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -150,16 +152,21 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener, B
         final int TAG_SHARE_LOCAL = 4;
 
         BottomSheet.BottomGridSheetBuilder builder = new BottomSheet.BottomGridSheetBuilder(this);
-        builder.addItem(R.drawable.icon_more_operation_share_friend,"分享到微信",TAG_SHARE_WECHAT_FRIEND,BottomSheet.BottomGridSheetBuilder.FIRST_LINE)
-                .addItem(R.drawable.icon_more_operation_share_moment,"分享到朋友圈",TAG_SHARE_WECHAT_MOMENT,BottomSheet.BottomGridSheetBuilder.FIRST_LINE)
-                .addItem(R.drawable.icon_more_operation_share_weibo,"分享到微博",TAG_SHARE_WEIBO,BottomSheet.BottomGridSheetBuilder.FIRST_LINE)
-                .addItem(R.drawable.icon_more_operation_share_chat,"分享到私信",TAG_SHARE_CHAT,BottomSheet.BottomGridSheetBuilder.FIRST_LINE)
-                .addItem(R.drawable.icon_more_operation_save,"保存到本地",TAG_SHARE_LOCAL,BottomSheet.BottomGridSheetBuilder.SECOND_LINE)
+        builder.addItem(R.drawable.createinfo,"发布招聘",TAG_SHARE_WECHAT_FRIEND,BottomSheet.BottomGridSheetBuilder.FIRST_LINE)
+                .addItem(R.drawable.createteam,"创建团队",TAG_SHARE_WECHAT_MOMENT,BottomSheet.BottomGridSheetBuilder.FIRST_LINE)
                 .setOnSheetItemClickListener(((dialog, itemView) -> {
                     //点击之后退出底部弹窗
                     dialog.dismiss();
                     int tag = (int) itemView.getTag();
                     XToastUtils.toast("tag:" + tag + ", content:" + itemView.toString());
+
+                    if (tag == 0){
+                        //跳转到招募信息发布页面
+                        Intent intent = new Intent();
+                        intent.setClass(this,CreateInfosActivity.class);
+                        startActivity(intent);
+                    }
+
                 })).build().show();
 
 
