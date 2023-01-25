@@ -16,6 +16,8 @@ import com.nothinglin.nothingteam.dao.table.HiresInfosTabsTable;
 import com.nothinglin.nothingteam.dao.table.TeamLabelsTable;
 import com.nothinglin.nothingteam.db.DBOpenHelper;
 
+import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -84,9 +86,8 @@ public class HiresInfosDao {
     }
 
 
-
     //获取招聘信息标签中的全部内容
-    public List<HiresInfosTabs> getHiresInfoTabsAll(){
+    public List<HiresInfosTabs> getHiresInfoTabsAll() {
         String sql = "select * from project_requirements";
         Connection connection = DBOpenHelper.getConnection();
         List<HiresInfosTabs> hiresInfosTabs = new ArrayList<>();
@@ -95,7 +96,7 @@ public class HiresInfosDao {
             Statement statement = (Statement) connection.createStatement();
             ResultSet rs = statement.executeQuery(sql);
 
-            while (rs.next()){
+            while (rs.next()) {
                 HiresInfosTabs hiresInfosTab = new HiresInfosTabs();
 
                 hiresInfosTab.setProject_id(rs.getString(HiresInfosTabsTable.COL_PROJECT_ID));
@@ -117,7 +118,7 @@ public class HiresInfosDao {
 
 
     //获取团队标签中的全部内容
-    public List<TeamLabel> getTeamLabelsAll(){
+    public List<TeamLabel> getTeamLabelsAll() {
         String sql = "select * from team_skill_label";
         Connection connection = DBOpenHelper.getConnection();
         List<TeamLabel> teamLabels = new ArrayList<>();
@@ -126,7 +127,7 @@ public class HiresInfosDao {
             Statement statement = (Statement) connection.createStatement();
             ResultSet rs = statement.executeQuery(sql);
 
-            while (rs.next()){
+            while (rs.next()) {
                 TeamLabel teamLabel = new TeamLabel();
 
                 teamLabel.setProject_id(rs.getString(TeamLabelsTable.COL_PROJECT_ID));
@@ -144,6 +145,46 @@ public class HiresInfosDao {
         }
 
         return teamLabels;
+    }
+
+
+    //插入招聘信息
+    public void InsertHiresInfo(HiresInfos hiresInfos) {
+        String sql = "insert into hires_infos(project_id,project_name,project_owner_team_name,project_type,competition_type,hire_numbers,project_position,project_create_date,is_team_full,is_hide,project_introduction,team_avatar,team_school,team_intro,team_manager_userid,project_detail,hire_detail)value(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        Connection connection = DBOpenHelper.getConnection();
+        PreparedStatement pst;
+
+        try {
+            pst = (PreparedStatement) connection.prepareStatement(sql);
+            pst.setString(1,hiresInfos.getProject_id());
+            pst.setString(2,hiresInfos.getProject_name());
+            pst.setString(3,hiresInfos.getProject_owner_team_name());
+            pst.setString(4,hiresInfos.getProject_type());
+            pst.setString(5,hiresInfos.getCompetition_type());
+            pst.setString(6,hiresInfos.getHire_numbers());
+            pst.setString(7,hiresInfos.getProject_position());
+            pst.setDate(8, new java.sql.Date(hiresInfos.getProject_create_date().getTime()));
+            pst.setInt(9,hiresInfos.getIs_team_full());
+            pst.setInt(10,hiresInfos.getIs_hide());
+            pst.setString(11,hiresInfos.getProject_introdution());
+            pst.setString(12,hiresInfos.getTeam_avatar());
+            pst.setString(13,hiresInfos.getTeam_school());
+            pst.setString(14,hiresInfos.getTeam_intro());
+            pst.setString(15,hiresInfos.getTeam_manager_userid());
+            pst.setString(16,hiresInfos.getProject_detail());
+            pst.setString(17,hiresInfos.getHire_detail());
+
+            pst.executeUpdate();
+
+            pst.close();
+            connection.close();
+
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+
     }
 
 }

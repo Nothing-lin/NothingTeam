@@ -25,6 +25,7 @@
                     android:layout_margin="5dp"
                     android:text="项目名称:" />
                 <com.xuexiang.xui.widget.edittext.ClearEditText
+                    android:id="@+id/project_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
@@ -38,6 +39,7 @@
                     android:layout_margin="5dp"
                     android:text="项目团队名称:" />
                 <com.xuexiang.xui.widget.edittext.ClearEditText
+                    android:id="@+id/project_owner_team_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
@@ -51,6 +53,7 @@
                     android:layout_margin="5dp"
                     android:text="项目的类型:" />
                 <com.xuexiang.xui.widget.edittext.ClearEditText
+                    android:id="@+id/project_type"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
@@ -64,6 +67,7 @@
                     android:layout_margin="5dp"
                     android:text="项目的目标/比赛:" />
                 <com.xuexiang.xui.widget.edittext.ClearEditText
+                    android:id="@+id/competition_type"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
@@ -76,6 +80,7 @@
                     android:layout_margin="5dp"
                     android:text="项目的募招人数:" />
                 <com.xuexiang.xui.widget.edittext.ClearEditText
+                    android:id="@+id/hire_numbers"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
@@ -89,6 +94,20 @@
                     android:layout_margin="5dp"
                     android:text="项目所在院校:" />
                 <com.xuexiang.xui.widget.edittext.ClearEditText
+                    android:id="@+id/team_school"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:hint="请输入内容..."
+                    android:textAlignment="viewStart" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="项目地点:" />
+                <com.xuexiang.xui.widget.edittext.ClearEditText
+                    android:id="@+id/project_pisiton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
@@ -101,6 +120,7 @@
                     android:layout_margin="5dp"
                     android:text="项目简介:" />
                 <com.xuexiang.xui.widget.edittext.MultiLineEditText
+                    android:id="@+id/project_introduction"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp" />
@@ -112,6 +132,7 @@
                     android:layout_margin="5dp"
                     android:text="项目详情:" />
                 <com.xuexiang.xui.widget.edittext.MultiLineEditText
+                    android:id="@+id/project_detail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp" />
@@ -123,6 +144,7 @@
                     android:layout_margin="5dp"
                     android:text="团队简介:" />
                 <com.xuexiang.xui.widget.edittext.MultiLineEditText
+                    android:id="@+id/team_intro"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp" />
@@ -133,11 +155,13 @@
                     android:layout_margin="5dp"
                     android:text="招募要求:" />
                 <com.xuexiang.xui.widget.edittext.MultiLineEditText
+                    android:id="@+id/hire_detail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp" />
 
                 <Button
+                    android:id="@+id/create_project"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
