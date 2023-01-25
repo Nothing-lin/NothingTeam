@@ -197,53 +197,39 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener, B
 
     private void getHiresInfosList(){
 
-        //开启一个子线程thread，获取数据库中的hiresinfos，全部数据！
-        GlobalThreadPool.getInstance().getGlobalThreadPool().execute(new Runnable() {
-            @Override
-            public void run() {
-                //调用数据库操作类方法
-                hiresInfosList = hiresInfosDao.getHiresInfoAll();
-                hiresInfosTabsList = hiresInfosDao.getHiresInfoTabsAll();
-                teamLabelsList = hiresInfosDao.getTeamLabelsAll();
-
-                //将标签送入信息列表中，这样后面ToolTabCardListFragment --> CardViewListAdapter 循环传值的时候才方便
-                for (HiresInfos info : hiresInfosList){
-                    info.setTabs(hiresInfosTabsList);
-                }
-
-                for (HiresInfos info : hiresInfosList){
-                    info.setTeamLabels(teamLabelsList);
-                }
-
-                //通过message方法把联网获取到的MySQL中的数据从子线程传递到主线程中去
-                Message message = new Message();
-                message.obj = hiresInfosList;
-                //主线程通过handler来响应和接收子线程传来的数据
-                handler.sendMessage(message);
-            }
-        });
-
-        //上面handler发送了信息，这里需要立刻接收，并且赋值给全局变量
-        handler = new Handler(){
-            @Override
-            public void handleMessage(@NonNull Message msg) {
-                super.handleMessage(msg);
-                hiresInfosList = (List<HiresInfos>) msg.obj;
-            }
-        };
-
-        /**
-         * 上面的数据过程是子线程，由于下面立刻就要用到了hiresInfosList，但是开启子线程之后就分两条路来走了
-         * 子线程和主线程不同步，主线程要获取hiresInfosList，但是子线程没有从数据库中拿到且返回给主线程
-         * 这样主线程由于跑得快，就没有拿到数据，报错就报空指针，应该让主线程等一等子线程，等子线程获取数据后再
-         * 获取子线程的数据处理下一步，初步使用thread.sleep方法让主线程睡眠
-         */
-
+        //更新子线程 -- 用join实现，主线程等待子线程完成之后再执行主线程之后的步骤
+        Thread getHiresInfosListThread = new getHiresInfosListThread();
         try {
-            // thread --> handler --> thread.sleep
-            Thread.sleep(1500);
+            getHiresInfosListThread.start();
+            getHiresInfosListThread.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }
+
+
+    }
+
+
+
+    public class getHiresInfosListThread extends Thread{
+        @Override
+        public void run() {
+            super.run();
+
+            //调用数据库操作类方法
+            hiresInfosList = hiresInfosDao.getHiresInfoAll();
+            hiresInfosTabsList = hiresInfosDao.getHiresInfoTabsAll();
+            teamLabelsList = hiresInfosDao.getTeamLabelsAll();
+
+            //将标签送入信息列表中，这样后面ToolTabCardListFragment --> CardViewListAdapter 循环传值的时候才方便
+            for (HiresInfos info : hiresInfosList){
+                info.setTabs(hiresInfosTabsList);
+            }
+
+            for (HiresInfos info : hiresInfosList){
+                info.setTeamLabels(teamLabelsList);
+            }
+
         }
     }
 }
