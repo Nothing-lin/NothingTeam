@@ -12,8 +12,10 @@ import static org.junit.Assert.*;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
+import com.nothinglin.nothingteam.bean.DetailPicture;
 import com.nothinglin.nothingteam.bean.HiresInfos;
 import com.nothinglin.nothingteam.dao.HiresInfosDao;
+import com.nothinglin.nothingteam.dao.PictureDao;
 import com.nothinglin.nothingteam.dao.table.HiresInfosTable;
 import com.nothinglin.nothingteam.db.DBOpenHelper;
 
@@ -39,11 +41,11 @@ public class ExampleInstrumentedTest {
     @Test
     public void testMysql(){
 
-        HiresInfosDao hiresInfosDao = new HiresInfosDao();
-        List<HiresInfos> list = hiresInfosDao.getHiresInfoAll();
-        for (HiresInfos hiresInfos : list){
-            System.out.println(hiresInfos.getProject_name());
-        }
+        DetailPicture detailPicture = new DetailPicture();
+        detailPicture.setProject_id("111");
+        detailPicture.setDetail_picture("222");
+        PictureDao pictureDao = new PictureDao();
+        pictureDao.InsetDetailPicture(detailPicture);
 
     }
 }

@@ -20,8 +20,10 @@ import com.mysql.jdbc.Connection;
 import com.nothinglin.nothingteam.R;
 import com.nothinglin.nothingteam.activity.MainActivity;
 import com.nothinglin.nothingteam.base.BaseFragment;
+import com.nothinglin.nothingteam.bean.DetailPicture;
 import com.nothinglin.nothingteam.bean.HiresInfos;
 import com.nothinglin.nothingteam.dao.HiresInfosDao;
+import com.nothinglin.nothingteam.dao.PictureDao;
 import com.xuexiang.xpage.annotation.Page;
 import com.xuexiang.xui.widget.edittext.ClearEditText;
 import com.xuexiang.xui.widget.edittext.MultiLineEditText;
@@ -79,6 +81,19 @@ public class CreateInfoFragment extends BaseFragment {
     @BindView(R.id.team_avatar)
     ImageView getTeamAvatar;
 
+    //简介图
+    @BindView(R.id.detail_picture1)
+    ImageView getDetailPicture1;
+    DetailPicture detailPicture1 = new DetailPicture();
+
+    @BindView(R.id.detail_picture2)
+    ImageView getDetailPicture2;
+    DetailPicture detailPicture2 = new DetailPicture();
+
+    @BindView(R.id.detail_picture3)
+    ImageView getDetailPicture3;
+    DetailPicture detailPicture3 = new DetailPicture();
+
     public Uri uri;
 
     public HiresInfos hiresInfos = new HiresInfos();
@@ -100,6 +115,35 @@ public class CreateInfoFragment extends BaseFragment {
                 galleryIntent.addCategory(Intent.CATEGORY_OPENABLE);
                 galleryIntent.setType("image/*");
                 startActivityForResult(galleryIntent,0);
+            }
+        });
+
+        //缩略图123的选择
+        getDetailPicture1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                galleryIntent.addCategory(Intent.CATEGORY_OPENABLE);
+                galleryIntent.setType("image/*");
+                startActivityForResult(galleryIntent,1);
+            }
+        });
+        getDetailPicture2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                galleryIntent.addCategory(Intent.CATEGORY_OPENABLE);
+                galleryIntent.setType("image/*");
+                startActivityForResult(galleryIntent,2);
+            }
+        });
+        getDetailPicture3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                galleryIntent.addCategory(Intent.CATEGORY_OPENABLE);
+                galleryIntent.setType("image/*");
+                startActivityForResult(galleryIntent,3);
             }
         });
 
@@ -127,7 +171,7 @@ public class CreateInfoFragment extends BaseFragment {
                 hiresInfos.setProject_create_date(currentTime);
 
 
-                Thread insertHireInfos = new InsertHireinfosThread(hiresInfos);
+                Thread insertHireInfos = new InsertHireinfosThread();
 
                 try {
                     insertHireInfos.start();
@@ -148,13 +192,6 @@ public class CreateInfoFragment extends BaseFragment {
 
     public class  InsertHireinfosThread extends Thread{
 
-        HiresInfos hiresInfos = new HiresInfos();
-
-        InsertHireinfosThread(HiresInfos hiresInfos){
-            this.hiresInfos = hiresInfos;
-        }
-
-
         @Override
         public void run() {
             super.run();
@@ -165,9 +202,26 @@ public class CreateInfoFragment extends BaseFragment {
             UserInfo userInfo = JMessageClient.getMyInfo();
             hiresInfos.setTeam_manager_userid(String.valueOf(userInfo.getUserID()));
 
-            new HiresInfosDao().InsertHiresInfo(hiresInfos);
+            hiresInfos.setProject_id(String.valueOf(new HiresInfosDao().InsertHiresInfo(hiresInfos)));
 //            Toast.makeText(getContext(), "添加成功", Toast.LENGTH_SHORT).show();
 //            Looper.loop();
+
+            //插入数据库转码后的图片
+            if (detailPicture1 != null){
+                PictureDao pictureDao = new PictureDao();
+                detailPicture1.setProject_id(hiresInfos.getProject_id());
+                pictureDao.InsetDetailPicture(detailPicture1);
+            }
+
+            if (detailPicture2 != null){
+                detailPicture2.setProject_id(hiresInfos.getProject_id());
+                new PictureDao().InsetDetailPicture(detailPicture2);
+            }
+
+            if (detailPicture3 != null){
+                detailPicture3.setProject_id(hiresInfos.getProject_id());
+                new PictureDao().InsetDetailPicture(detailPicture3);
+            }
 
         }
     }
@@ -197,8 +251,74 @@ public class CreateInfoFragment extends BaseFragment {
                 e.printStackTrace();
             }
 
+        }
 
+        if (requestCode ==1 && resultCode == -1){
+            uri = data.getData();
+            getDetailPicture1.setImageURI(uri);
+
+            //图片 --> base64转码
+            try {
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),uri);
+                bitmap.compress(Bitmap.CompressFormat.JPEG,100,baos);
+                byte[] imageBytes = baos.toByteArray();
+                //将图片转换成二进制写入数据库中
+//                detailPicture1.setProject_id(hiresInfos.getProject_id());
+                detailPicture1.setDetail_picture(Base64.encodeToString(imageBytes,Base64.DEFAULT));
+
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
         }
+
+        if (requestCode ==2 && resultCode == -1){
+            uri = data.getData();
+            getDetailPicture2.setImageURI(uri);
+
+            //图片 --> base64转码
+            try {
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),uri);
+                bitmap.compress(Bitmap.CompressFormat.JPEG,100,baos);
+                byte[] imageBytes = baos.toByteArray();
+                //将图片转换成二进制写入数据库中
+//                detailPicture2.setProject_id(hiresInfos.getProject_id());
+                detailPicture2.setDetail_picture(Base64.encodeToString(imageBytes,Base64.DEFAULT));
+
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (requestCode ==3 && resultCode == -1){
+            uri = data.getData();
+            getDetailPicture3.setImageURI(uri);
+
+            //图片 --> base64转码
+            try {
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),uri);
+                bitmap.compress(Bitmap.CompressFormat.JPEG,100,baos);
+                byte[] imageBytes = baos.toByteArray();
+                //将图片转换成二进制写入数据库中
+//                detailPicture3.setProject_id(hiresInfos.getProject_id());
+                detailPicture3.setDetail_picture(Base64.encodeToString(imageBytes,Base64.DEFAULT));
+
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 }

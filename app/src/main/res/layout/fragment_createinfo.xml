@@ -132,6 +132,37 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
+                    android:text="项目简介图:" />
+
+                <ImageView
+                    android:id="@+id/detail_picture1"
+                    android:layout_width="match_parent"
+                    android:layout_height="170dp"
+                    android:background="#CFCFCF"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:src="@drawable/picture_demo"/>
+
+                <ImageView
+                    android:id="@+id/detail_picture2"
+                    android:layout_width="match_parent"
+                    android:layout_height="170dp"
+                    android:background="#CFCFCF"
+                    android:src="@drawable/picture_demo"/>
+
+                <ImageView
+                    android:id="@+id/detail_picture3"
+                    android:layout_width="match_parent"
+                    android:layout_height="170dp"
+                    android:background="#CFCFCF"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:src="@drawable/picture_demo"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
                     android:text="项目简介:" />
                 <com.xuexiang.xui.widget.edittext.MultiLineEditText
                     android:id="@+id/project_introduction"

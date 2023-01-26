@@ -149,13 +149,14 @@ public class HiresInfosDao {
 
 
     //插入招聘信息
-    public void InsertHiresInfo(HiresInfos hiresInfos) {
+    public int InsertHiresInfo(HiresInfos hiresInfos) {
+        int project_id = 0;
         String sql = "insert into hires_infos(project_id,project_name,project_owner_team_name,project_type,competition_type,hire_numbers,project_position,project_create_date,is_team_full,is_hide,project_introduction,team_avatar,team_school,team_intro,team_manager_userid,project_detail,hire_detail)value(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         Connection connection = DBOpenHelper.getConnection();
         PreparedStatement pst;
 
         try {
-            pst = (PreparedStatement) connection.prepareStatement(sql);
+            pst = (PreparedStatement) connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
             pst.setString(1,hiresInfos.getProject_id());
             pst.setString(2,hiresInfos.getProject_name());
             pst.setString(3,hiresInfos.getProject_owner_team_name());
@@ -176,6 +177,11 @@ public class HiresInfosDao {
 
             pst.executeUpdate();
 
+            ResultSet rs = pst.getGeneratedKeys();
+
+            if(rs.next()){
+                project_id = rs.getInt(1);//获取自增的id数值
+            }
             pst.close();
             connection.close();
 
@@ -184,7 +190,7 @@ public class HiresInfosDao {
             throwables.printStackTrace();
         }
 
-
+        return project_id;
     }
 
 }
