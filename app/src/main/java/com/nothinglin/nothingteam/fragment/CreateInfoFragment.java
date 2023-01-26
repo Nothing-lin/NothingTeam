@@ -1,11 +1,22 @@
 package com.nothinglin.nothingteam.fragment;
 
+import static com.xuexiang.xutil.XUtil.getContentResolver;
+
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Looper;
+import android.provider.MediaStore;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+
+import com.mysql.jdbc.Connection;
 import com.nothinglin.nothingteam.R;
 import com.nothinglin.nothingteam.activity.MainActivity;
 import com.nothinglin.nothingteam.base.BaseFragment;
@@ -15,6 +26,11 @@ import com.xuexiang.xpage.annotation.Page;
 import com.xuexiang.xui.widget.edittext.ClearEditText;
 import com.xuexiang.xui.widget.edittext.MultiLineEditText;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Date;
 
 import butterknife.BindView;
@@ -60,6 +76,11 @@ public class CreateInfoFragment extends BaseFragment {
     @BindView(R.id.create_project)
     Button createProject;
 
+    @BindView(R.id.team_avatar)
+    ImageView getTeamAvatar;
+
+    public Uri uri;
+
     public HiresInfos hiresInfos = new HiresInfos();
 
 
@@ -71,6 +92,19 @@ public class CreateInfoFragment extends BaseFragment {
 
     @Override
     protected void initViews() {
+        //头像选择
+        getTeamAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                galleryIntent.addCategory(Intent.CATEGORY_OPENABLE);
+                galleryIntent.setType("image/*");
+                startActivityForResult(galleryIntent,0);
+            }
+        });
+
+
+
 
         //单击触发
         createProject.setOnClickListener(new View.OnClickListener() {
@@ -138,5 +172,33 @@ public class CreateInfoFragment extends BaseFragment {
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        if (requestCode == 0 && resultCode == -1){
+
+            uri = data.getData();
+            getTeamAvatar.setImageURI(uri);
+            //将头像图片转换成base64编码
+
+            try {
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),uri);
+                bitmap.compress(Bitmap.CompressFormat.JPEG,100,baos);
+                byte[] imageBytes = baos.toByteArray();
+                //将图片转换成二进制写入数据库中
+                hiresInfos.setTeam_avatar(Base64.encodeToString(imageBytes,Base64.DEFAULT));
+
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+
+        }
+    }
 }
