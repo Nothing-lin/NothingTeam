@@ -2,12 +2,15 @@ package com.nothinglin.nothingteam.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,6 +46,7 @@ import com.xuexiang.xui.widget.banner.widget.banner.BannerItem;
 import com.xuexiang.xui.widget.banner.widget.banner.SimpleImageBanner;
 import com.xuexiang.xui.widget.dialog.materialdialog.DialogAction;
 import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog;
+import com.xuexiang.xui.widget.imageview.RadiusImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,6 +86,10 @@ public class CardDetailFragment extends BaseFragment {
     TextView mBt_comment;
     @BindView(R.id.bt_group_apply)
     Button mBtGroupApply;
+
+    //头像
+    @BindView(R.id.detail_team_avatar)
+    RadiusImageView detailTeamAvatar;
 
 
     @BindView(R.id.rib_simple_usage)
@@ -310,6 +318,11 @@ public class CardDetailFragment extends BaseFragment {
         mProjectIntroduction.setText(hiresInfos.getProject_detail());
         mHireDetail.setText(hiresInfos.getHire_detail());
         mProjecName.setText(hiresInfos.getProject_name());
+
+        //头像处理，对头像图片进行转码
+        byte[] imageBytes = Base64.decode(hiresInfos.getTeam_avatar(),Base64.DEFAULT);
+        Bitmap decodeImage = BitmapFactory.decodeByteArray(imageBytes,0,imageBytes.length);
+        detailTeamAvatar.setImageBitmap(decodeImage);
 
         new TitleBar(getContext()).setTitle(hiresInfos.getProject_name());
 

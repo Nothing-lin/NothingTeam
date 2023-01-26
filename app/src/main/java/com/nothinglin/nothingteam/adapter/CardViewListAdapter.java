@@ -1,6 +1,11 @@
 package com.nothinglin.nothingteam.adapter;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Base64;
 
 import androidx.annotation.NonNull;
 
@@ -34,6 +39,7 @@ public class CardViewListAdapter extends BaseRecyclerAdapter<HiresInfos> {
     @Override
     public void bindData(@NonNull RecyclerViewHolder holder, int position, HiresInfos model) {
 
+
         if (model != null) {
             holder.text(R.id.tv_title, model.getProject_name());
             holder.text(R.id.tv_user_name, model.getProject_owner_team_name());
@@ -42,6 +48,17 @@ public class CardViewListAdapter extends BaseRecyclerAdapter<HiresInfos> {
             holder.text(R.id.tv_position, model.getProject_position());
             holder.text(R.id.tv_summary, model.getProject_introdution());
             holder.text(R.id.rb_project_type,model.getProject_type());
+
+            if (model.getTeam_avatar() != null){
+                //对头像进行base64转码
+                //头像处理，对头像图片进行转码
+                byte[] imageBytes = Base64.decode(model.getTeam_avatar(),Base64.DEFAULT);
+                Bitmap decodeImage = BitmapFactory.decodeByteArray(imageBytes,0,imageBytes.length);
+                //将bitmap转成drawble
+                Drawable drawableImage = new BitmapDrawable(decodeImage);
+                holder.image(R.id.iv_avatar,drawableImage);
+
+            }
 
             LabelsView labelsView = holder.findViewById(R.id.labels);
 

@@ -44,6 +44,7 @@
 
                             <!--    团队信息栏头像    -->
                             <com.xuexiang.xui.widget.imageview.RadiusImageView
+                                android:id="@+id/detail_team_avatar"
                                 android:layout_width="50dp"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"

@@ -48,6 +48,7 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@mipmap/ic_launcher"
+                        android:background="@color/white"
                         app:riv_is_circle="true" />
 
                     <TextView
