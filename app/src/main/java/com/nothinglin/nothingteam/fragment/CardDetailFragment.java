@@ -1,13 +1,19 @@
 package com.nothinglin.nothingteam.fragment;
 
+import static com.xuexiang.xutil.XUtil.getContentResolver;
+
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Base64;
@@ -34,9 +40,11 @@ import com.nothinglin.nothingteam.base.BaseFragment;
 import com.nothinglin.nothingteam.bean.CommentBean;
 import com.nothinglin.nothingteam.bean.CommentDetail;
 import com.nothinglin.nothingteam.bean.CommentDetailBean;
+import com.nothinglin.nothingteam.bean.DetailPicture;
 import com.nothinglin.nothingteam.bean.HiresInfos;
 import com.nothinglin.nothingteam.bean.TeamLabel;
 import com.nothinglin.nothingteam.dao.DetailCommentDao;
+import com.nothinglin.nothingteam.dao.PictureDao;
 import com.nothinglin.nothingteam.widget.CommentExpandableListView;
 import com.nothinglin.nothingteam.widget.DemoDataProvider;
 import com.nothinglin.nothingteam.widget.RadiusImageBanner;
@@ -95,7 +103,7 @@ public class CardDetailFragment extends BaseFragment {
     @BindView(R.id.rib_simple_usage)
     RadiusImageBanner rib_simple_usage;
     //mPictures是用来存放轮播图图片的
-    private List<BannerItem> mPictures;
+    public List<BannerItem> mPictures;
 
     private CommentExpandableListView expandableListView;
     private CommentExpandAdapter adapter;
@@ -124,6 +132,9 @@ public class CardDetailFragment extends BaseFragment {
     @Override
     protected void initViews() {
 
+        //bitmap转uri时要获取本地权限
+        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},0);
+
 
         //获取CardDetailActivity传来的数据
         getdetailCardInfo();
@@ -131,8 +142,18 @@ public class CardDetailFragment extends BaseFragment {
         //初始化团队信息栏
         initTeamInfo();
 
-        //轮播图
-        mPictures = DemoDataProvider.getBannerList();
+//        //轮播图-----------------------------------------------------------------------------------
+//        mPictures = DemoDataProvider.getBannerList();
+        GetDetailPictureThread getDetailPictureThread = new GetDetailPictureThread();
+
+        try {
+            getDetailPictureThread.start();
+            getDetailPictureThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        //------------------------------------------------------------------------------------------
+
         sib_simple_usage();
 
 
@@ -384,6 +405,51 @@ public class CardDetailFragment extends BaseFragment {
         public void run() {
 
             new DetailCommentDao().InsetComment(project_id,user_name,null,content);
+
+        }
+    }
+
+
+    //获取与处理详情页中轮播图
+
+    public class GetDetailPictureThread extends Thread{
+
+        @Override
+        public void run() {
+
+            List<DetailPicture> base64Pictures = new ArrayList<>();
+            base64Pictures = new PictureDao().getDetailPicture(hiresInfos.getProject_id());
+            List<BannerItem> pictures = new ArrayList<>();
+
+            //对base64进行转码,对每一项进行循环处理
+            for (DetailPicture detailPicture : base64Pictures){
+
+                //头像处理，对头像图片进行转码
+                byte[] imageBytes = Base64.decode(detailPicture.getDetail_picture(),Base64.DEFAULT);
+                Bitmap decodeImage = BitmapFactory.decodeByteArray(imageBytes,0,imageBytes.length);
+
+                //bitmap转为uri
+                Uri uri = Uri.parse(MediaStore.Images.Media.insertImage(getContentResolver(),decodeImage,null,null));
+
+                //uri-content -- 转为 uri-file 获取转码后的图片url
+                String filePath = null;
+                Cursor cursor = getContentResolver().query(uri,new String[]{MediaStore.Images.ImageColumns.DATA},null,null,null);
+                cursor.moveToFirst();
+                filePath = cursor.getString(0);//这个就是图片转码后保存到本地的图片的url地址
+                cursor.close();
+
+                //轮播图的图片集对象
+                BannerItem item = new BannerItem();
+                item.imgUrl = filePath;
+
+                pictures.add(item);
+
+
+
+            }
+
+            mPictures = pictures;
+
 
         }
     }

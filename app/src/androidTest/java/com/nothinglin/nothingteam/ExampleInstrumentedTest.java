@@ -39,13 +39,10 @@ public class ExampleInstrumentedTest {
     }
     
     @Test
-    public void testMysql(){
+    public void testMysql() throws SQLException {
 
-        DetailPicture detailPicture = new DetailPicture();
-        detailPicture.setProject_id("111");
-        detailPicture.setDetail_picture("222");
         PictureDao pictureDao = new PictureDao();
-        pictureDao.InsetDetailPicture(detailPicture);
-
+        List<DetailPicture> list = pictureDao.getDetailPicture("1353695225");
+        System.out.println(list);
     }
 }

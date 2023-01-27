@@ -70,7 +70,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:hint="示例：文档编辑 | Java开发 ， 使用|进行标签分隔，最多三个"
+                    android:hint="示例：文档编辑 | Java开发 ， 使用“|”分隔，最多三个"
                     android:textAlignment="viewStart" />
 
 
@@ -206,6 +206,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="团队标签:" />
+                <com.xuexiang.xui.widget.edittext.ClearEditText
+                    android:id="@+id/team_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:hint="示例：java | python ， 使用“|”分隔"
+                    android:textAlignment="viewStart" />
 
                 <TextView
                     android:layout_width="match_parent"

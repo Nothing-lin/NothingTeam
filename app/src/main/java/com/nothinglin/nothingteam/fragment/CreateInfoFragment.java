@@ -92,6 +92,9 @@ public class CreateInfoFragment extends BaseFragment {
     @BindView(R.id.project_requirement)
     ClearEditText getProjectRequirement;
 
+    @BindView(R.id.team_label)
+    ClearEditText getTeamLabel;
+
     public Uri uri;
 
     public HiresInfos hiresInfos = new HiresInfos();
@@ -234,6 +237,21 @@ public class CreateInfoFragment extends BaseFragment {
                 LabelDao labelDao = new LabelDao();
                 labelDao.InsertProjectLabel(hiresInfos.getProject_id(),labelArray[i]);
 
+            }
+
+            //--------------------------------------------------------------------------------------
+
+
+            //团队标签--------------------------------------------------------------------------------
+            String teamLabel = String.valueOf(getTeamLabel.getText());
+            //将字符串按照|进行分隔，获取标签数组
+            String[] teamlabelArray = teamLabel.split("[|]");
+
+
+            //将分隔出来的标签写入数据库中
+            for (int i = 0;i<teamlabelArray.length;i++){
+                LabelDao TeamlabelDao = new LabelDao();
+                TeamlabelDao.InsertTeamLabel(hiresInfos.getProject_id(),teamlabelArray[i]);
             }
 
 

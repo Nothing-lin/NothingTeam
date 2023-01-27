@@ -2,6 +2,7 @@ package com.nothinglin.nothingteam.fragment;
 
 import android.animation.ArgbEvaluator;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.view.View;
@@ -12,6 +13,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.nothinglin.nothingteam.R;
+import com.nothinglin.nothingteam.activity.MainActivity;
 import com.nothinglin.nothingteam.base.BaseFragment;
 import com.nothinglin.nothingteam.bean.HiresInfos;
 import com.nothinglin.nothingteam.fragment.homepages.ToolTabCardListFragment;
@@ -86,8 +88,12 @@ public class HomeFragment extends BaseFragment implements BaseBanner.OnItemClick
         titlebar.setLeftClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "事件触发成功", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "事件触发成功", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
+                getActivity().finish();
             }
+
         });
 
         return null;
