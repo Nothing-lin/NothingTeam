@@ -5,24 +5,21 @@ import static com.xuexiang.xutil.XUtil.getContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Looper;
 import android.provider.MediaStore;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import com.mysql.jdbc.Connection;
 import com.nothinglin.nothingteam.R;
 import com.nothinglin.nothingteam.activity.MainActivity;
 import com.nothinglin.nothingteam.base.BaseFragment;
 import com.nothinglin.nothingteam.bean.DetailPicture;
 import com.nothinglin.nothingteam.bean.HiresInfos;
 import com.nothinglin.nothingteam.dao.HiresInfosDao;
+import com.nothinglin.nothingteam.dao.LabelDao;
 import com.nothinglin.nothingteam.dao.PictureDao;
 import com.xuexiang.xpage.annotation.Page;
 import com.xuexiang.xui.widget.edittext.ClearEditText;
@@ -31,8 +28,6 @@ import com.xuexiang.xui.widget.edittext.MultiLineEditText;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.Date;
 
 import butterknife.BindView;
@@ -93,6 +88,9 @@ public class CreateInfoFragment extends BaseFragment {
     @BindView(R.id.detail_picture3)
     ImageView getDetailPicture3;
     DetailPicture detailPicture3 = new DetailPicture();
+
+    @BindView(R.id.project_requirement)
+    ClearEditText getProjectRequirement;
 
     public Uri uri;
 
@@ -202,11 +200,12 @@ public class CreateInfoFragment extends BaseFragment {
             UserInfo userInfo = JMessageClient.getMyInfo();
             hiresInfos.setTeam_manager_userid(String.valueOf(userInfo.getUserID()));
 
+            //获取项目的自增project_id-----------------------------------------------------------------
             hiresInfos.setProject_id(String.valueOf(new HiresInfosDao().InsertHiresInfo(hiresInfos)));
 //            Toast.makeText(getContext(), "添加成功", Toast.LENGTH_SHORT).show();
 //            Looper.loop();
 
-            //插入数据库转码后的图片
+            //插入数据库转码后的图片，详情页的图片插入mysql
             if (detailPicture1 != null){
                 PictureDao pictureDao = new PictureDao();
                 detailPicture1.setProject_id(hiresInfos.getProject_id());
@@ -222,6 +221,21 @@ public class CreateInfoFragment extends BaseFragment {
                 detailPicture3.setProject_id(hiresInfos.getProject_id());
                 new PictureDao().InsetDetailPicture(detailPicture3);
             }
+            //--------------------------------------------------------------------------------------
+
+            //项目的需求标签---------------------------------------------------------------------------
+            String projectLabel = String.valueOf(getProjectRequirement.getText());//获取输入的字符串
+            //将字符串按照|进行分隔，获取标签数组
+            String[] labelArray = projectLabel.split("[|]");
+            //System.out.println(labelArray);
+
+            //将分隔出来的标签写入数据库中
+            for (int i = 0;i < labelArray.length;i++){
+                LabelDao labelDao = new LabelDao();
+                labelDao.InsertProjectLabel(hiresInfos.getProject_id(),labelArray[i]);
+
+            }
+
 
         }
     }

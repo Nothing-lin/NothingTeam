@@ -60,6 +60,19 @@
                     android:layout_marginBottom="10dp"
                     android:background="#CFCFCF"/>
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="项目条件标签:" />
+                <com.xuexiang.xui.widget.edittext.ClearEditText
+                    android:id="@+id/project_requirement"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:hint="示例：文档编辑 | Java开发 ， 使用|进行标签分隔，最多三个"
+                    android:textAlignment="viewStart" />
+
 
                 <TextView
                     android:layout_width="match_parent"
