@@ -4,8 +4,10 @@ import static com.xuexiang.xutil.XUtil.getContentResolver;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -45,6 +47,7 @@ import com.nothinglin.nothingteam.bean.HiresInfos;
 import com.nothinglin.nothingteam.bean.TeamLabel;
 import com.nothinglin.nothingteam.dao.DetailCommentDao;
 import com.nothinglin.nothingteam.dao.PictureDao;
+import com.nothinglin.nothingteam.db.SqliteDBHelper;
 import com.nothinglin.nothingteam.widget.CommentExpandableListView;
 import com.nothinglin.nothingteam.widget.DemoDataProvider;
 import com.nothinglin.nothingteam.widget.RadiusImageBanner;
@@ -421,34 +424,85 @@ public class CardDetailFragment extends BaseFragment {
             base64Pictures = new PictureDao().getDetailPicture(hiresInfos.getProject_id());
             List<BannerItem> pictures = new ArrayList<>();
 
-            //对base64进行转码,对每一项进行循环处理
-            for (DetailPicture detailPicture : base64Pictures){
+            //判断sqlite中是否已经有数值了，没有数值再写入sqlite中
+            //初始化一个sqlite数据库
+            SqliteDBHelper dbHelper = new SqliteDBHelper(getContext(),"nothingTeam.db",null,1);
+            SQLiteDatabase sqlitDB = dbHelper.getWritableDatabase();
 
-                //头像处理，对头像图片进行转码
-                byte[] imageBytes = Base64.decode(detailPicture.getDetail_picture(),Base64.DEFAULT);
-                Bitmap decodeImage = BitmapFactory.decodeByteArray(imageBytes,0,imageBytes.length);
+            Cursor cursor = sqlitDB.rawQuery("select * from detail_picture where project_id = "+hiresInfos.getProject_id(),null);
+            //将游标移到开头
+            cursor.moveToFirst();
 
-                //bitmap转为uri
-                Uri uri = Uri.parse(MediaStore.Images.Media.insertImage(getContentResolver(),decodeImage,null,null));
+            List<BannerItem> SQLiteDetailPictures = new ArrayList<>();
+            while (!cursor.isAfterLast()){
 
-                //uri-content -- 转为 uri-file 获取转码后的图片url
-                String filePath = null;
-                Cursor cursor = getContentResolver().query(uri,new String[]{MediaStore.Images.ImageColumns.DATA},null,null,null);
-                cursor.moveToFirst();
-                filePath = cursor.getString(0);//这个就是图片转码后保存到本地的图片的url地址
-                cursor.close();
+                BannerItem SQLitebannerItem = new BannerItem();
 
-                //轮播图的图片集对象
-                BannerItem item = new BannerItem();
-                item.imgUrl = filePath;
+                String projectId = cursor.getString(0);
+                String picturePath = cursor.getString(1);
 
-                pictures.add(item);
+                SQLitebannerItem.setImgUrl(picturePath);
+
+                SQLiteDetailPictures.add(SQLitebannerItem);
+
+                cursor.moveToNext();
+            }
+            cursor.close();
+
+            //如果本地数据库中没有数据，就把转码的数据写入sqlite中
+            if (SQLiteDetailPictures.isEmpty()){
+
+                //对base64进行转码,对每一项进行循环处理
+                for (DetailPicture detailPicture : base64Pictures){
+
+                    //头像处理，对头像图片进行转码
+                    byte[] imageBytes = Base64.decode(detailPicture.getDetail_picture(),Base64.DEFAULT);
+                    Bitmap decodeImage = BitmapFactory.decodeByteArray(imageBytes,0,imageBytes.length);
+
+                    //bitmap转为uri
+                    Uri uri = Uri.parse(MediaStore.Images.Media.insertImage(getContentResolver(),decodeImage,null,null));
+
+                    //uri-content -- 转为 uri-file 获取转码后的图片url
+                    String filePath = null;
+                    Cursor cursor1 = getContentResolver().query(uri,new String[]{MediaStore.Images.ImageColumns.DATA},null,null,null);
+                    cursor1.moveToFirst();
+                    filePath = cursor1.getString(0);//这个就是图片转码后保存到本地的图片的url地址
+                    cursor1.close();
+
+                    //轮播图的图片集对象
+                    BannerItem item = new BannerItem();
+                    item.imgUrl = filePath;
+
+                    pictures.add(item);
+
+
+                    //避免每次加载都要重新下载图片，把第一次加载的图片path添加到本地数据库中方便去，注意是sqlite不是mysql
+
+
+                    //sqlite---------------------------------------------------------------------------
+                    //设置键值
+                    ContentValues contentValues = new ContentValues();
+                    contentValues.put("project_id",hiresInfos.getProject_id());
+                    contentValues.put("detail_picture_path",filePath);
+
+                    //写入sqlite
+                    sqlitDB.insert("detail_picture",null,contentValues);
 
 
 
+                }
+
+                mPictures = pictures;
+            }else {
+
+
+                mPictures = SQLiteDetailPictures;
             }
 
-            mPictures = pictures;
+
+
+            sqlitDB.close();
+
 
 
         }
