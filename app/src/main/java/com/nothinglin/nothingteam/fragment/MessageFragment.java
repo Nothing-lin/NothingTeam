@@ -1,21 +1,13 @@
 package com.nothinglin.nothingteam.fragment;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.nothinglin.nothingteam.R;
 import com.nothinglin.nothingteam.base.BaseFragment;
-import com.nothinglin.nothingteam.fragment.messagepages.ChatToTeamFragment;
+import com.nothinglin.nothingteam.fragment.teampages.ChatToTeamFragment;
 import com.nothinglin.nothingteam.fragment.messagepages.SystemMessageFragment;
-import com.nothinglin.nothingteam.fragment.teampages.JoinTeamFragment;
 import com.xuexiang.xpage.annotation.Page;
 import com.xuexiang.xui.adapter.FragmentAdapter;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
@@ -55,9 +47,7 @@ public class MessageFragment extends BaseFragment {
         tabLayout.addTab(tabLayout.newTab().setText("系统消息"));
         adapter.addFragment(new SystemMessageFragment(),"系统消息");
 
-        //注册适配“联系团队”界面
-        tabLayout.addTab(tabLayout.newTab().setText("联系团队"));
-        adapter.addFragment(new ChatToTeamFragment(),"联系团队");
+
 
         //设置消息页面的视图极限为2个
         mViewPager.setOffscreenPageLimit(2);

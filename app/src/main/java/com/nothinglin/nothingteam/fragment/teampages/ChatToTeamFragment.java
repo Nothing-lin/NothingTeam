@@ -1,4 +1,4 @@
-package com.nothinglin.nothingteam.fragment.messagepages;
+package com.nothinglin.nothingteam.fragment.teampages;
 
 import android.content.Intent;
 import android.os.Bundle;

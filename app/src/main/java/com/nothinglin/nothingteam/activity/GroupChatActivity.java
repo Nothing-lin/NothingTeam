@@ -4,12 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -230,5 +233,36 @@ public class GroupChatActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    //群聊界面的右上角菜单
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.group_chat_info,menu);
+
+        return true;
+    }
+
+    //进入群信息管理界面
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        int menu_id = item.getItemId();
+        if (menu_id == R.id.action_info){
+            Intent intent = new Intent();
+            Long id = GroupId;
+            intent.putExtra("groupId",id);//将群id传递到下一个页面
+
+            intent.setClass(GroupChatActivity.this,GroupInfoActivity.class);
+
+            startActivity(intent);
+            return true;
+
+        }
+
+
+        return super.onOptionsItemSelected(item);
     }
 }

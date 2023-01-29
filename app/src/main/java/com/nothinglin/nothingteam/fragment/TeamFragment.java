@@ -13,6 +13,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 import com.nothinglin.nothingteam.R;
 import com.nothinglin.nothingteam.base.BaseFragment;
+import com.nothinglin.nothingteam.fragment.teampages.ChatToTeamFragment;
 import com.nothinglin.nothingteam.fragment.teampages.JoinTeamFragment;
 import com.nothinglin.nothingteam.fragment.teampages.MyTeamFragment;
 import com.xuexiang.xpage.annotation.Page;
@@ -61,12 +62,17 @@ public class TeamFragment extends BaseFragment {
         //注册适配“我加入的团队”界面
         tabLayout.addTab(tabLayout.newTab().setText("团队消息"));
         adapter.addFragment(new JoinTeamFragment(),"团队消息");
+
+        //注册适配“联系团队”界面
+        tabLayout.addTab(tabLayout.newTab().setText("联系团队"));
+        adapter.addFragment(new ChatToTeamFragment(),"联系团队");
+
         //注册适配“我创建的团队”界面
         tabLayout.addTab(tabLayout.newTab().setText("我的团队"));
         adapter.addFragment(new MyTeamFragment(),"我的团队");
 
         //设置团队页面的视图极限为2个
-        mViewPager.setOffscreenPageLimit(2);
+        mViewPager.setOffscreenPageLimit(3);
         //将视图和tablayout进行绑定
         mViewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(mViewPager);

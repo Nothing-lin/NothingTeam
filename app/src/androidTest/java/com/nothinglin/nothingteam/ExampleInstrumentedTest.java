@@ -1,6 +1,7 @@
 package com.nothinglin.nothingteam;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -12,17 +13,28 @@ import static org.junit.Assert.*;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
+import com.nothinglin.nothingteam.adapter.GroupListAdapter;
 import com.nothinglin.nothingteam.bean.DetailPicture;
 import com.nothinglin.nothingteam.bean.HiresInfos;
 import com.nothinglin.nothingteam.dao.HiresInfosDao;
 import com.nothinglin.nothingteam.dao.PictureDao;
 import com.nothinglin.nothingteam.dao.table.HiresInfosTable;
 import com.nothinglin.nothingteam.db.DBOpenHelper;
+import com.nothinglin.nothingteam.utils.GlobalThreadPool;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.callback.GetGroupIDListCallback;
+import cn.jpush.im.android.api.callback.GetGroupInfoCallback;
+import cn.jpush.im.android.api.callback.GetUserInfoCallback;
+import cn.jpush.im.android.api.callback.RequestCallback;
+import cn.jpush.im.android.api.model.GroupInfo;
+import cn.jpush.im.android.api.model.GroupMemberInfo;
+import cn.jpush.im.android.api.model.UserInfo;
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -44,5 +56,23 @@ public class ExampleInstrumentedTest {
         PictureDao pictureDao = new PictureDao();
         List<DetailPicture> list = pictureDao.getDetailPicture("1353695225");
         System.out.println(list);
+    }
+
+
+    @Test
+    public void TestJG(){
+
+
+//        System.out.println("11");
+//
+//        JMessageClient.getGroupInfo(75514999, new GetGroupInfoCallback() {
+//            @Override
+//            public void gotResult(int i, String s, GroupInfo groupInfo) {
+//                System.out.println(i);
+//            }
+//        });
+
+
+
     }
 }

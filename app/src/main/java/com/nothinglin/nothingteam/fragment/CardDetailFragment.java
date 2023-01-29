@@ -355,7 +355,7 @@ public class CardDetailFragment extends BaseFragment {
     private void getdetailCardInfo() {
         Bundle bundle = getArguments();
         detailCardInfo = (ArrayList<HiresInfos>) bundle.getSerializable("detailCardInfo");
-        System.out.println(detailCardInfo);
+//        System.out.println(detailCardInfo);
     }
 
 

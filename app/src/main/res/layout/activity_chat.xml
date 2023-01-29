@@ -79,87 +79,87 @@
             android:textSize="12sp" />
     </LinearLayout>
 
-    <!--  菜单工具栏  -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:orientation="horizontal">
+<!--    &lt;!&ndash;  菜单工具栏  &ndash;&gt;-->
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="40dp"-->
+<!--        android:orientation="horizontal">-->
 
-        <RelativeLayout
-            android:id="@+id/rl_chat_1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/click_bg"
-            android:clickable="true">
+<!--        <RelativeLayout-->
+<!--            android:id="@+id/rl_chat_1"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="1"-->
+<!--            android:background="@drawable/click_bg"-->
+<!--            android:clickable="true">-->
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_centerInParent="true"
-                android:background="@drawable/c_1" />
-        </RelativeLayout>
+<!--            <ImageView-->
+<!--                android:layout_width="30dp"-->
+<!--                android:layout_height="30dp"-->
+<!--                android:layout_centerInParent="true"-->
+<!--                android:background="@drawable/c_1" />-->
+<!--        </RelativeLayout>-->
 
-        <RelativeLayout
-            android:id="@+id/rl_chat_2"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/click_bg"
-            android:clickable="true">
+<!--        <RelativeLayout-->
+<!--            android:id="@+id/rl_chat_2"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="1"-->
+<!--            android:background="@drawable/click_bg"-->
+<!--            android:clickable="true">-->
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_centerInParent="true"
-                android:background="@drawable/c_2" />
-        </RelativeLayout>
+<!--            <ImageView-->
+<!--                android:layout_width="30dp"-->
+<!--                android:layout_height="30dp"-->
+<!--                android:layout_centerInParent="true"-->
+<!--                android:background="@drawable/c_2" />-->
+<!--        </RelativeLayout>-->
 
-        <RelativeLayout
-            android:id="@+id/rl_chat_3"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/click_bg"
-            android:clickable="true">
+<!--        <RelativeLayout-->
+<!--            android:id="@+id/rl_chat_3"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="1"-->
+<!--            android:background="@drawable/click_bg"-->
+<!--            android:clickable="true">-->
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_centerInParent="true"
-                android:background="@drawable/c_3" />
-        </RelativeLayout>
+<!--            <ImageView-->
+<!--                android:layout_width="30dp"-->
+<!--                android:layout_height="30dp"-->
+<!--                android:layout_centerInParent="true"-->
+<!--                android:background="@drawable/c_3" />-->
+<!--        </RelativeLayout>-->
 
-        <RelativeLayout
-            android:id="@+id/rl_chat_4"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/click_bg"
-            android:clickable="true">
+<!--        <RelativeLayout-->
+<!--            android:id="@+id/rl_chat_4"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="1"-->
+<!--            android:background="@drawable/click_bg"-->
+<!--            android:clickable="true">-->
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_centerInParent="true"
-                android:background="@drawable/c_4" />
-        </RelativeLayout>
+<!--            <ImageView-->
+<!--                android:layout_width="30dp"-->
+<!--                android:layout_height="30dp"-->
+<!--                android:layout_centerInParent="true"-->
+<!--                android:background="@drawable/c_4" />-->
+<!--        </RelativeLayout>-->
 
-        <RelativeLayout
-            android:id="@+id/rl_chat_5"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/click_bg"
-            android:clickable="true">
+<!--        <RelativeLayout-->
+<!--            android:id="@+id/rl_chat_5"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="1"-->
+<!--            android:background="@drawable/click_bg"-->
+<!--            android:clickable="true">-->
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_centerInParent="true"
-                android:background="@drawable/c_5" />
-        </RelativeLayout>
-    </LinearLayout>
+<!--            <ImageView-->
+<!--                android:layout_width="30dp"-->
+<!--                android:layout_height="30dp"-->
+<!--                android:layout_centerInParent="true"-->
+<!--                android:background="@drawable/c_5" />-->
+<!--        </RelativeLayout>-->
+<!--    </LinearLayout>-->
 
 
 </LinearLayout>

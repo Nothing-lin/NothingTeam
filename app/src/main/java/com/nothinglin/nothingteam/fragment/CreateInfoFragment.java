@@ -201,7 +201,7 @@ public class CreateInfoFragment extends BaseFragment {
 
             //获取创建该招聘信息管理者的id
             UserInfo userInfo = JMessageClient.getMyInfo();
-            hiresInfos.setTeam_manager_userid(String.valueOf(userInfo.getUserID()));
+            hiresInfos.setTeam_manager_userid(String.valueOf(userInfo.getUserName()));
 
             //获取项目的自增project_id-----------------------------------------------------------------
             hiresInfos.setProject_id(String.valueOf(new HiresInfosDao().InsertHiresInfo(hiresInfos)));
