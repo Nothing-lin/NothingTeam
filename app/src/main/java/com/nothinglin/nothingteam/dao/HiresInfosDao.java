@@ -68,6 +68,7 @@ public class HiresInfosDao {
                 hiresInfo.setTeam_manager_userid(rs.getString(HiresInfosTable.COL_TEAM_MANAGER_USERID));
                 hiresInfo.setProject_detail(rs.getString(HiresInfosTable.COL_PROJECT_DETAIL));
                 hiresInfo.setHire_detail(rs.getString(HiresInfosTable.COL_HIRE_DETAIL));
+                hiresInfo.setGroup_id(rs.getString("group_id"));
 
 
                 hiresInfos.add(hiresInfo);
@@ -151,7 +152,7 @@ public class HiresInfosDao {
     //插入招聘信息
     public int InsertHiresInfo(HiresInfos hiresInfos) {
         int project_id = 0;
-        String sql = "insert into hires_infos(project_id,project_name,project_owner_team_name,project_type,competition_type,hire_numbers,project_position,project_create_date,is_team_full,is_hide,project_introduction,team_avatar,team_school,team_intro,team_manager_userid,project_detail,hire_detail)value(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "insert into hires_infos(project_id,project_name,project_owner_team_name,project_type,competition_type,hire_numbers,project_position,project_create_date,is_team_full,is_hide,project_introduction,team_avatar,team_school,team_intro,team_manager_userid,project_detail,hire_detail,group_id)value(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         Connection connection = DBOpenHelper.getConnection();
         PreparedStatement pst;
 
@@ -174,6 +175,7 @@ public class HiresInfosDao {
             pst.setString(15,hiresInfos.getTeam_manager_userid());
             pst.setString(16,hiresInfos.getProject_detail());
             pst.setString(17,hiresInfos.getHire_detail());
+            pst.setString(18,hiresInfos.getGroup_id());
 
             pst.executeUpdate();
 

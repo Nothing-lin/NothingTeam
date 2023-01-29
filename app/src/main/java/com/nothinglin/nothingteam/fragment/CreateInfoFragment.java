@@ -32,6 +32,7 @@ import java.util.Date;
 
 import butterknife.BindView;
 import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.callback.CreateGroupCallback;
 import cn.jpush.im.android.api.model.UserInfo;
 
 @Page(name = "创建项目")
@@ -172,18 +173,31 @@ public class CreateInfoFragment extends BaseFragment {
                 hiresInfos.setProject_create_date(currentTime);
 
 
-                Thread insertHireInfos = new InsertHireinfosThread();
+                //创建一个团队群,参数1：群名称，参数2：群描述
+                JMessageClient.createPublicGroup(hiresInfos.getProject_name(), hiresInfos.getProject_detail(), new CreateGroupCallback() {
+                    @Override
+                    public void gotResult(int i, String s, long l) {
+                        //创建成功时，i==0,s是错误时的报错,l是创建成功后的群id
+                        hiresInfos.setGroup_id(String.valueOf(l));
 
-                try {
-                    insertHireInfos.start();
-                    insertHireInfos.join();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                        Thread insertHireInfos = new InsertHireinfosThread();
+
+                        try {
+                            insertHireInfos.start();
+                            insertHireInfos.join();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
 
 
-                Intent intent = new Intent(getActivity(),MainActivity.class);
-                startActivity(intent);
+
+                        Intent intent = new Intent(getActivity(),MainActivity.class);
+                        startActivity(intent);
+
+                    }
+                });
+
+
 
 
             }
