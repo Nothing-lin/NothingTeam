@@ -33,6 +33,7 @@ import java.util.HashSet;
 import java.util.List;
 
 import butterknife.BindView;
+import cn.jpush.im.android.api.JMessageClient;
 
 public class HomeFragment extends BaseFragment implements BaseBanner.OnItemClickListener<BannerItem> {
 
@@ -92,6 +93,7 @@ public class HomeFragment extends BaseFragment implements BaseBanner.OnItemClick
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 startActivity(intent);
                 getActivity().finish();
+
             }
 
         });

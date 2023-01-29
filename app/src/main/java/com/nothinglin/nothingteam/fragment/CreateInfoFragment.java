@@ -180,6 +180,11 @@ public class CreateInfoFragment extends BaseFragment {
                         //创建成功时，i==0,s是错误时的报错,l是创建成功后的群id
                         hiresInfos.setGroup_id(String.valueOf(l));
 
+
+                        JMessageClient.createGroupTextMessage(l,"恭喜你成功创建了“"+hiresInfos.getProject_name()+"“群，并且你已成为该群的群主");
+
+
+
                         Thread insertHireInfos = new InsertHireinfosThread();
 
                         try {

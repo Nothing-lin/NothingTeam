@@ -90,7 +90,7 @@ public class MyTeamFragment extends BaseFragment {
 
                 mGroupConversationList = JMessageClient.getConversationList();//重新获取对话列表
 
-                //遍历每个对话列表的item到mData中
+                //遍历每个对话列表的item到mData中，筛选出对话框为群组的
                 for (Conversation conversation : mGroupConversationList){
                     if (conversation.getType() == ConversationType.group){
                         mData.add(conversation);
