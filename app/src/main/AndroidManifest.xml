@@ -62,6 +62,7 @@
         <activity android:name=".activity.GroupChatActivity"/>
         <activity android:name=".activity.CreateInfosActivity"/>
         <activity android:name=".activity.GroupInfoActivity"/>
+        <activity android:name=".activity.GroupVerificationActivity"/>
         <activity
             android:name=".activity.WelcomeActivity"
             android:exported="true">

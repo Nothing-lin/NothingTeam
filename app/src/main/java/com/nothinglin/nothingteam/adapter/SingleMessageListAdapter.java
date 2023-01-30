@@ -151,7 +151,7 @@ public class SingleMessageListAdapter extends BaseAdapter {
         }
 
         //设置显示发给我信息的用户名称
-        viewHolder.mText.setText("lastname:");
+        viewHolder.mText.setText(lastname+":");
 
         //获取mtext信息长度， 东榆：回来吃饭了
         int size = (int) viewHolder.mText.getTextSize();
