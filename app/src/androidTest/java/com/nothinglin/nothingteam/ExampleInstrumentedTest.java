@@ -18,6 +18,7 @@ import com.nothinglin.nothingteam.bean.DetailPicture;
 import com.nothinglin.nothingteam.bean.HiresInfos;
 import com.nothinglin.nothingteam.dao.HiresInfosDao;
 import com.nothinglin.nothingteam.dao.PictureDao;
+import com.nothinglin.nothingteam.dao.VerificationInfoDao;
 import com.nothinglin.nothingteam.dao.table.HiresInfosTable;
 import com.nothinglin.nothingteam.db.DBOpenHelper;
 import com.nothinglin.nothingteam.utils.GlobalThreadPool;
@@ -63,14 +64,9 @@ public class ExampleInstrumentedTest {
     public void TestJG(){
 
 
-//        System.out.println("11");
-//
-//        JMessageClient.getGroupInfo(75514999, new GetGroupInfoCallback() {
-//            @Override
-//            public void gotResult(int i, String s, GroupInfo groupInfo) {
-//                System.out.println(i);
-//            }
-//        });
+        VerificationInfoDao verificationInfoDao = new VerificationInfoDao();
+//        boolean t = verificationInfoDao.IsApplyManApplyThisGroup("111","111");
+//        System.out.println(t);
 
 
 

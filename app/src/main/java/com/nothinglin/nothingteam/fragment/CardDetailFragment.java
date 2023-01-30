@@ -14,6 +14,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.text.InputType;
@@ -45,9 +46,12 @@ import com.nothinglin.nothingteam.bean.CommentDetailBean;
 import com.nothinglin.nothingteam.bean.DetailPicture;
 import com.nothinglin.nothingteam.bean.HiresInfos;
 import com.nothinglin.nothingteam.bean.TeamLabel;
+import com.nothinglin.nothingteam.bean.VerificationInfo;
 import com.nothinglin.nothingteam.dao.DetailCommentDao;
 import com.nothinglin.nothingteam.dao.PictureDao;
+import com.nothinglin.nothingteam.dao.VerificationInfoDao;
 import com.nothinglin.nothingteam.db.SqliteDBHelper;
+import com.nothinglin.nothingteam.utils.GlobalThreadPool;
 import com.nothinglin.nothingteam.widget.CommentExpandableListView;
 import com.nothinglin.nothingteam.widget.DemoDataProvider;
 import com.nothinglin.nothingteam.widget.RadiusImageBanner;
@@ -289,6 +293,7 @@ public class CardDetailFragment extends BaseFragment {
             @SuppressLint("ResourceAsColor")
             @Override
             public void onClick(View v) {
+
                 new MaterialDialog.Builder(getContext())
                         .iconRes(R.drawable.ic_cat).titleColor(Color.BLACK).backgroundColor(Color.WHITE)
                         .title("入群申请")
@@ -297,23 +302,30 @@ public class CardDetailFragment extends BaseFragment {
                         .input("请输入您的申请入群请求", "", true, new MaterialDialog.InputCallback() {
                             @Override
                             public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
+
                                 //发送加入群组验证消息
                                 String verification = dialog.getInputEditText().getText().toString();
 
-                                JMessageClient.applyJoinGroup(75514999, verification, new BasicCallback() {
-                                    @Override
-                                    public void gotResult(int i, String s) {
-                                        //发送群申请成功 、发送的信息到极光服务器中进行处理
-                                        if (i == 0){
-                                            Toast.makeText(getActivity(), "申请已发出,等待审核", Toast.LENGTH_SHORT).show();
-                                            getActivity().finish();
-                                        }else {
-                                            dialog.dismiss();
-                                            Toast.makeText(getActivity(), "您已是该群成员，请勿再次申请！", Toast.LENGTH_SHORT).show();
+                                JoinApplyGroupThread joinApplyGroupThread = new JoinApplyGroupThread(verification,dialog);
 
-                                        }
-                                    }
-                                });
+                                try {
+                                    joinApplyGroupThread.start();
+                                    joinApplyGroupThread.join();
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+
+                                if (joinApplyGroupThread.tips ==1){
+                                    Toast.makeText(getActivity(), "您已是该群成员或您已申请过正在审核中，请勿再次申请！", Toast.LENGTH_SHORT).show();
+                                }
+
+                                if (joinApplyGroupThread.tips == 0){
+                                    Toast.makeText(getActivity(), "申请成功，请您耐心等待群主的审核~", Toast.LENGTH_SHORT).show();
+                                }
+
+                                dialog.dismiss();
+
+
                             }
                         })
                         .positiveText("确定申请")
@@ -455,6 +467,10 @@ public class CardDetailFragment extends BaseFragment {
                 //对base64进行转码,对每一项进行循环处理
                 for (DetailPicture detailPicture : base64Pictures){
 
+                    if (detailPicture.getDetail_picture() == null){
+                        continue;
+                    }
+
                     //头像处理，对头像图片进行转码
                     byte[] imageBytes = Base64.decode(detailPicture.getDetail_picture(),Base64.DEFAULT);
                     Bitmap decodeImage = BitmapFactory.decodeByteArray(imageBytes,0,imageBytes.length);
@@ -503,6 +519,51 @@ public class CardDetailFragment extends BaseFragment {
 
             sqlitDB.close();
 
+
+
+        }
+    }
+
+    //设置一个加群的线程，数据库获取数据时需要
+    public class JoinApplyGroupThread extends Thread{
+        private String verification;
+        private MaterialDialog dialog;
+        private int tips;//提示：1为重复申请，0为未申请过
+
+        public JoinApplyGroupThread(String verification,MaterialDialog dialog){
+            this.dialog = dialog;
+            this.verification = verification;
+        }
+
+
+        @Override
+        public void run() {
+            super.run();
+
+            //获取申请者（正在登录的用户）的username
+            UserInfo userInfo = JMessageClient.getMyInfo();
+            String applyUsername = userInfo.getUserName();
+            String groupId = hiresInfos.getGroup_id();
+
+            //判断我之前有没申请过
+            VerificationInfoDao verificationInfoDao = new VerificationInfoDao();
+            VerificationInfo verificationInfo = new VerificationInfo();
+            Boolean IsApplyManApplyThisGroup = verificationInfoDao.IsApplyManApplyThisGroup(applyUsername, groupId);
+
+            if (IsApplyManApplyThisGroup) {
+                tips = 1;
+
+            } else {
+                verificationInfo.setApplyText(verification);
+                verificationInfo.setGroupId(hiresInfos.getGroup_id());
+                verificationInfo.setGroupManagerUsername(hiresInfos.getTeam_manager_userid());
+                verificationInfo.setApplyUserName(applyUsername);
+                //如果没申请过，将申请者的申请信息写入审核表中
+                verificationInfoDao.InsertVerificationInfo(verificationInfo);
+
+                tips = 0;
+
+            }
 
 
         }

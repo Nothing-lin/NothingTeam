@@ -6,6 +6,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 import com.nothinglin.nothingteam.R;
 import com.nothinglin.nothingteam.base.BaseFragment;
+import com.nothinglin.nothingteam.fragment.groupverification.GroupVerificationMeFragment;
 import com.nothinglin.nothingteam.fragment.groupverification.GroupVerificationOtherFragment;
 import com.nothinglin.nothingteam.fragment.teampages.ChatToTeamFragment;
 import com.nothinglin.nothingteam.fragment.teampages.JoinTeamFragment;
@@ -47,7 +48,7 @@ public class GroupVerificationFragment extends BaseFragment {
 
         //注册适配“我加入的团队”界面
         tabLayout.addTab(tabLayout.newTab().setText("我的审批"));
-        adapter.addFragment(new GroupVerificationOtherFragment(),"我的审批");
+        adapter.addFragment(new GroupVerificationMeFragment(),"我的审批");
 
         //注册适配“联系团队”界面
         tabLayout.addTab(tabLayout.newTab().setText("我的入群"));
