@@ -7,6 +7,25 @@ public class VerificationInfo {
     private String GroupManagerUsername;//群主的用户名id
     private String ApplyText;//申请理由
 
+    private String GroupName;
+    private String Avatar;
+
+    public String getGroupName() {
+        return GroupName;
+    }
+
+    public void setGroupName(String groupName) {
+        GroupName = groupName;
+    }
+
+    public String getAvatar() {
+        return Avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        Avatar = avatar;
+    }
+
     public String getApplyText() {
         return ApplyText;
     }

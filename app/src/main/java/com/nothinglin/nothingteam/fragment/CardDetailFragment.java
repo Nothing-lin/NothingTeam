@@ -558,6 +558,8 @@ public class CardDetailFragment extends BaseFragment {
                 verificationInfo.setGroupId(hiresInfos.getGroup_id());
                 verificationInfo.setGroupManagerUsername(hiresInfos.getTeam_manager_userid());
                 verificationInfo.setApplyUserName(applyUsername);
+                verificationInfo.setAvatar(hiresInfos.getTeam_avatar());
+                verificationInfo.setGroupName(hiresInfos.getProject_name());
                 //如果没申请过，将申请者的申请信息写入审核表中
                 verificationInfoDao.InsertVerificationInfo(verificationInfo);
 

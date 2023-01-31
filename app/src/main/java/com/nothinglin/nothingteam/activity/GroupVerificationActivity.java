@@ -19,4 +19,7 @@ public class GroupVerificationActivity extends BaseActivity {
         //隐藏状态栏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
+
+
+
 }

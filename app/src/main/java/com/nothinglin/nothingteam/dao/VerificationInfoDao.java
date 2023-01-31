@@ -16,7 +16,7 @@ public class VerificationInfoDao {
 
     //插入数据
     public void InsertVerificationInfo(VerificationInfo verificationInfo){
-        String sql = "insert into verification_list(apply_username,group_id,group_manager_username,apply_text)value(?,?,?,?)";
+        String sql = "insert into verification_list(apply_username,group_id,group_manager_username,apply_text,group_name,avatar)value(?,?,?,?,?,?)";
         Connection connection = DBOpenHelper.getConnection();
         PreparedStatement pst;
 
@@ -27,6 +27,8 @@ public class VerificationInfoDao {
             pst.setString(2,verificationInfo.getGroupId());
             pst.setString(3,verificationInfo.getGroupManagerUsername());
             pst.setString(4,verificationInfo.getApplyText());
+            pst.setString(5,verificationInfo.getGroupName());
+            pst.setString(6,verificationInfo.getAvatar());
 
             pst.executeUpdate();
 
@@ -57,8 +59,10 @@ public class VerificationInfoDao {
 
                 verificationInfo.setApplyUserName(rs.getString("apply_username"));
                 verificationInfo.setGroupId(rs.getString("group_id"));
-                verificationInfo.setGroupManagerUsername("group_manager_username");
-                verificationInfo.setApplyText("apply_text");
+                verificationInfo.setGroupManagerUsername(rs.getString("group_manager_username"));
+                verificationInfo.setApplyText(rs.getString("apply_text"));
+                verificationInfo.setGroupName(rs.getString("group_name"));
+                verificationInfo.setAvatar(rs.getString("avatar"));
 
                 verificationInfos.add(verificationInfo);
 
