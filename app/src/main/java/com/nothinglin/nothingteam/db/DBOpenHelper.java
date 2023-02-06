@@ -10,7 +10,7 @@ public class DBOpenHelper {
     //5.7mysql驱动名
     private static String diver = "com.mysql.jdbc.Driver";
     //数据库地址
-    private static String url = "jdbc:mysql://192.168.0.8:3306/nothingteam?useUnicode=true&characterEncoding=utf-8&useSSL=false";
+    private static String url = "jdbc:mysql://192.168.125.107:3306/nothingteam?useUnicode=true&characterEncoding=utf-8&useSSL=false";
     //mysql用户名
     private static String user = "androidmysql";
     //mysql用户密码

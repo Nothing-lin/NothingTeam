@@ -86,6 +86,18 @@
             android:textSize="14sp" />
 
         <TextView
+            android:layout_gravity="center_vertical"
+            android:id="@+id/item_ignore_btn"
+            android:layout_width="53.33dp"
+            android:layout_height="26.67dp"
+            android:layout_marginRight="14.33dp"
+            android:background="@color/xui_config_color_red"
+            android:gravity="center"
+            android:text="忽略"
+            android:textColor="@drawable/blue_text_selector"
+            android:textSize="14sp" />
+
+        <TextView
             android:id="@+id/item_state"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -121,4 +121,27 @@ public class VerificationInfoDao {
             return true;
         }
     }
+
+    public void DeleteThieApply(String username,String GroudID){
+        //Mysql语句
+        String sql = "delete from verification_list where apply_username = ? and group_id = ?";
+        Connection connection = DBOpenHelper.getConnection();
+        PreparedStatement pst;
+
+        try{
+            pst = connection.prepareStatement(sql);
+            pst.setString(1,username);
+            pst.setString(2,GroudID);
+
+            pst.executeUpdate();
+
+            pst.close();
+            connection.close();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }
+
 }
