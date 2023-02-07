@@ -1,6 +1,7 @@
 package com.nothinglin.nothingteam.dao;
 
 import com.nothinglin.nothingteam.bean.VerificationInfo;
+import com.nothinglin.nothingteam.bean.VerificationReply;
 import com.nothinglin.nothingteam.db.DBOpenHelper;
 
 import java.sql.Connection;
@@ -79,6 +80,44 @@ public class VerificationInfoDao {
         return verificationInfos;
     }
 
+    //获取我申请的群申请信息
+    public List<VerificationReply> getAboutMyApplication(String myUsername){
+        String sql = "select * from verification_reply where apply_username = "+myUsername;
+        Connection connection = DBOpenHelper.getConnection();
+        List<VerificationReply> verificationReplies = new ArrayList<>();
+
+        Statement statement = null;
+
+        try {
+            statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+
+            while (rs.next()){
+                VerificationReply verificationReply = new VerificationReply();
+
+                verificationReply.setGroundId(rs.getString("groud_id"));
+                verificationReply.setApplyUsername(rs.getString("apply_username"));
+                verificationReply.setProjectName(rs.getString("project_name"));
+                verificationReply.setTips(rs.getString("tips"));
+                verificationReply.setAvatar(rs.getString("avatar"));
+
+                verificationReplies.add(verificationReply);
+
+
+            }
+
+            rs.close();
+            connection.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return verificationReplies;
+    }
+
+
+
 
     //获取申请者的数据，看申请者是否提交过申请给这个群了，提交过就提示请勿重复申请
     //根据群主的身份获取看看有哪些未审批的数据
@@ -141,6 +180,78 @@ public class VerificationInfoDao {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+
+    }
+
+    //修改群验证消息 -- 同意
+    public void updateVerificationReplyYes(String username,String groudId){
+        String sql = "update verification_reply set tips = ? where apply_username=? and groud_id=?";
+        Connection connection = DBOpenHelper.getConnection();
+        PreparedStatement pst;
+
+        try {
+            pst = connection.prepareStatement(sql);
+            pst.setString(1,"您已通过该群的群申请~");
+            pst.setString(2,username);
+            pst.setString(3,groudId);
+
+            pst.executeUpdate();
+            pst.close();
+            connection.close();
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    //修改群验证消息 -- 拒绝
+    public void updateVerificationReplyNo(String username,String groudId){
+        String sql = "update verification_reply set tips = ? where apply_username=? and groud_id=?";
+        Connection connection = DBOpenHelper.getConnection();
+        PreparedStatement pst;
+
+        try {
+            pst = connection.prepareStatement(sql);
+            pst.setString(1,"抱歉，您没有通过该群的群申请~");
+            pst.setString(2,username);
+            pst.setString(3,groudId);
+
+            pst.executeUpdate();
+            pst.close();
+            connection.close();
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    //插入群验证消息
+    public void InsertVerificationReply(VerificationReply verificationReply){
+        String sql = "insert into verification_reply(groud_id,apply_username,project_name,tips,avatar)value(?,?,?,?,?)";
+        Connection connection = DBOpenHelper.getConnection();
+        PreparedStatement pst;
+
+        try {
+            pst = connection.prepareStatement(sql);
+            pst.setString(1,verificationReply.getGroundId());
+            pst.setString(2,verificationReply.getApplyUsername());
+            pst.setString(3,verificationReply.getProjectName());
+            pst.setString(4,verificationReply.getTips());
+            pst.setString(5,verificationReply.getAvatar());
+
+            pst.executeUpdate();
+            pst.close();
+            connection.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
 
     }
 

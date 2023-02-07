@@ -112,6 +112,15 @@ public class GroupVerificationAdapter extends BaseAdapter {
                     }
                 });
 
+                acceptVerificationThread acceptVerificationThread = new acceptVerificationThread(recommends.get(position));
+
+                try {
+                    acceptVerificationThread.start();
+                    acceptVerificationThread.join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
                 recommends.remove(recommends.get(position));
                 notifyDataSetChanged();
 
@@ -155,6 +164,23 @@ public class GroupVerificationAdapter extends BaseAdapter {
         TextView item_ignore;
     }
 
+    public class acceptVerificationThread extends Thread{
+        private VerificationInfo verificationInfo;
+
+        public acceptVerificationThread(VerificationInfo verificationInfo){
+            this.verificationInfo = verificationInfo;
+        }
+
+        @Override
+        public void run() {
+            super.run();
+            VerificationInfoDao verificationInfoDao = new VerificationInfoDao();
+            verificationInfoDao.updateVerificationReplyYes(verificationInfo.getApplyUserName(),verificationInfo.getGroupId());
+
+        }
+    }
+
+
     public class IgnoreVerificationThread extends Thread{
         private VerificationInfo verificationInfo;
 
@@ -169,6 +195,8 @@ public class GroupVerificationAdapter extends BaseAdapter {
 
             VerificationInfoDao verificationInfoDao = new VerificationInfoDao();
             verificationInfoDao.DeleteThieApply(verificationInfo.getApplyUserName(),verificationInfo.getGroupId());
+
+            verificationInfoDao.updateVerificationReplyNo(verificationInfo.getApplyUserName(),verificationInfo.getGroupId());
 
         }
     }

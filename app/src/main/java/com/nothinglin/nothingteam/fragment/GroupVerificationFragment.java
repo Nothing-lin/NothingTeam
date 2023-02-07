@@ -7,11 +7,10 @@ import com.google.android.material.tabs.TabLayout;
 import com.nothinglin.nothingteam.R;
 import com.nothinglin.nothingteam.base.BaseFragment;
 import com.nothinglin.nothingteam.bean.VerificationInfo;
+import com.nothinglin.nothingteam.bean.VerificationReply;
 import com.nothinglin.nothingteam.dao.VerificationInfoDao;
 import com.nothinglin.nothingteam.fragment.groupverification.GroupVerificationMeFragment;
 import com.nothinglin.nothingteam.fragment.groupverification.GroupVerificationOtherFragment;
-import com.nothinglin.nothingteam.fragment.teampages.ChatToTeamFragment;
-import com.nothinglin.nothingteam.fragment.teampages.JoinTeamFragment;
 import com.xuexiang.xpage.annotation.Page;
 import com.xuexiang.xui.adapter.FragmentAdapter;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
@@ -21,7 +20,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import cn.jpush.im.android.api.JMessageClient;
-import cn.jpush.im.android.api.model.UserInfo;
 
 @Page(name = "团队申请审批")
 public class GroupVerificationFragment extends BaseFragment {
@@ -33,6 +31,7 @@ public class GroupVerificationFragment extends BaseFragment {
     ViewPager mViewPager;
 
     private List<VerificationInfo> mRecommends;
+    private List<VerificationReply> MyApplications;
 
 
     //初始化标题栏
@@ -59,7 +58,17 @@ public class GroupVerificationFragment extends BaseFragment {
             e.printStackTrace();
         }
 
+        getMyApplicationThread getMyApplicationThread = new getMyApplicationThread();
+
+        try {
+            getMyApplicationThread.start();
+            getMyApplicationThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         mRecommends = getmRecommendsThread.verificationInfos;
+        MyApplications = getMyApplicationThread.verificationReplies;
 
 
         //初始化fragment适配器
@@ -72,8 +81,8 @@ public class GroupVerificationFragment extends BaseFragment {
         adapter.addFragment(new GroupVerificationMeFragment(mRecommends),"我的审批");
 
         //注册适配“联系团队”界面
-//        tabLayout.addTab(tabLayout.newTab().setText("我的入群"));
-//        adapter.addFragment(new GroupVerificationOtherFragment(),"我的入群");
+        tabLayout.addTab(tabLayout.newTab().setText("审核消息"));
+        adapter.addFragment(new GroupVerificationOtherFragment(MyApplications),"审核消息");
 
         //设置消息页面的视图极限为2个
         mViewPager.setOffscreenPageLimit(2);
@@ -96,6 +105,19 @@ public class GroupVerificationFragment extends BaseFragment {
             verificationInfos = verificationInfoDao.getAboutManagerData(userName);
 
 
+        }
+    }
+
+    public class getMyApplicationThread extends Thread{
+        private List<VerificationReply> verificationReplies = new ArrayList<>();
+
+        @Override
+        public void run() {
+            super.run();
+
+            VerificationInfoDao verificationInfoDao = new VerificationInfoDao();
+            String userName = JMessageClient.getMyInfo().getUserName();
+            verificationReplies = verificationInfoDao.getAboutMyApplication(userName);
         }
     }
 }

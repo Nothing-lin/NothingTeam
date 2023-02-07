@@ -5,11 +5,15 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import com.nothinglin.nothingteam.bean.HiresInfos;
+import com.nothinglin.nothingteam.bean.VerificationReply;
 import com.nothinglin.nothingteam.dao.HiresInfosDao;
 import com.nothinglin.nothingteam.dao.UserInfoDao;
+import com.nothinglin.nothingteam.dao.VerificationInfoDao;
 import com.umeng.commonsdk.debug.D;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -42,8 +46,11 @@ public class ExampleUnitTest {
 
     @Test
     public void TestTime(){
-        Date datetime = new Date();
-        System.out.println(datetime);
+        VerificationInfoDao verificationInfoDao = new VerificationInfoDao();
+        List<VerificationReply> verificationReplies = new ArrayList<>();
+        verificationReplies = verificationInfoDao.getAboutMyApplication("5555");
+        System.out.println(verificationReplies);
+
 
     }
 }

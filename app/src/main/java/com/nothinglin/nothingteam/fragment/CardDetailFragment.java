@@ -47,6 +47,7 @@ import com.nothinglin.nothingteam.bean.DetailPicture;
 import com.nothinglin.nothingteam.bean.HiresInfos;
 import com.nothinglin.nothingteam.bean.TeamLabel;
 import com.nothinglin.nothingteam.bean.VerificationInfo;
+import com.nothinglin.nothingteam.bean.VerificationReply;
 import com.nothinglin.nothingteam.dao.DetailCommentDao;
 import com.nothinglin.nothingteam.dao.PictureDao;
 import com.nothinglin.nothingteam.dao.VerificationInfoDao;
@@ -566,6 +567,16 @@ public class CardDetailFragment extends BaseFragment {
                 tips = 0;
 
             }
+
+            //设置申请消息
+            VerificationReply verificationReply = new VerificationReply();
+            verificationReply.setTips("您的申请正在审批中~");
+            verificationReply.setApplyUsername(applyUsername);
+            verificationReply.setGroundId(hiresInfos.getGroup_id());
+            verificationReply.setProjectName(hiresInfos.getProject_name());
+            verificationReply.setAvatar(hiresInfos.getTeam_avatar());
+
+            verificationInfoDao.InsertVerificationReply(verificationReply);
 
 
         }

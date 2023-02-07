@@ -26,7 +26,7 @@
             android:layout_marginTop="5dp"
             android:layout_gravity="center"
             android:textColor="@color/black"
-            android:text="公告消息" />
+            android:text="消息审批" />
 
     </LinearLayout>
 
