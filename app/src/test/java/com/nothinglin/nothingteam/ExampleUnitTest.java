@@ -46,10 +46,7 @@ public class ExampleUnitTest {
 
     @Test
     public void TestTime(){
-        VerificationInfoDao verificationInfoDao = new VerificationInfoDao();
-        List<VerificationReply> verificationReplies = new ArrayList<>();
-        verificationReplies = verificationInfoDao.getAboutMyApplication("5555");
-        System.out.println(verificationReplies);
+
 
 
     }

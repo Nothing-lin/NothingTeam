@@ -14,8 +14,10 @@ import static org.junit.Assert.*;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
 import com.nothinglin.nothingteam.adapter.GroupListAdapter;
+import com.nothinglin.nothingteam.bean.ActivityInfo;
 import com.nothinglin.nothingteam.bean.DetailPicture;
 import com.nothinglin.nothingteam.bean.HiresInfos;
+import com.nothinglin.nothingteam.dao.ActivityInfoDao;
 import com.nothinglin.nothingteam.dao.HiresInfosDao;
 import com.nothinglin.nothingteam.dao.PictureDao;
 import com.nothinglin.nothingteam.dao.VerificationInfoDao;
@@ -63,12 +65,11 @@ public class ExampleInstrumentedTest {
     @Test
     public void TestJG(){
 
+        List<ActivityInfo> activityInfos = new ArrayList<>();
+        ActivityInfoDao activityInfoDao = new ActivityInfoDao();
+        activityInfos = activityInfoDao.getActivityInfosAll();
 
-        VerificationInfoDao verificationInfoDao = new VerificationInfoDao();
-//        boolean t = verificationInfoDao.IsApplyManApplyThisGroup("111","111");
-//        System.out.println(t);
-
-
+        System.out.println(activityInfos);
 
     }
 }

@@ -1,7 +1,5 @@
 package com.nothinglin.nothingteam.activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
@@ -9,13 +7,10 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
-import android.text.InputType;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.google.android.material.tabs.TabLayout;
 import com.jpeng.jptabbar.BadgeDismissListener;
 import com.jpeng.jptabbar.JPTabBar;
 import com.jpeng.jptabbar.OnTabSelectListener;
@@ -26,17 +21,14 @@ import com.nothinglin.nothingteam.bean.HiresInfos;
 import com.nothinglin.nothingteam.bean.HiresInfosTabs;
 import com.nothinglin.nothingteam.bean.TeamLabel;
 import com.nothinglin.nothingteam.dao.HiresInfosDao;
+import com.nothinglin.nothingteam.fragment.ActivityFragment;
 import com.nothinglin.nothingteam.fragment.HomeFragment;
 import com.nothinglin.nothingteam.fragment.MeFragment;
-import com.nothinglin.nothingteam.fragment.MessageFragment;
 import com.nothinglin.nothingteam.fragment.TeamFragment;
-import com.nothinglin.nothingteam.utils.GlobalThreadPool;
 import com.nothinglin.nothingteam.utils.XToastUtils;
 import com.nothinglin.nothingteam.widget.StatusBarUtil;
 import com.xuexiang.xui.XUI;
-import com.xuexiang.xui.utils.WidgetUtils;
 import com.xuexiang.xui.widget.dialog.bottomsheet.BottomSheet;
-import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +53,7 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener, B
     //注册底部菜单栏的每项fragment界面
     HomeFragment homeFragment;
     MeFragment meFragment;
-    MessageFragment messageFragment;
+    ActivityFragment activityFragment;
     TeamFragment teamFragment;
 
     //-------------------------获取homepage列表信息的声明---------------------------------
@@ -111,12 +103,12 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener, B
         //实例化fragment界面
         homeFragment = new HomeFragment(hiresInfosList);
         meFragment = new MeFragment();
-        messageFragment = new MessageFragment();
+        activityFragment = new ActivityFragment();
         teamFragment = new TeamFragment();
 
         list.add(homeFragment);
         list.add(teamFragment);
-        list.add(messageFragment);
+        list.add(activityFragment);
         list.add(meFragment);
 
         //设置页面适配
