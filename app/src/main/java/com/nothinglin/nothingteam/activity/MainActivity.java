@@ -145,7 +145,7 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener, B
 
         BottomSheet.BottomGridSheetBuilder builder = new BottomSheet.BottomGridSheetBuilder(this);
         builder.addItem(R.drawable.createinfo,"发布招聘",TAG_SHARE_WECHAT_FRIEND,BottomSheet.BottomGridSheetBuilder.FIRST_LINE)
-                .addItem(R.drawable.createteam,"创建团队",TAG_SHARE_WECHAT_MOMENT,BottomSheet.BottomGridSheetBuilder.FIRST_LINE)
+                .addItem(R.drawable.activity,"发布活动",TAG_SHARE_WECHAT_MOMENT,BottomSheet.BottomGridSheetBuilder.FIRST_LINE)
                 .setOnSheetItemClickListener(((dialog, itemView) -> {
                     //点击之后退出底部弹窗
                     dialog.dismiss();
@@ -156,6 +156,13 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener, B
                         //跳转到招募信息发布页面
                         Intent intent = new Intent();
                         intent.setClass(this,CreateInfosActivity.class);
+                        startActivity(intent);
+                    }
+
+                    if (tag == 1){
+                        //跳转到活动创建页面
+                        Intent intent = new Intent();
+                        intent.setClass(this,CreateActivitysActivity.class);
                         startActivity(intent);
                     }
 

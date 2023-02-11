@@ -13,31 +13,7 @@ public class ActivityInfo {
     private String ActivityUser;
     private String ActivityDetail;
     private String ActivityType;
-
-
-    public String getActivityStartTime() {
-        return ActivityStartTime;
-    }
-
-    public void setActivityStartTime(String activityStartTime) {
-        ActivityStartTime = activityStartTime;
-    }
-
-    public String getActivityEndTime() {
-        return ActivityEndTime;
-    }
-
-    public void setActivityEndTime(String activityEndTime) {
-        ActivityEndTime = activityEndTime;
-    }
-
-    public String getActivityType() {
-        return ActivityType;
-    }
-
-    public void setActivityType(String activityType) {
-        ActivityType = activityType;
-    }
+    private String ActivityManagerId;
 
     public String getActivityId() {
         return ActivityId;
@@ -71,6 +47,22 @@ public class ActivityInfo {
         ActivityAvatar = activityAvatar;
     }
 
+    public String getActivityStartTime() {
+        return ActivityStartTime;
+    }
+
+    public void setActivityStartTime(String activityStartTime) {
+        ActivityStartTime = activityStartTime;
+    }
+
+    public String getActivityEndTime() {
+        return ActivityEndTime;
+    }
+
+    public void setActivityEndTime(String activityEndTime) {
+        ActivityEndTime = activityEndTime;
+    }
+
     public String getActivityUser() {
         return ActivityUser;
     }
@@ -85,5 +77,37 @@ public class ActivityInfo {
 
     public void setActivityDetail(String activityDetail) {
         ActivityDetail = activityDetail;
+    }
+
+    public String getActivityType() {
+        return ActivityType;
+    }
+
+    public void setActivityType(String activityType) {
+        ActivityType = activityType;
+    }
+
+    public String getActivityManagerId() {
+        return ActivityManagerId;
+    }
+
+    public void setActivityManagerId(String activityManagerId) {
+        ActivityManagerId = activityManagerId;
+    }
+
+    @Override
+    public String toString() {
+        return "ActivityInfo{" +
+                "ActivityId='" + ActivityId + '\'' +
+                ", ActivityPosition='" + ActivityPosition + '\'' +
+                ", ActivityName='" + ActivityName + '\'' +
+                ", ActivityAvatar='" + ActivityAvatar + '\'' +
+                ", ActivityStartTime='" + ActivityStartTime + '\'' +
+                ", ActivityEndTime='" + ActivityEndTime + '\'' +
+                ", ActivityUser='" + ActivityUser + '\'' +
+                ", ActivityDetail='" + ActivityDetail + '\'' +
+                ", ActivityType='" + ActivityType + '\'' +
+                ", ActivityManagerId='" + ActivityManagerId + '\'' +
+                '}';
     }
 }

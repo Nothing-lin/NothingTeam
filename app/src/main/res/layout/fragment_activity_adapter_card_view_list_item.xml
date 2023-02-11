@@ -59,7 +59,6 @@
                         android:singleLine="false"
                         android:text="为曾宏亮庆祝16岁生日"
                         android:textSize="14dp"
-                        android:textStyle="bold"
                         android:textColor="@color/xui_config_color_pure_black" />
 
                 </LinearLayout>

@@ -55,12 +55,14 @@
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/activity_register_login.xml" value="0.194140625" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/activity_welcome.xml" value="0.194140625" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/adapter_news_card_view_list_item.xml" value="0.264" />
+        <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/fragment_activity.xml" value="0.193359375" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/fragment_activity_adapter_card_view_list_item.xml" value="0.193359375" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/fragment_activity_doing.xml" value="0.193359375" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/fragment_card_detail_comment.xml" value="0.14947916666666666" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/fragment_card_detail_project_detail.xml" value="0.14947916666666666" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/fragment_conv_item_list.xml" value="0.194140625" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/fragment_conv_list.xml" value="0.193359375" />
+        <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/fragment_create_activity.xml" value="0.193359375" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/fragment_createinfo.xml" value="0.193359375" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/fragment_createteam.xml" value="0.193359375" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/fragment_detail_comment_dialog_layout.xml" value="0.194140625" />
