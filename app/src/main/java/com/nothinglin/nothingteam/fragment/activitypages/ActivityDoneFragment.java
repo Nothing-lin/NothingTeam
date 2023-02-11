@@ -14,7 +14,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class ActivityDoingFragment extends BaseFragment {
+public class ActivityDoneFragment extends BaseFragment {
 
     @BindView(R.id.activity_doing_list_view)
     ListView mListView;
@@ -24,7 +24,7 @@ public class ActivityDoingFragment extends BaseFragment {
 
     private List<ActivityInfo> activityInfoList = new ArrayList<>();
 
-    public ActivityDoingFragment(List<ActivityInfo> activityInfoList) {
+    public ActivityDoneFragment(List<ActivityInfo> activityInfoList) {
         this.activityInfoList = activityInfoList;
     }
 

@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.nothinglin.nothingteam.R;
 import com.nothinglin.nothingteam.bean.ActivityInfo;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -76,6 +77,27 @@ public class ActivityDoingListAdapter extends BaseAdapter {
         holder.item_name.setText(activityInfo.getActivityName());
         holder.item_user.setText(activityInfo.getActivityUser());
         //日期设置
+
+        try {
+            SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            Date date1 = format1.parse(activityInfo.getActivityStartTime());
+            SimpleDateFormat outputFormat1 = new SimpleDateFormat("yyyy年MM月dd日HH时mm分");
+            holder.item_startTime.setText(outputFormat1.format(date1));
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            Date date2 = format2.parse(activityInfo.getActivityEndTime());
+            SimpleDateFormat outputFormat2 = new SimpleDateFormat("yyyy年MM月dd日HH时mm分");
+            holder.item_endTime.setText(outputFormat2.format(date2));
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         holder.item_startTime.setText(activityInfo.getActivityStartTime());
         holder.item_endTime.setText(activityInfo.getActivityEndTime());
 

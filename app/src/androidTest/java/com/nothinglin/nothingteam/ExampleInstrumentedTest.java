@@ -28,6 +28,7 @@ import com.nothinglin.nothingteam.utils.GlobalThreadPool;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import cn.jpush.im.android.api.JMessageClient;
@@ -68,6 +69,8 @@ public class ExampleInstrumentedTest {
         List<ActivityInfo> activityInfos = new ArrayList<>();
         ActivityInfoDao activityInfoDao = new ActivityInfoDao();
         activityInfos = activityInfoDao.getActivityInfosAll();
+//        Date mysqlDate = new Date(activityInfos.get(0).getActivityStartTime());
+
 
         System.out.println(activityInfos);
 
