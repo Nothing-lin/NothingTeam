@@ -95,6 +95,7 @@ public class ToolTabCardListFragment extends BaseFragment {
 
         recyclerView.setAdapter(mAdapter = new CardViewListAdapter());
 
+        if (this.tabtitle != "全部"){
         //筛选标签页对应的内容
         for (HiresInfos info : hiresInfosList) {
             //注意这里值的比较不要使用 == 要使用equals方法
@@ -111,9 +112,14 @@ public class ToolTabCardListFragment extends BaseFragment {
                 }
             }
         }
+            //加载数据集合，数据库获取到的数据，通过适配器的refresh传给adapeter
+            mAdapter.refresh(toolTabCardInfos);
+        }else {
+            //加载数据集合，数据库获取到的数据，通过适配器的refresh传给adapeter
+            mAdapter.refresh(hiresInfosList);
+        }
 
-        //加载数据集合，数据库获取到的数据，通过适配器的refresh传给adapeter
-        mAdapter.refresh(toolTabCardInfos);
+
 
         swipeRefreshLayout.setEnabled(false);
     }
@@ -122,12 +128,25 @@ public class ToolTabCardListFragment extends BaseFragment {
     protected void initListeners() {
         mAdapter.setOnItemClickListener(((itemView, item, position) -> {
             ArrayList<HiresInfos> detailCardInfo = new ArrayList<>();
-            //筛选被选中的信息
-            for (HiresInfos info : toolTabCardInfos){
-                if (info.getProject_id().equals(item.getProject_id())){
-                    detailCardInfo.add(info);
+
+            if (this.tabtitle != "全部"){
+                //筛选被选中的信息
+                for (HiresInfos info : toolTabCardInfos){
+                    if (info.getProject_id().equals(item.getProject_id())){
+                        detailCardInfo.add(info);
+                    }
+                }
+            }else {
+                //筛选被选中的信息
+                for (HiresInfos info : hiresInfosList){
+                    if (info.getProject_id().equals(item.getProject_id())){
+                        detailCardInfo.add(info);
+                    }
                 }
             }
+
+
+
             Intent intent = new Intent();
             intent.putExtra("detailCardInfo",detailCardInfo);
             intent.setClass(getContext(), CardDetailActivity.class);

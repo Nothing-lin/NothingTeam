@@ -135,6 +135,10 @@ public class HomeFragment extends BaseFragment implements BaseBanner.OnItemClick
         //获取选项卡的标签title，过滤重复的数据
         String[] tabtitles = getTabTitles();
 
+        //添加全部内容的标签
+        tabLayout.addTab(tabLayout.newTab().setText("全部"));
+        adapter.addFragment(new ToolTabCardListFragment("全部", hiresInfosList), "全部");
+
         //遍历标签页的数量，设置标签页的名字并且给每个标签也添加简单的list帧布局，也意味着每个标签都有自己的fragment，而他们的fragment对应他们的title
         for (String title : tabtitles) {
             tabLayout.addTab(tabLayout.newTab().setText(title));
