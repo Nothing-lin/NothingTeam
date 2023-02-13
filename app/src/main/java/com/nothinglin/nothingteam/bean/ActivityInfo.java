@@ -1,8 +1,9 @@
 package com.nothinglin.nothingteam.bean;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class ActivityInfo {
+public class ActivityInfo implements Serializable {
 
     private String ActivityId;
     private String ActivityPosition;

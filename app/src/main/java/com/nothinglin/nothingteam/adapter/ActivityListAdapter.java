@@ -1,10 +1,14 @@
 package com.nothinglin.nothingteam.adapter;
 
+import static com.xuexiang.xutil.app.ActivityUtils.startActivity;
+
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Parcelable;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,10 +16,17 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.cardview.widget.CardView;
 
 import com.nothinglin.nothingteam.R;
+import com.nothinglin.nothingteam.activity.ActivityDetailActivity;
+import com.nothinglin.nothingteam.activity.CardDetailActivity;
 import com.nothinglin.nothingteam.bean.ActivityInfo;
+import com.nothinglin.nothingteam.fragment.activitypages.ActivityDetailFragment;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,12 +34,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class ActivityDoingListAdapter extends BaseAdapter {
+public class ActivityListAdapter extends BaseAdapter {
     private Activity mContext;
     private final LayoutInflater mInflater;
     private List<ActivityInfo> activityInfoList = new ArrayList<>();
+    ActivityInfo activityInfo;
 
-    public ActivityDoingListAdapter(Activity mContext, List<ActivityInfo> activityInfoList) {
+    public ActivityListAdapter(Activity mContext, List<ActivityInfo> activityInfoList) {
         this.mContext = mContext;
         this.activityInfoList = activityInfoList;
         mInflater = LayoutInflater.from(mContext);
@@ -51,7 +63,7 @@ public class ActivityDoingListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ActivityInfo activityInfo = new ActivityInfo();
+
         activityInfo = activityInfoList.get(position);
 
         //如果视图不存在则初始化视图
@@ -66,6 +78,7 @@ public class ActivityDoingListAdapter extends BaseAdapter {
             holder.item_type = convertView.findViewById(R.id.activity_type);
             holder.item_startTime = convertView.findViewById(R.id.activity_startTime);
             holder.item_endTime = convertView.findViewById(R.id.activity_endTime);
+            holder.item_card = convertView.findViewById(R.id.activity_card);
 
             convertView.setTag(holder);
 
@@ -114,6 +127,22 @@ public class ActivityDoingListAdapter extends BaseAdapter {
         holder.item_type.setText(activityInfo.getActivityType());
 
 
+        holder.item_card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                ArrayList<ActivityInfo> activityInfoList1 = new ArrayList<>();
+                activityInfoList1.add(activityInfo);
+
+                Intent intent = new Intent();
+                intent.putExtra("activityInfo", (Serializable) activityInfoList1);
+                intent.setClass(v.getContext(), ActivityDetailActivity.class);
+                startActivity(intent);
+
+
+
+            }
+        });
 
 
         return convertView;
@@ -128,5 +157,6 @@ public class ActivityDoingListAdapter extends BaseAdapter {
         TextView item_endTime;
         TextView item_user;
         TextView item_type;
+        CardView item_card;
     }
 }

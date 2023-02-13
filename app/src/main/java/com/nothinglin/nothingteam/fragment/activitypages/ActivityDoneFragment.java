@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.widget.ListView;
 
 import com.nothinglin.nothingteam.R;
-import com.nothinglin.nothingteam.adapter.ActivityDoingListAdapter;
+import com.nothinglin.nothingteam.adapter.ActivityListAdapter;
 import com.nothinglin.nothingteam.base.BaseFragment;
 import com.nothinglin.nothingteam.bean.ActivityInfo;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
@@ -20,7 +20,7 @@ public class ActivityDoneFragment extends BaseFragment {
     ListView mListView;
 
     private Activity mContext;
-    private ActivityDoingListAdapter mAdapter;
+    private ActivityListAdapter mAdapter;
 
     private List<ActivityInfo> activityInfoList = new ArrayList<>();
 
@@ -42,7 +42,7 @@ public class ActivityDoneFragment extends BaseFragment {
     protected void initViews() {
 
         mContext = getActivity();
-        mAdapter = new ActivityDoingListAdapter(mContext,activityInfoList);
+        mAdapter = new ActivityListAdapter(mContext,activityInfoList);
         mListView.setAdapter(mAdapter);
 
     }
