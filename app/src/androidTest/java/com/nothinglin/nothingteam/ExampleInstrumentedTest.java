@@ -67,9 +67,7 @@ public class ExampleInstrumentedTest {
     public void TestJG(){
 
         List<ActivityInfo> activityInfos = new ArrayList<>();
-        ActivityInfoDao activityInfoDao = new ActivityInfoDao();
-        activityInfos = activityInfoDao.getActivityInfosAll();
-//        Date mysqlDate = new Date(activityInfos.get(0).getActivityStartTime());
+        Or
 
 
         System.out.println(activityInfos);

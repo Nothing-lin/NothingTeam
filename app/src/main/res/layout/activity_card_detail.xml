@@ -430,32 +430,20 @@
                 android:textSize="12sp" />
 
             <ImageView
+                android:id="@+id/detail_collection"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
-                android:src="@drawable/icon_collect" />
+                android:src="@drawable/collection_nor" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="32"
-                android:textColor="#9A9A9A"
-                android:textSize="14sp" />
 
             <ImageView
+                android:id="@+id/detail_good"
+                android:layout_marginRight="10dp"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:layout_marginLeft="20dp"
-                android:src="@drawable/icon_work_like" />
+                android:src="@drawable/good_nor" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="14dp"
-                android:text="66"
-                android:textColor="#9A9A9A"
-                android:textSize="14sp" />
 
         </LinearLayout>
 

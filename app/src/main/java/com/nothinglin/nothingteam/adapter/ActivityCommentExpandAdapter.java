@@ -1,20 +1,16 @@
 package com.nothinglin.nothingteam.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.nothinglin.nothingteam.R;
 import com.nothinglin.nothingteam.bean.CommentDetail;
-import com.nothinglin.nothingteam.bean.CommentDetailBean;
+import com.nothinglin.nothingteam.dao.ActivityDetailCommentDao;
 import com.nothinglin.nothingteam.dao.DetailCommentDao;
 
 import java.util.List;
@@ -30,13 +26,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Desc: 评论与回复列表的适配器
  */
 
-public class CommentExpandAdapter extends BaseExpandableListAdapter {
+public class ActivityCommentExpandAdapter extends BaseExpandableListAdapter {
     private static final String TAG = "CommentExpandAdapter";
     private List<CommentDetail> commentBeanList;
     private Context context;
     private int pageIndex = 1;
 
-    public CommentExpandAdapter(Context context, List<CommentDetail> commentBeanList) {
+    public ActivityCommentExpandAdapter(Context context, List<CommentDetail> commentBeanList) {
         this.context = context;
         this.commentBeanList = commentBeanList;
     }
@@ -114,7 +110,7 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
                 String userName = commentBeanList.get(groupPosition).getUser_name();
                 String content = commentBeanList.get(groupPosition).getComment_content();
 
-                DeleteCommentThread deleteComment = new DeleteCommentThread(projectId,userName,content);
+                DeleteCommentThread deleteComment = new DeleteCommentThread(projectId,userInfo.getUserName(),content);
 
                 try {
 
@@ -188,7 +184,9 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
         @Override
         public void run() {
 
-            new DetailCommentDao().DeleteComment(project_id,user_name,content);
+            ActivityDetailCommentDao activityDetailCommentDao = new ActivityDetailCommentDao();
+
+            activityDetailCommentDao.DeleteComment(project_id,user_name,content);
 
         }
     }

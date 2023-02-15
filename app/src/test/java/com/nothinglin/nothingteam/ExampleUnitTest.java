@@ -4,9 +4,11 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+import com.nothinglin.nothingteam.bean.CollectionInfo;
 import com.nothinglin.nothingteam.bean.HiresInfos;
 import com.nothinglin.nothingteam.bean.VerificationReply;
 import com.nothinglin.nothingteam.dao.HiresInfosDao;
+import com.nothinglin.nothingteam.dao.OrderDao;
 import com.nothinglin.nothingteam.dao.UserInfoDao;
 import com.nothinglin.nothingteam.dao.VerificationInfoDao;
 import com.umeng.commonsdk.debug.D;
@@ -47,7 +49,20 @@ public class ExampleUnitTest {
     @Test
     public void TestTime(){
 
+        List<CollectionInfo> collectionInfos =new ArrayList<>();
+        OrderDao orderDaos = new OrderDao();
+//        collectionInfos = orderDaos.getAllMyCollectionOnThis("1","1");
+//        System.out.println(collectionInfos);
 
+        CollectionInfo collectionInfo = new CollectionInfo();
+        collectionInfo.setAcountId("12");
+        collectionInfo.setActivityName("12");
+        collectionInfo.setActivityManagerId("12");
+        collectionInfo.setActivityId("32");
+
+//        orderDaos.AddCollection(collectionInfo);
+
+        orderDaos.CancelCollection("32","12");
 
     }
 }

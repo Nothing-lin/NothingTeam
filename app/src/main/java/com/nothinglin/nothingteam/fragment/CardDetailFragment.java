@@ -1,5 +1,8 @@
 package com.nothinglin.nothingteam.fragment;
 
+import static com.nothinglin.nothingteam.R.drawable.collection_nor;
+import static com.nothinglin.nothingteam.R.drawable.collection_pre;
+import static com.nothinglin.nothingteam.R.drawable.good_pre;
 import static com.xuexiang.xutil.XUtil.getContentResolver;
 
 import android.Manifest;
@@ -36,10 +39,12 @@ import androidx.viewpager.widget.ViewPager;
 import com.donkingliang.labels.LabelsView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.nothinglin.nothingteam.R;
+import com.nothinglin.nothingteam.activity.CardDetailActivity;
 import com.nothinglin.nothingteam.activity.MainActivity;
 import com.nothinglin.nothingteam.activity.SingleChatActivity;
 import com.nothinglin.nothingteam.adapter.CommentExpandAdapter;
 import com.nothinglin.nothingteam.base.BaseFragment;
+import com.nothinglin.nothingteam.bean.CollectionInfo;
 import com.nothinglin.nothingteam.bean.CommentBean;
 import com.nothinglin.nothingteam.bean.CommentDetail;
 import com.nothinglin.nothingteam.bean.CommentDetailBean;
@@ -49,6 +54,7 @@ import com.nothinglin.nothingteam.bean.TeamLabel;
 import com.nothinglin.nothingteam.bean.VerificationInfo;
 import com.nothinglin.nothingteam.bean.VerificationReply;
 import com.nothinglin.nothingteam.dao.DetailCommentDao;
+import com.nothinglin.nothingteam.dao.OrderDao;
 import com.nothinglin.nothingteam.dao.PictureDao;
 import com.nothinglin.nothingteam.dao.VerificationInfoDao;
 import com.nothinglin.nothingteam.db.SqliteDBHelper;
@@ -102,6 +108,10 @@ public class CardDetailFragment extends BaseFragment {
     TextView mBt_comment;
     @BindView(R.id.bt_group_apply)
     Button mBtGroupApply;
+    @BindView(R.id.detail_collection)
+    ImageView mCollection;
+    @BindView(R.id.detail_good)
+    ImageView mGood;
 
     //头像
     @BindView(R.id.detail_team_avatar)
@@ -113,12 +123,16 @@ public class CardDetailFragment extends BaseFragment {
     //mPictures是用来存放轮播图图片的
     public List<BannerItem> mPictures;
 
+    private static int isColection;
+
     private CommentExpandableListView expandableListView;
     private CommentExpandAdapter adapter;
     private List<CommentDetail> AllCommentsList = new ArrayList<>();
     private List<CommentDetail> commentsList = new ArrayList<>();
     private String testJson = new DemoDataProvider().testJson;
     private BottomSheetDialog dialog;
+
+    List<CollectionInfo> collectionInfos = new ArrayList<>();
 
 
 
@@ -139,6 +153,29 @@ public class CardDetailFragment extends BaseFragment {
 
     @Override
     protected void initViews() {
+
+        UserInfo userInfo = JMessageClient.getMyInfo();
+
+        //收藏数据初始化
+        CollectionsThread collectionsThread = new CollectionsThread(detailCardInfo.get(0).getProject_id(),userInfo.getUserName());
+
+        try {
+            collectionsThread.start();
+            collectionsThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        collectionInfos = collectionsThread.collectionInfos;
+        if (collectionInfos.size() == 0){
+            isColection = 2;//0没收藏
+            mCollection.setImageResource(collection_nor);
+        }else {
+            isColection = 1;//1收藏了
+            mCollection.setImageResource(collection_pre);
+
+        }
+
 
         //bitmap转uri时要获取本地权限
         requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},0);
@@ -174,6 +211,52 @@ public class CardDetailFragment extends BaseFragment {
 
         //初始化评论模块
         initComments();
+
+
+        mCollection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (isColection % 2 == 1) {
+                    mCollection.setImageResource(collection_pre);
+
+                    InsertCollectionThread insertCollectionThread = new InsertCollectionThread();
+
+                    try {
+                        insertCollectionThread.start();
+                        insertCollectionThread.join();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    Toast.makeText(getActivity(), "成功将该项目添加到了收藏夹~", Toast.LENGTH_SHORT).show();
+
+
+                }else {
+                    mCollection.setImageResource(collection_nor);
+
+                    DeleteCollectionThread deleteCollectionThread = new DeleteCollectionThread();
+
+                    try {
+                        deleteCollectionThread.start();
+                        deleteCollectionThread.join();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    Toast.makeText(getActivity(), "您已取消了该项目的收藏~", Toast.LENGTH_SHORT).show();
+
+
+                }
+                isColection++;
+            }
+        });
+
+        mGood.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mGood.setImageResource(good_pre);
+            }
+        });
 
     }
 
@@ -264,10 +347,12 @@ public class CardDetailFragment extends BaseFragment {
                     public void onClick(View v) {
                         String commentContent = commentText.getText().toString().trim();
                         CommentDetail testDetail = new CommentDetail();
-                        testDetail.setUser_name("Nothinglin");
+                        UserInfo userInfo = JMessageClient.getMyInfo();
+
+                        testDetail.setUser_name(userInfo.getUserName());
                         testDetail.setComment_content(commentContent);
 
-                        Thread insertCommentThread = new InsetCommentThread(hiresInfos.getProject_id(),"Nothinglin",commentContent);
+                        Thread insertCommentThread = new InsetCommentThread(hiresInfos.getProject_id(),userInfo.getUserName(),commentContent);
 
                         try {
 
@@ -524,6 +609,60 @@ public class CardDetailFragment extends BaseFragment {
 
         }
     }
+
+    public class DeleteCollectionThread extends Thread{
+
+
+        @Override
+        public void run() {
+            super.run();
+            OrderDao orderDao = new OrderDao();
+            UserInfo userInfo = JMessageClient.getMyInfo();
+            orderDao.CancelCollection(detailCardInfo.get(0).getProject_id(),userInfo.getUserName());
+
+        }
+    }
+
+    public class InsertCollectionThread extends Thread{
+
+        @Override
+        public void run() {
+            super.run();
+
+            UserInfo userInfo = JMessageClient.getMyInfo();
+            CollectionInfo collectionInfo = new CollectionInfo();
+            collectionInfo.setActivityId(detailCardInfo.get(0).getProject_id());
+            collectionInfo.setActivityName(detailCardInfo.get(0).getProject_name());
+            collectionInfo.setActivityManagerId(detailCardInfo.get(0).getTeam_manager_userid());
+            collectionInfo.setAcountId(userInfo.getUserName());
+
+            OrderDao orderDao = new OrderDao();
+            orderDao.AddCollection(collectionInfo);
+
+        }
+    }
+
+    //收藏的线程
+    public class CollectionsThread extends Thread{
+
+        private List<CollectionInfo> collectionInfos = new ArrayList<>();
+        private String  activityId, acountId;
+
+        public CollectionsThread(String activityId,String acountId){
+            this.activityId = activityId;
+            this.acountId = acountId;
+        }
+
+
+        @Override
+        public void run() {
+            super.run();
+
+            OrderDao orderDao = new OrderDao();
+            collectionInfos = orderDao.getAllMyCollectionOnThis(activityId,acountId);
+        }
+    }
+
 
     //设置一个加群的线程，数据库获取数据时需要
     public class JoinApplyGroupThread extends Thread{
