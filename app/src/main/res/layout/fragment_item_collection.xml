@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/friend_verify_item_ll"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:id="@+id/collection_linearlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingLeft="14.33dip"
+        android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:id="@+id/title_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="22.33dp"
+                    android:maxLines="1"
+                    android:text="项目："
+                    android:textColor="#2C2C2C"
+                    android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/project_name"
+                    android:layout_width="0dp"
+                    android:layout_height="22.33dp"
+                    android:layout_weight="1"
+                    android:maxLines="1"
+                    android:text="申请人"
+                    android:textColor="#2C2C2C"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.33dp"
+        android:background="#D9D9D9" />
+</LinearLayout>

@@ -14,6 +14,41 @@ import java.util.List;
 
 public class OrderDao {
 
+    public List<CollectionInfo> getAllMyCollection(){
+        String sql = "select * from detail_collection";
+        Connection connection = DBOpenHelper.getConnection();
+        List<CollectionInfo> collectionInfos = new ArrayList<>();
+
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+
+            while (rs.next()){
+                CollectionInfo collectionInfo = new CollectionInfo();
+
+                collectionInfo.setActivityId(rs.getString("activity_id"));
+                collectionInfo.setActivityName(rs.getString("activity_name"));
+                collectionInfo.setAcountId(rs.getString("acount_id"));
+                collectionInfo.setActivityManagerId(rs.getString("activity_manager_id"));
+                collectionInfo.setActivityStartTime(rs.getTime("activity_start_time"));
+                collectionInfo.setActivityEndTime(rs.getTime("activity_end_time"));
+
+                collectionInfos.add(collectionInfo);
+
+            }
+
+            rs.close();
+            connection.close();
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return collectionInfos;
+
+    }
+
     public List<CollectionInfo> getAllMyCollectionOnThis(String activityId,String acountId){
         String sql = "select * from detail_collection where activity_id = "+activityId+" and acount_id = "+acountId+"";
         Connection connection = DBOpenHelper.getConnection();

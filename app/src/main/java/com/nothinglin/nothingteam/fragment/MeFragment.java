@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import com.nothinglin.nothingteam.R;
 import com.nothinglin.nothingteam.activity.GroupVerificationActivity;
 import com.nothinglin.nothingteam.activity.LoginActivity;
+import com.nothinglin.nothingteam.activity.MyCollectionActivity;
 import com.nothinglin.nothingteam.base.BaseFragment;
 import com.xuexiang.xpage.annotation.Page;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
@@ -30,6 +31,9 @@ public class MeFragment extends BaseFragment {
 
     @BindView(R.id.ll_icon1)
     LinearLayout mGroupVerification;
+
+    @BindView(R.id.collection)
+    LinearLayout mMyCollection;
 
     @Override
     protected int getLayoutId() {
@@ -67,6 +71,18 @@ public class MeFragment extends BaseFragment {
                 intent.setClass(getContext(), GroupVerificationActivity.class);
                 startActivity(intent);
 
+
+            }
+        });
+
+        //我的收藏
+        mMyCollection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent();
+                intent.setClass(getContext(), MyCollectionActivity.class);
+                startActivity(intent);
 
             }
         });

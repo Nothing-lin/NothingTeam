@@ -30,6 +30,63 @@ public class HiresInfosDao {
     }
 
     //获取招聘信息表中的全部内容
+    public ArrayList<HiresInfos> getHiresInfoThis(String projectId) {
+
+        String sql = "select * from hires_infos where project_id = "+projectId+"";
+        Connection connection = DBOpenHelper.getConnection();
+        ArrayList<HiresInfos> hiresInfos = new ArrayList<>();
+
+        //数据库执行体
+        /**
+         * Jdbc中的statement对象用于向数据库发送SQL语句，想完成对数据库的增删改查，只需要通过这个对象向数据库发送增删改查语句即可。
+         * Statement对象的executeUpdate方法，用于向数据库发送增、删、改的sql语句，executeUpdate执行完后，将会返回一个整数（即增删改语句导致了数据库几行数据发生了变化)。
+         * Statement.executeQuery方法用于向数据库发送查询语句,executeQuery方法返回代表查询结果的ResultSet对象。
+         */
+        try {
+            Statement statement = (Statement) connection.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+
+            //rs.next() -- 看看数据库有没有下条数据，没有就不遍历了，有的话就继续遍历
+            while (rs.next()) {
+                HiresInfos hiresInfo = new HiresInfos();
+
+                //将数据库的每条数据放到hireInfo bean中保存，再统一加入list列表中（多条数据）
+                hiresInfo.setProject_id(rs.getString(HiresInfosTable.COL_PROJECT_ID));
+                hiresInfo.setProject_name(rs.getString(HiresInfosTable.COL_PROJECT_NAME));
+                hiresInfo.setProject_owner_team_name(rs.getString(HiresInfosTable.COL_PROJECT_OWNER_TEAM_NAME));
+                hiresInfo.setProject_type(rs.getString(HiresInfosTable.COL_PROJECT_TYPE));
+                hiresInfo.setCompetition_type(rs.getString(HiresInfosTable.COL_COMPETITION_TYPE));
+                hiresInfo.setHire_numbers(rs.getString(HiresInfosTable.COL_HIRE_NUMBERS));
+                hiresInfo.setProject_position(rs.getString(HiresInfosTable.COL_PROJECT_POSITION));
+                hiresInfo.setProject_create_date(rs.getDate(HiresInfosTable.COL_PROJECT_CREATE_DATE));
+                hiresInfo.setIs_team_full(rs.getInt(HiresInfosTable.COL_IS_TEAM_FULL));
+                hiresInfo.setIs_hide(rs.getInt(HiresInfosTable.COL_IS_HIDE));
+                hiresInfo.setProject_introdution(rs.getString(HiresInfosTable.COL_PROJECT_INTRODUCTION));
+                hiresInfo.setTeam_avatar(rs.getString(HiresInfosTable.COL_TEAM_AVATAR));
+                hiresInfo.setTeam_school(rs.getString(HiresInfosTable.COL_TEAM_SCHOOL));
+                hiresInfo.setTeam_intro(rs.getString(HiresInfosTable.COL_TEAM_INTRO));
+                hiresInfo.setTeam_manager_userid(rs.getString(HiresInfosTable.COL_TEAM_MANAGER_USERID));
+                hiresInfo.setProject_detail(rs.getString(HiresInfosTable.COL_PROJECT_DETAIL));
+                hiresInfo.setHire_detail(rs.getString(HiresInfosTable.COL_HIRE_DETAIL));
+                hiresInfo.setGroup_id(rs.getString("group_id"));
+
+
+                hiresInfos.add(hiresInfo);
+            }
+
+            //关闭数据库连接资源
+            rs.close();
+            connection.close();
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return hiresInfos;
+    }
+
+    //获取招聘信息表中的全部内容
     public List<HiresInfos> getHiresInfoAll() {
 
         String sql = "select * from hires_infos";
