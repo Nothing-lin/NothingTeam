@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.widget.ListView;
 
 import com.nothinglin.nothingteam.R;
+import com.nothinglin.nothingteam.adapter.ActivityCollectionAdapter;
 import com.nothinglin.nothingteam.adapter.CollectionAdapter;
 import com.nothinglin.nothingteam.base.BaseFragment;
 import com.nothinglin.nothingteam.bean.CollectionInfo;
+import com.nothinglin.nothingteam.dao.ActivityOrderDao;
 import com.nothinglin.nothingteam.dao.HiresOrderDao;
 import com.xuexiang.xpage.annotation.Page;
 
@@ -16,19 +18,19 @@ import butterknife.BindView;
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.model.UserInfo;
 
-@Page(name = "我的收藏")
-public class MyCollectionFragment extends BaseFragment {
+@Page(name = "活动订阅")
+public class ActivityCollectionFragment extends BaseFragment {
 
     @BindView(R.id.collection_list_view)
     ListView mListView;
 
     List<CollectionInfo> collectionInfos;
-    private CollectionAdapter madapter;
+    private ActivityCollectionAdapter madapter;
     private Activity mContext;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_collection;
+        return R.layout.fragment_activity_collection_list;
     }
 
     @Override
@@ -45,7 +47,7 @@ public class MyCollectionFragment extends BaseFragment {
 
         collectionInfos = getAllCollectionsThread.collectionInfos;
         mContext = getActivity();
-        madapter = new CollectionAdapter(mContext,collectionInfos);
+        madapter = new ActivityCollectionAdapter(mContext,collectionInfos);
         mListView.setAdapter(madapter);
 
     }
@@ -58,8 +60,8 @@ public class MyCollectionFragment extends BaseFragment {
         public void run() {
             super.run();
             UserInfo userInfo = JMessageClient.getMyInfo();
-            HiresOrderDao hiresOrderDao = new HiresOrderDao();
-            collectionInfos = hiresOrderDao.getAllMyCollection(userInfo.getUserName());
+            ActivityOrderDao activityOrderDao = new ActivityOrderDao();
+            collectionInfos = activityOrderDao.getAllMyCollection(userInfo.getUserName());
 
         }
     }

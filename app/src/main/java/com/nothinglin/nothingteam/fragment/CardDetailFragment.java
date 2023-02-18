@@ -2,7 +2,6 @@ package com.nothinglin.nothingteam.fragment;
 
 import static com.nothinglin.nothingteam.R.drawable.collection_nor;
 import static com.nothinglin.nothingteam.R.drawable.collection_pre;
-import static com.nothinglin.nothingteam.R.drawable.good_pre;
 import static com.xuexiang.xutil.XUtil.getContentResolver;
 
 import android.Manifest;
@@ -16,56 +15,43 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.provider.MediaStore;
 import android.text.InputType;
-import android.text.TextUtils;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.viewpager.widget.ViewPager;
 
 import com.donkingliang.labels.LabelsView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.nothinglin.nothingteam.R;
-import com.nothinglin.nothingteam.activity.CardDetailActivity;
-import com.nothinglin.nothingteam.activity.MainActivity;
 import com.nothinglin.nothingteam.activity.SingleChatActivity;
 import com.nothinglin.nothingteam.adapter.CommentExpandAdapter;
 import com.nothinglin.nothingteam.base.BaseFragment;
 import com.nothinglin.nothingteam.bean.CollectionInfo;
-import com.nothinglin.nothingteam.bean.CommentBean;
 import com.nothinglin.nothingteam.bean.CommentDetail;
-import com.nothinglin.nothingteam.bean.CommentDetailBean;
 import com.nothinglin.nothingteam.bean.DetailPicture;
 import com.nothinglin.nothingteam.bean.HiresInfos;
 import com.nothinglin.nothingteam.bean.TeamLabel;
 import com.nothinglin.nothingteam.bean.VerificationInfo;
 import com.nothinglin.nothingteam.bean.VerificationReply;
 import com.nothinglin.nothingteam.dao.DetailCommentDao;
-import com.nothinglin.nothingteam.dao.OrderDao;
+import com.nothinglin.nothingteam.dao.HiresOrderDao;
 import com.nothinglin.nothingteam.dao.PictureDao;
 import com.nothinglin.nothingteam.dao.VerificationInfoDao;
 import com.nothinglin.nothingteam.db.SqliteDBHelper;
-import com.nothinglin.nothingteam.utils.GlobalThreadPool;
 import com.nothinglin.nothingteam.widget.CommentExpandableListView;
 import com.nothinglin.nothingteam.widget.DemoDataProvider;
 import com.nothinglin.nothingteam.widget.RadiusImageBanner;
 import com.xuexiang.xpage.annotation.Page;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
 import com.xuexiang.xui.widget.banner.widget.banner.BannerItem;
-import com.xuexiang.xui.widget.banner.widget.banner.SimpleImageBanner;
 import com.xuexiang.xui.widget.dialog.materialdialog.DialogAction;
 import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog;
 import com.xuexiang.xui.widget.imageview.RadiusImageView;
@@ -74,11 +60,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import cn.jmessage.support.google.gson.Gson;
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.callback.GetUserInfoCallback;
 import cn.jpush.im.android.api.model.UserInfo;
-import cn.jpush.im.api.BasicCallback;
 
 @Page(name = "项目详情页")
 public class CardDetailFragment extends BaseFragment {
@@ -110,8 +94,6 @@ public class CardDetailFragment extends BaseFragment {
     Button mBtGroupApply;
     @BindView(R.id.detail_collection)
     ImageView mCollection;
-    @BindView(R.id.detail_good)
-    ImageView mGood;
 
     //头像
     @BindView(R.id.detail_team_avatar)
@@ -168,10 +150,10 @@ public class CardDetailFragment extends BaseFragment {
 
         collectionInfos = collectionsThread.collectionInfos;
         if (collectionInfos.size() == 0){
-            isColection = 2;//0没收藏
+            isColection = 1;//0没收藏
             mCollection.setImageResource(collection_nor);
         }else {
-            isColection = 1;//1收藏了
+            isColection = 2;//1收藏了
             mCollection.setImageResource(collection_pre);
 
         }
@@ -251,12 +233,6 @@ public class CardDetailFragment extends BaseFragment {
             }
         });
 
-        mGood.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mGood.setImageResource(good_pre);
-            }
-        });
 
     }
 
@@ -616,9 +592,9 @@ public class CardDetailFragment extends BaseFragment {
         @Override
         public void run() {
             super.run();
-            OrderDao orderDao = new OrderDao();
+            HiresOrderDao hiresOrderDao = new HiresOrderDao();
             UserInfo userInfo = JMessageClient.getMyInfo();
-            orderDao.CancelCollection(detailCardInfo.get(0).getProject_id(),userInfo.getUserName());
+            hiresOrderDao.CancelCollection(detailCardInfo.get(0).getProject_id(),userInfo.getUserName());
 
         }
     }
@@ -636,8 +612,8 @@ public class CardDetailFragment extends BaseFragment {
             collectionInfo.setActivityManagerId(detailCardInfo.get(0).getTeam_manager_userid());
             collectionInfo.setAcountId(userInfo.getUserName());
 
-            OrderDao orderDao = new OrderDao();
-            orderDao.AddCollection(collectionInfo);
+            HiresOrderDao hiresOrderDao = new HiresOrderDao();
+            hiresOrderDao.AddCollection(collectionInfo);
 
         }
     }
@@ -658,8 +634,8 @@ public class CardDetailFragment extends BaseFragment {
         public void run() {
             super.run();
 
-            OrderDao orderDao = new OrderDao();
-            collectionInfos = orderDao.getAllMyCollectionOnThis(activityId,acountId);
+            HiresOrderDao hiresOrderDao = new HiresOrderDao();
+            collectionInfos = hiresOrderDao.getAllMyCollectionOnThis(activityId,acountId);
         }
     }
 

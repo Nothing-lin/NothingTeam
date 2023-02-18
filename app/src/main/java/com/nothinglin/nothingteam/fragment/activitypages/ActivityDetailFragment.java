@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.nothinglin.nothingteam.R;
@@ -22,16 +23,20 @@ import com.nothinglin.nothingteam.adapter.ActivityCommentExpandAdapter;
 import com.nothinglin.nothingteam.adapter.CommentExpandAdapter;
 import com.nothinglin.nothingteam.base.BaseFragment;
 import com.nothinglin.nothingteam.bean.ActivityInfo;
+import com.nothinglin.nothingteam.bean.CollectionInfo;
 import com.nothinglin.nothingteam.bean.CommentDetail;
 import com.nothinglin.nothingteam.bean.HiresInfos;
 import com.nothinglin.nothingteam.dao.ActivityDetailCommentDao;
+import com.nothinglin.nothingteam.dao.ActivityOrderDao;
 import com.nothinglin.nothingteam.dao.DetailCommentDao;
 import com.nothinglin.nothingteam.fragment.CardDetailFragment;
 import com.nothinglin.nothingteam.widget.CommentExpandableListView;
 import com.xuexiang.xpage.annotation.Page;
+import com.xuexiang.xutil.data.DateUtils;
 
 import java.io.Serializable;
 import java.net.URISyntaxException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -60,6 +65,9 @@ public class ActivityDetailFragment extends BaseFragment {
     @BindView(R.id.detail_union)
     TextView mDetailUnion;
 
+    @BindView(R.id.bt_activity_collection)
+    Button mBtCollection;
+
     //输入框
     @BindView(R.id.detail_page_do_comment)
     TextView mBt_comment;
@@ -72,6 +80,11 @@ public class ActivityDetailFragment extends BaseFragment {
     private ArrayList<ActivityInfo> activityInfoList = new ArrayList<>();
     private ActivityInfo activityInfo = new ActivityInfo();
 
+    CollectionInfo collectionInfo = new CollectionInfo();
+    List<CollectionInfo> collectionInfos = new ArrayList<>();
+
+    private static int isColection;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_activity_detail;
@@ -80,10 +93,33 @@ public class ActivityDetailFragment extends BaseFragment {
     @Override
     protected void initViews() {
 
+
+
+
         //获取传过来的详情页数据
         Bundle bundle = getArguments();
         activityInfoList = (ArrayList<ActivityInfo>) bundle.getSerializable("activityInfo");
         activityInfo = activityInfoList.get(0);
+
+        UserInfo userInfo = JMessageClient.getMyInfo();
+        getActivityCollectionOnthisThread getActivityCollectionOnthisThread = new getActivityCollectionOnthisThread(activityInfo.getActivityId(),userInfo.getUserName());
+
+        try {
+            getActivityCollectionOnthisThread.start();
+            getActivityCollectionOnthisThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        collectionInfos = getActivityCollectionOnthisThread.collectionInfos;
+
+        if (collectionInfos.size() != 0){
+            isColection = 2;//1收藏了
+            mBtCollection.setText("已订阅");
+        }else {
+            isColection = 1;//0没收藏
+            mBtCollection.setText("活动订阅");
+        }
 
 
         if (activityInfo.getActivityAvatar() != null) {
@@ -93,9 +129,9 @@ public class ActivityDetailFragment extends BaseFragment {
             Bitmap decodeImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
             mDtailPicture.setImageBitmap(decodeImage);
         }
-            mDetailTitle.setText(activityInfo.getActivityName());
-            mDetailContent.setText(activityInfo.getActivityDetail());
-            mDetailPosition.setText(activityInfo.getActivityPosition());
+        mDetailTitle.setText(activityInfo.getActivityName());
+        mDetailContent.setText(activityInfo.getActivityDetail());
+        mDetailPosition.setText(activityInfo.getActivityPosition());
 
         try {
             SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -142,7 +178,7 @@ public class ActivityDetailFragment extends BaseFragment {
                         ActivityCommentDetail.setUser_name(userInfo.getUserName());
                         ActivityCommentDetail.setComment_content(commentContent);
 
-                        InsertActivityCommentThread insertActivityCommentThread = new InsertActivityCommentThread(activityInfo.getActivityId(),userInfo.getUserName(),commentContent);
+                        InsertActivityCommentThread insertActivityCommentThread = new InsertActivityCommentThread(activityInfo.getActivityId(), userInfo.getUserName(), commentContent);
 
                         try {
 
@@ -166,6 +202,73 @@ public class ActivityDetailFragment extends BaseFragment {
 
         //初始化评论模块
         initComments();
+
+        mBtCollection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (isColection % 2 == 1){
+
+                    UserInfo userInfo = JMessageClient.getMyInfo();
+                    collectionInfo.setAcountId(userInfo.getUserName());//我订阅了这个活动
+                    collectionInfo.setActivityId(activityInfo.getActivityId());
+                    collectionInfo.setActivityName(activityInfo.getActivityName());
+                    collectionInfo.setActivityManagerId(activityInfo.getActivityManagerId());
+
+
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date date1 = null;
+                    Date date2 = null;
+                    try {
+                        date1 = sdf.parse(String.valueOf(activityInfo.getActivityStartTime()));
+                        collectionInfo.setActivityStartTime(date1);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        date2 = sdf.parse(String.valueOf(activityInfo.getActivityEndTime()));
+                        collectionInfo.setActivityEndTime(date2);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    InsertActivityCollectionThread insertActivityCollectionThread = new InsertActivityCollectionThread(collectionInfo);
+
+                    try {
+                        insertActivityCollectionThread.join();
+                        insertActivityCollectionThread.start();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    mBtCollection.setText("已订阅");
+                    Toast.makeText(getActivity(), "您已订阅了该活动~", Toast.LENGTH_SHORT).show();
+
+                }else {
+
+                    mBtCollection.setText("活动订阅");
+
+                    UserInfo userInfo = JMessageClient.getMyInfo();
+
+                    CancelCollectionThread cancelCollectionThread = new CancelCollectionThread(activityInfo.getActivityId(),userInfo.getUserName());
+
+                    try {
+                        cancelCollectionThread.start();
+                        cancelCollectionThread.join();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    Toast.makeText(getActivity(), "您已取消了该活动~", Toast.LENGTH_SHORT).show();
+
+                }
+
+
+
+                isColection++;
+            }
+        });
 
     }
 
@@ -212,14 +315,14 @@ public class ActivityDetailFragment extends BaseFragment {
 
     }
 
-    public class GetActivityComments extends Thread{
+    public class GetActivityComments extends Thread {
         @Override
         public void run() {
             ActivityDetailCommentDao activityDetailCommentDao = new ActivityDetailCommentDao();
             AllCommentsList = activityDetailCommentDao.getAllComment();
 
-            for (CommentDetail commentDetail : AllCommentsList){
-                if (commentDetail.getProject_id().equals(activityInfo.getActivityId())){
+            for (CommentDetail commentDetail : AllCommentsList) {
+                if (commentDetail.getProject_id().equals(activityInfo.getActivityId())) {
                     commentsList.add(commentDetail);
                 }
             }
@@ -227,12 +330,12 @@ public class ActivityDetailFragment extends BaseFragment {
     }
 
 
-    public class InsertActivityCommentThread extends Thread{
+    public class InsertActivityCommentThread extends Thread {
         private String project_id;
         private String user_name;
         private String content;
 
-        InsertActivityCommentThread(String project_id,String user_name,String content){
+        InsertActivityCommentThread(String project_id, String user_name, String content) {
             this.project_id = project_id;
             this.user_name = user_name;
             this.content = content;
@@ -241,8 +344,65 @@ public class ActivityDetailFragment extends BaseFragment {
         @Override
         public void run() {
 
-            new ActivityDetailCommentDao().InsetComment(project_id,user_name,null,content);
+            new ActivityDetailCommentDao().InsetComment(project_id, user_name, null, content);
 
+        }
+    }
+
+
+    public class InsertActivityCollectionThread extends Thread {
+        CollectionInfo collectionInfo = new CollectionInfo();
+
+        public InsertActivityCollectionThread(CollectionInfo collectionInfo) {
+            this.collectionInfo = collectionInfo;
+        }
+
+        @Override
+        public void run() {
+            super.run();
+
+            ActivityOrderDao activityOrderDao = new ActivityOrderDao();
+            activityOrderDao.AddCollection(collectionInfo);
+
+        }
+    }
+
+    public class getActivityCollectionOnthisThread extends Thread{
+        String activityId;
+        String acountId;
+        public List<CollectionInfo> collectionInfos = new ArrayList<>();
+
+        public getActivityCollectionOnthisThread(String activityId,String acountId){
+            this.activityId = activityId;
+            this.acountId = acountId;
+        }
+
+
+        @Override
+        public void run() {
+            super.run();
+
+            ActivityOrderDao activityOrderDao = new ActivityOrderDao();
+            collectionInfos = activityOrderDao.getAllMyCollectionOnThis(activityId,acountId);
+        }
+    }
+
+
+    public class CancelCollectionThread extends Thread{
+        String activityId;
+        String acountId;
+
+        public CancelCollectionThread(String activityId,String acountId){
+            this.activityId = activityId;
+            this.acountId = acountId;
+        }
+
+        @Override
+        public void run() {
+            super.run();
+
+            ActivityOrderDao activityOrderDao = new ActivityOrderDao();
+            activityOrderDao.CancelCollection(activityId,acountId);
         }
     }
 }

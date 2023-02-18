@@ -40,6 +40,9 @@
         <entry key="..\:/Project/NothingTeam/app/src/main/res/drawable/selector_tab_text_color.xml" value="0.1395" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/drawable/send_message_failed.xml" value="0.1795" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/drawable/shape_top_corner.xml" value="0.1645" />
+        <entry key="..\:/Project/NothingTeam/app/src/main/res/drawable/status_blue.xml" value="0.1715" />
+        <entry key="..\:/Project/NothingTeam/app/src/main/res/drawable/status_gray.xml" value="0.1715" />
+        <entry key="..\:/Project/NothingTeam/app/src/main/res/drawable/status_yellow.xml" value="0.1715" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/drawable/textview_rounded_corner.xml" value="0.1725" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/drawable/xui_round_btn_green_bg.xml" value="0.1915" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout-w1240dp/activity_login.xml" value="0.16" />
@@ -58,6 +61,8 @@
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/adapter_news_card_view_list_item.xml" value="0.264" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/fragment_activity.xml" value="0.193359375" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/fragment_activity_adapter_card_view_list_item.xml" value="0.193359375" />
+        <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/fragment_activity_collection_item.xml" value="0.193359375" />
+        <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/fragment_activity_collection_list.xml" value="0.193359375" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/fragment_activity_doing.xml" value="0.193359375" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/fragment_card_detail_comment.xml" value="0.14947916666666666" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/fragment_card_detail_project_detail.xml" value="0.14947916666666666" />

@@ -420,7 +420,7 @@
                 android:layout_width="0dp"
                 android:layout_height="34dp"
                 android:layout_marginLeft="12dp"
-                android:layout_marginRight="22dp"
+                android:layout_marginRight="12dp"
                 android:layout_weight="1"
                 android:background="@drawable/comment_bt_selector"
                 android:gravity="center_vertical"
@@ -430,19 +430,17 @@
                 android:textSize="12sp" />
 
             <ImageView
+                android:layout_marginRight="3dp"
                 android:id="@+id/detail_collection"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:src="@drawable/collection_nor" />
 
-
-            <ImageView
-                android:id="@+id/detail_good"
-                android:layout_marginRight="10dp"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:layout_marginLeft="20dp"
-                android:src="@drawable/good_nor" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="收藏"
+                android:layout_marginRight="10dp"/>
 
 
         </LinearLayout>

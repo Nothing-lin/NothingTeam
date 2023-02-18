@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.nothinglin.nothingteam.R;
+import com.nothinglin.nothingteam.activity.ActivityCollectionActivity;
 import com.nothinglin.nothingteam.activity.GroupVerificationActivity;
 import com.nothinglin.nothingteam.activity.LoginActivity;
 import com.nothinglin.nothingteam.activity.MyCollectionActivity;
@@ -34,6 +35,9 @@ public class MeFragment extends BaseFragment {
 
     @BindView(R.id.collection)
     LinearLayout mMyCollection;
+
+    @BindView(R.id.my_activity_collection)
+    LinearLayout mMyActivityCollection;
 
     @Override
     protected int getLayoutId() {
@@ -84,6 +88,16 @@ public class MeFragment extends BaseFragment {
                 intent.setClass(getContext(), MyCollectionActivity.class);
                 startActivity(intent);
 
+            }
+        });
+
+        //我的活动订阅
+        mMyActivityCollection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(getContext(), ActivityCollectionActivity.class);
+                startActivity(intent);
             }
         });
 

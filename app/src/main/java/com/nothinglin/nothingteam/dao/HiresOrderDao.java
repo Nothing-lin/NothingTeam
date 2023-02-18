@@ -12,10 +12,10 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderDao {
+public class HiresOrderDao {
 
-    public List<CollectionInfo> getAllMyCollection(){
-        String sql = "select * from detail_collection";
+    public List<CollectionInfo> getAllMyCollection(String userid){
+        String sql = "select * from detail_collection where acount_id ="+userid+"";
         Connection connection = DBOpenHelper.getConnection();
         List<CollectionInfo> collectionInfos = new ArrayList<>();
 

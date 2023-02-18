@@ -66,6 +66,7 @@
         <activity android:name=".activity.CreateActivitysActivity"/>
         <activity android:name=".activity.ActivityDetailActivity"/>
         <activity android:name=".activity.MyCollectionActivity"/>
+        <activity android:name=".activity.ActivityCollectionActivity"/>
         <activity
             android:name=".activity.WelcomeActivity"
             android:exported="true">

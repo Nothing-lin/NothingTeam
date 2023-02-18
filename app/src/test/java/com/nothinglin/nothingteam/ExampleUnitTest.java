@@ -6,15 +6,11 @@ import static org.junit.Assert.*;
 
 import com.nothinglin.nothingteam.bean.CollectionInfo;
 import com.nothinglin.nothingteam.bean.HiresInfos;
-import com.nothinglin.nothingteam.bean.VerificationReply;
 import com.nothinglin.nothingteam.dao.HiresInfosDao;
-import com.nothinglin.nothingteam.dao.OrderDao;
+import com.nothinglin.nothingteam.dao.HiresOrderDao;
 import com.nothinglin.nothingteam.dao.UserInfoDao;
-import com.nothinglin.nothingteam.dao.VerificationInfoDao;
-import com.umeng.commonsdk.debug.D;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -50,7 +46,7 @@ public class ExampleUnitTest {
     public void TestTime(){
 
         List<CollectionInfo> collectionInfos =new ArrayList<>();
-        OrderDao orderDaos = new OrderDao();
+        HiresOrderDao hiresOrderDaos = new HiresOrderDao();
 //        collectionInfos = orderDaos.getAllMyCollectionOnThis("1","1");
 //        System.out.println(collectionInfos);
 
@@ -62,7 +58,7 @@ public class ExampleUnitTest {
 
 //        orderDaos.AddCollection(collectionInfo);
 
-        orderDaos.CancelCollection("32","12");
+        hiresOrderDaos.CancelCollection("32","12");
 
     }
 }
