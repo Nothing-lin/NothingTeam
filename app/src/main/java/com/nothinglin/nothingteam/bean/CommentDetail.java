@@ -7,6 +7,16 @@ public class CommentDetail {
     private String user_name;
     private Date comment_time;
     private String comment_content;
+    private String managerid;
+
+
+    public String getManagerid() {
+        return managerid;
+    }
+
+    public void setManagerid(String managerid) {
+        this.managerid = managerid;
+    }
 
     public String getProject_id() {
         return project_id;

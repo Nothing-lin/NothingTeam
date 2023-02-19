@@ -481,7 +481,7 @@ public class CardDetailFragment extends BaseFragment {
         @Override
         public void run() {
 
-            new DetailCommentDao().InsetComment(project_id,user_name,null,content);
+            new DetailCommentDao().InsetComment(project_id,user_name,null,content,hiresInfos.getTeam_manager_userid());
 
         }
     }

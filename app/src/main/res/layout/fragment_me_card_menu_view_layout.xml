@@ -54,6 +54,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_comments_tips"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"

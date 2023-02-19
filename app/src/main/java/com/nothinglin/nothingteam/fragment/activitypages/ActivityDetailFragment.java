@@ -178,7 +178,7 @@ public class ActivityDetailFragment extends BaseFragment {
                         ActivityCommentDetail.setUser_name(userInfo.getUserName());
                         ActivityCommentDetail.setComment_content(commentContent);
 
-                        InsertActivityCommentThread insertActivityCommentThread = new InsertActivityCommentThread(activityInfo.getActivityId(), userInfo.getUserName(), commentContent);
+                        InsertActivityCommentThread insertActivityCommentThread = new InsertActivityCommentThread(activityInfo.getActivityId(), userInfo.getUserName(), commentContent,activityInfo.getActivityManagerId());
 
                         try {
 
@@ -334,17 +334,20 @@ public class ActivityDetailFragment extends BaseFragment {
         private String project_id;
         private String user_name;
         private String content;
+        private String managerid;
 
-        InsertActivityCommentThread(String project_id, String user_name, String content) {
+        InsertActivityCommentThread(String project_id, String user_name, String content,String managerid) {
             this.project_id = project_id;
             this.user_name = user_name;
             this.content = content;
+            this.managerid = managerid;
         }
 
         @Override
         public void run() {
 
-            new ActivityDetailCommentDao().InsetComment(project_id, user_name, null, content);
+            UserInfo userInfo = JMessageClient.getMyInfo();
+            new ActivityDetailCommentDao().InsetComment(project_id, user_name, null, content,managerid);
 
         }
     }

@@ -42,6 +42,7 @@
         <entry key="..\:/Project/NothingTeam/app/src/main/res/drawable/shape_top_corner.xml" value="0.1645" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/drawable/status_blue.xml" value="0.1715" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/drawable/status_gray.xml" value="0.1715" />
+        <entry key="..\:/Project/NothingTeam/app/src/main/res/drawable/status_gray2.xml" value="0.132" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/drawable/status_yellow.xml" value="0.1715" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/drawable/textview_rounded_corner.xml" value="0.1725" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/drawable/xui_round_btn_green_bg.xml" value="0.1915" />
@@ -59,6 +60,7 @@
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/activity_register_login.xml" value="0.194140625" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/activity_welcome.xml" value="0.194140625" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/adapter_news_card_view_list_item.xml" value="0.264" />
+        <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/fragment.xml" value="0.193359375" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/fragment_activity.xml" value="0.193359375" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/fragment_activity_adapter_card_view_list_item.xml" value="0.193359375" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/fragment_activity_collection_item.xml" value="0.193359375" />
@@ -67,6 +69,10 @@
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/fragment_card_detail_comment.xml" value="0.14947916666666666" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/fragment_card_detail_project_detail.xml" value="0.14947916666666666" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/fragment_collection.xml" value="0.193359375" />
+        <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/fragment_comment_activity_list.xml" value="0.193359375" />
+        <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/fragment_comment_activity_list_item.xml" value="0.193359375" />
+        <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/fragment_comment_list.xml" value="0.193359375" />
+        <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/fragment_comment_project_list.xml" value="0.193359375" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/fragment_conv_item_list.xml" value="0.194140625" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/fragment_conv_list.xml" value="0.193359375" />
         <entry key="..\:/Project/NothingTeam/app/src/main/res/layout/fragment_create_activity.xml" value="0.193359375" />
