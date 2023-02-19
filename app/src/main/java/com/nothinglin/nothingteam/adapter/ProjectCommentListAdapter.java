@@ -9,22 +9,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nothinglin.nothingteam.R;
-import com.nothinglin.nothingteam.activity.ActivityDetailActivity;
-import com.nothinglin.nothingteam.bean.ActivityInfo;
-import com.nothinglin.nothingteam.bean.CollectionInfo;
+import com.nothinglin.nothingteam.activity.CardDetailActivity;
 import com.nothinglin.nothingteam.bean.CommentDetail;
-import com.nothinglin.nothingteam.dao.ActivityInfoDao;
+import com.nothinglin.nothingteam.bean.HiresInfos;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class ProjectCommentListAdapter extends BaseAdapter {
@@ -66,7 +61,7 @@ public class ProjectCommentListAdapter extends BaseAdapter {
         ViewHolder holder;
         if (convertView == null) {
             holder = new ViewHolder();
-            convertView = mInflater.inflate(R.layout.fragment_comment_activity_list_item, null);
+            convertView = mInflater.inflate(R.layout.fragment_comment_project_list_item, null);
 
             holder.UserName = convertView.findViewById(R.id.userName);
             holder.Content = convertView.findViewById(R.id.comment_content);
@@ -84,6 +79,32 @@ public class ProjectCommentListAdapter extends BaseAdapter {
         holder.Time.setText(outputFormat1.format(collectionInfo.getComment_time()));
 
 
+        CommentDetail finalCollectionInfo = collectionInfo;
+        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                CollectionAdapter.getProjectDetailThread getProjectDetailThread = new CollectionAdapter.getProjectDetailThread(finalCollectionInfo.getProject_id());
+
+                try {
+                    getProjectDetailThread.start();
+                    getProjectDetailThread.join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                ArrayList<HiresInfos> hiresInfos =new ArrayList<>();
+                hiresInfos = getProjectDetailThread.hiresInfosList;
+
+                Intent intent = new Intent();
+                intent.putExtra("detailCardInfo", (Serializable) hiresInfos);
+                intent.setClass(v.getContext(), CardDetailActivity.class);
+                startActivity(intent);
+
+
+
+            }
+        });
+
 
         return convertView;
     }
@@ -95,5 +116,8 @@ public class ProjectCommentListAdapter extends BaseAdapter {
         TextView Time;
         LinearLayout linearLayout;
     }
+
+
+
 
 }

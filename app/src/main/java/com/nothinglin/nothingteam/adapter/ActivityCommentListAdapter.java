@@ -1,7 +1,10 @@
 package com.nothinglin.nothingteam.adapter;
 
+import static com.xuexiang.xutil.app.ActivityUtils.startActivity;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +13,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nothinglin.nothingteam.R;
+import com.nothinglin.nothingteam.activity.ActivityDetailActivity;
+import com.nothinglin.nothingteam.bean.ActivityInfo;
 import com.nothinglin.nothingteam.bean.CommentDetail;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ActivityCommentListAdapter extends BaseAdapter {
@@ -71,7 +78,30 @@ public class ActivityCommentListAdapter extends BaseAdapter {
         SimpleDateFormat outputFormat1 = new SimpleDateFormat("MM月dd日HH时mm分ss时");
         holder.Time.setText(outputFormat1.format(collectionInfo.getComment_time()));
 
+        CommentDetail finalCollectionInfo = collectionInfo;
+        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                ActivityCollectionAdapter.getCollectionDetailThread getCollectionDetailThread = new ActivityCollectionAdapter.getCollectionDetailThread(finalCollectionInfo.getProject_id());
+
+                try {
+                    getCollectionDetailThread.start();
+                    getCollectionDetailThread.join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                List<ActivityInfo> activityInfos = new ArrayList<>();
+                activityInfos = getCollectionDetailThread.activityInfoList;
+
+                Intent intent = new Intent();
+                intent.putExtra("activityInfo", (Serializable) activityInfos);
+                intent.setClass(v.getContext(), ActivityDetailActivity.class);
+                startActivity(intent);
+
+            }
+        });
 
         return convertView;
     }

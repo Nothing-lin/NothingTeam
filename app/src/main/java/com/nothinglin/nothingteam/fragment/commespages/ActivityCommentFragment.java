@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.widget.ListView;
 
 import com.nothinglin.nothingteam.R;
+import com.nothinglin.nothingteam.adapter.ActivityCommentListAdapter;
 import com.nothinglin.nothingteam.adapter.ProjectCommentListAdapter;
 import com.nothinglin.nothingteam.base.BaseFragment;
 import com.nothinglin.nothingteam.bean.CommentDetail;
@@ -25,7 +26,7 @@ public class ActivityCommentFragment extends BaseFragment {
     ListView mListView;
 
     List<CommentDetail> collectionInfos;
-    private ProjectCommentListAdapter madapter;
+    private ActivityCommentListAdapter madapter;
     private Activity mContext;
 
     @Override
@@ -54,7 +55,7 @@ public class ActivityCommentFragment extends BaseFragment {
         collectionInfos = getAllmyCommentsThread.commentDetails;
 
         mContext = getActivity();
-        madapter = new ProjectCommentListAdapter(mContext,collectionInfos);
+        madapter = new ActivityCommentListAdapter(mContext,collectionInfos);
         mListView.setAdapter(madapter);
 
     }

@@ -123,7 +123,7 @@ public class CollectionAdapter extends BaseAdapter {
         LinearLayout linearLayout;
     }
 
-    public class getProjectDetailThread extends Thread{
+    public static class getProjectDetailThread extends Thread{
 
         public ArrayList<HiresInfos> hiresInfosList = new ArrayList<>();
         private String projectID;

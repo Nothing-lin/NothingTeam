@@ -151,7 +151,7 @@ public class ActivityCollectionAdapter extends BaseAdapter {
         LinearLayout linearLayout;
     }
 
-    public class getCollectionDetailThread extends Thread{
+    public static class getCollectionDetailThread extends Thread{
 
         String activityId;
         public List<ActivityInfo> activityInfoList = new ArrayList<>();

@@ -34,7 +34,7 @@ public class ProjectCommentFragment extends BaseFragment {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_comment_activity_list;
+        return R.layout.fragment_comment_project_list;
     }
 
     @Override

@@ -49,7 +49,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="#5B595A"
                         android:textSize="15dp"
-                        android:text="在你的活动中留言了" />
+                        android:text="在你的项目中留言了" />
 
 
                 </LinearLayout>
