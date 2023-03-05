@@ -31,6 +31,9 @@ import androidx.annotation.NonNull;
 import com.donkingliang.labels.LabelsView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.nothinglin.nothingteam.R;
+import com.nothinglin.nothingteam.activity.CardDetailActivity;
+import com.nothinglin.nothingteam.activity.CardDetailEditActivity;
+import com.nothinglin.nothingteam.activity.MainActivity;
 import com.nothinglin.nothingteam.activity.SingleChatActivity;
 import com.nothinglin.nothingteam.adapter.CommentExpandAdapter;
 import com.nothinglin.nothingteam.base.BaseFragment;
@@ -49,6 +52,7 @@ import com.nothinglin.nothingteam.db.SqliteDBHelper;
 import com.nothinglin.nothingteam.widget.CommentExpandableListView;
 import com.nothinglin.nothingteam.widget.DemoDataProvider;
 import com.nothinglin.nothingteam.widget.RadiusImageBanner;
+import com.xuexiang.xaop.annotation.SingleClick;
 import com.xuexiang.xpage.annotation.Page;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
 import com.xuexiang.xui.widget.banner.widget.banner.BannerItem;
@@ -117,7 +121,6 @@ public class CardDetailFragment extends BaseFragment {
     List<CollectionInfo> collectionInfos = new ArrayList<>();
 
 
-
     @Override
     protected int getLayoutId() {
         return R.layout.activity_card_detail;
@@ -129,7 +132,29 @@ public class CardDetailFragment extends BaseFragment {
         //获取CardDetailActivity传来的数据
         getdetailCardInfo();
         //setImmersive是状态栏的设置，因为一开始已经取消了状态栏的样式了
-        super.initTitle().setLeftVisible(true).setTitle("项目详情");
+        TitleBar titleBar = super.initTitle();
+        titleBar.setLeftVisible(true).setTitle("项目详情");
+
+        UserInfo userInfo = JMessageClient.getMyInfo();
+        String userid_1 = userInfo.getUserName();
+        String userid_2 = detailCardInfo.get(0).getTeam_manager_userid();
+
+        if (userid_1.equals(userid_2)){
+            titleBar.addAction(new TitleBar.TextAction("编辑") {
+                @Override
+                public void performAction(View view) {
+
+                    Intent intent = new Intent();
+                    intent.putExtra("detailCardInfo",detailCardInfo);
+                    intent.setClass(getContext(), CardDetailEditActivity.class);
+                    startActivity(intent);
+                }
+            });
+
+        }
+
+
+
         return null;
     }
 
@@ -139,7 +164,7 @@ public class CardDetailFragment extends BaseFragment {
         UserInfo userInfo = JMessageClient.getMyInfo();
 
         //收藏数据初始化
-        CollectionsThread collectionsThread = new CollectionsThread(detailCardInfo.get(0).getProject_id(),userInfo.getUserName());
+        CollectionsThread collectionsThread = new CollectionsThread(detailCardInfo.get(0).getProject_id(), userInfo.getUserName());
 
         try {
             collectionsThread.start();
@@ -149,10 +174,10 @@ public class CardDetailFragment extends BaseFragment {
         }
 
         collectionInfos = collectionsThread.collectionInfos;
-        if (collectionInfos.size() == 0){
+        if (collectionInfos.size() == 0) {
             isColection = 1;//0没收藏
             mCollection.setImageResource(collection_nor);
-        }else {
+        } else {
             isColection = 2;//1收藏了
             mCollection.setImageResource(collection_pre);
 
@@ -160,7 +185,7 @@ public class CardDetailFragment extends BaseFragment {
 
 
         //bitmap转uri时要获取本地权限
-        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},0);
+        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
 
 
         //获取CardDetailActivity传来的数据
@@ -214,7 +239,7 @@ public class CardDetailFragment extends BaseFragment {
                     Toast.makeText(getActivity(), "成功将该项目添加到了收藏夹~", Toast.LENGTH_SHORT).show();
 
 
-                }else {
+                } else {
                     mCollection.setImageResource(collection_nor);
 
                     DeleteCollectionThread deleteCollectionThread = new DeleteCollectionThread();
@@ -328,7 +353,7 @@ public class CardDetailFragment extends BaseFragment {
                         testDetail.setUser_name(userInfo.getUserName());
                         testDetail.setComment_content(commentContent);
 
-                        Thread insertCommentThread = new InsetCommentThread(hiresInfos.getProject_id(),userInfo.getUserName(),commentContent);
+                        Thread insertCommentThread = new InsetCommentThread(hiresInfos.getProject_id(), userInfo.getUserName(), commentContent);
 
                         try {
 
@@ -368,7 +393,7 @@ public class CardDetailFragment extends BaseFragment {
                                 //发送加入群组验证消息
                                 String verification = dialog.getInputEditText().getText().toString();
 
-                                JoinApplyGroupThread joinApplyGroupThread = new JoinApplyGroupThread(verification,dialog);
+                                JoinApplyGroupThread joinApplyGroupThread = new JoinApplyGroupThread(verification, dialog);
 
                                 try {
                                     joinApplyGroupThread.start();
@@ -377,11 +402,11 @@ public class CardDetailFragment extends BaseFragment {
                                     e.printStackTrace();
                                 }
 
-                                if (joinApplyGroupThread.tips ==1){
+                                if (joinApplyGroupThread.tips == 1) {
                                     Toast.makeText(getActivity(), "您已是该群成员或您已申请过正在审核中，请勿再次申请！", Toast.LENGTH_SHORT).show();
                                 }
 
-                                if (joinApplyGroupThread.tips == 0){
+                                if (joinApplyGroupThread.tips == 0) {
                                     Toast.makeText(getActivity(), "申请成功，请您耐心等待群主的审核~", Toast.LENGTH_SHORT).show();
                                 }
 
@@ -418,8 +443,8 @@ public class CardDetailFragment extends BaseFragment {
         mProjecName.setText(hiresInfos.getProject_name());
 
         //头像处理，对头像图片进行转码
-        byte[] imageBytes = Base64.decode(hiresInfos.getTeam_avatar(),Base64.DEFAULT);
-        Bitmap decodeImage = BitmapFactory.decodeByteArray(imageBytes,0,imageBytes.length);
+        byte[] imageBytes = Base64.decode(hiresInfos.getTeam_avatar(), Base64.DEFAULT);
+        Bitmap decodeImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
         detailTeamAvatar.setImageBitmap(decodeImage);
 
         new TitleBar(getContext()).setTitle(hiresInfos.getProject_name());
@@ -454,25 +479,25 @@ public class CardDetailFragment extends BaseFragment {
         labelsView.setSelectType(LabelsView.SelectType.NONE);
     }
 
-    public class MyThread extends Thread{
+    public class MyThread extends Thread {
         @Override
         public void run() {
             AllCommentsList = new DetailCommentDao().getAllComment();
 
-            for (CommentDetail commentDetail : AllCommentsList){
-                if (commentDetail.getProject_id().equals(hiresInfos.getProject_id())){
+            for (CommentDetail commentDetail : AllCommentsList) {
+                if (commentDetail.getProject_id().equals(hiresInfos.getProject_id())) {
                     commentsList.add(commentDetail);
                 }
             }
         }
     }
 
-    public class InsetCommentThread extends Thread{
+    public class InsetCommentThread extends Thread {
         private String project_id;
         private String user_name;
         private String content;
 
-        InsetCommentThread(String project_id,String user_name,String content){
+        InsetCommentThread(String project_id, String user_name, String content) {
             this.project_id = project_id;
             this.user_name = user_name;
             this.content = content;
@@ -481,7 +506,7 @@ public class CardDetailFragment extends BaseFragment {
         @Override
         public void run() {
 
-            new DetailCommentDao().InsetComment(project_id,user_name,null,content,hiresInfos.getTeam_manager_userid());
+            new DetailCommentDao().InsetComment(project_id, user_name, null, content, hiresInfos.getTeam_manager_userid());
 
         }
     }
@@ -489,7 +514,7 @@ public class CardDetailFragment extends BaseFragment {
 
     //获取与处理详情页中轮播图
 
-    public class GetDetailPictureThread extends Thread{
+    public class GetDetailPictureThread extends Thread {
 
         @Override
         public void run() {
@@ -500,15 +525,15 @@ public class CardDetailFragment extends BaseFragment {
 
             //判断sqlite中是否已经有数值了，没有数值再写入sqlite中
             //初始化一个sqlite数据库
-            SqliteDBHelper dbHelper = new SqliteDBHelper(getContext(),"nothingTeam.db",null,1);
+            SqliteDBHelper dbHelper = new SqliteDBHelper(getContext(), "nothingTeam.db", null, 1);
             SQLiteDatabase sqlitDB = dbHelper.getWritableDatabase();
 
-            Cursor cursor = sqlitDB.rawQuery("select * from detail_picture where project_id = "+hiresInfos.getProject_id(),null);
+            Cursor cursor = sqlitDB.rawQuery("select * from detail_picture where project_id = " + hiresInfos.getProject_id(), null);
             //将游标移到开头
             cursor.moveToFirst();
 
             List<BannerItem> SQLiteDetailPictures = new ArrayList<>();
-            while (!cursor.isAfterLast()){
+            while (!cursor.isAfterLast()) {
 
                 BannerItem SQLitebannerItem = new BannerItem();
 
@@ -524,25 +549,25 @@ public class CardDetailFragment extends BaseFragment {
             cursor.close();
 
             //如果本地数据库中没有数据，就把转码的数据写入sqlite中
-            if (SQLiteDetailPictures.isEmpty()){
+            if (SQLiteDetailPictures.isEmpty()) {
 
                 //对base64进行转码,对每一项进行循环处理
-                for (DetailPicture detailPicture : base64Pictures){
+                for (DetailPicture detailPicture : base64Pictures) {
 
-                    if (detailPicture.getDetail_picture() == null){
+                    if (detailPicture.getDetail_picture() == null) {
                         continue;
                     }
 
                     //头像处理，对头像图片进行转码
-                    byte[] imageBytes = Base64.decode(detailPicture.getDetail_picture(),Base64.DEFAULT);
-                    Bitmap decodeImage = BitmapFactory.decodeByteArray(imageBytes,0,imageBytes.length);
+                    byte[] imageBytes = Base64.decode(detailPicture.getDetail_picture(), Base64.DEFAULT);
+                    Bitmap decodeImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
 
                     //bitmap转为uri
-                    Uri uri = Uri.parse(MediaStore.Images.Media.insertImage(getContentResolver(),decodeImage,null,null));
+                    Uri uri = Uri.parse(MediaStore.Images.Media.insertImage(getContentResolver(), decodeImage, null, null));
 
                     //uri-content -- 转为 uri-file 获取转码后的图片url
                     String filePath = null;
-                    Cursor cursor1 = getContentResolver().query(uri,new String[]{MediaStore.Images.ImageColumns.DATA},null,null,null);
+                    Cursor cursor1 = getContentResolver().query(uri, new String[]{MediaStore.Images.ImageColumns.DATA}, null, null, null);
                     cursor1.moveToFirst();
                     filePath = cursor1.getString(0);//这个就是图片转码后保存到本地的图片的url地址
                     cursor1.close();
@@ -560,33 +585,30 @@ public class CardDetailFragment extends BaseFragment {
                     //sqlite---------------------------------------------------------------------------
                     //设置键值
                     ContentValues contentValues = new ContentValues();
-                    contentValues.put("project_id",hiresInfos.getProject_id());
-                    contentValues.put("detail_picture_path",filePath);
+                    contentValues.put("project_id", hiresInfos.getProject_id());
+                    contentValues.put("detail_picture_path", filePath);
 
                     //写入sqlite
-                    sqlitDB.insert("detail_picture",null,contentValues);
-
+                    sqlitDB.insert("detail_picture", null, contentValues);
 
 
                 }
 
                 mPictures = pictures;
-            }else {
+            } else {
 
 
                 mPictures = SQLiteDetailPictures;
             }
 
 
-
             sqlitDB.close();
-
 
 
         }
     }
 
-    public class DeleteCollectionThread extends Thread{
+    public class DeleteCollectionThread extends Thread {
 
 
         @Override
@@ -594,12 +616,12 @@ public class CardDetailFragment extends BaseFragment {
             super.run();
             HiresOrderDao hiresOrderDao = new HiresOrderDao();
             UserInfo userInfo = JMessageClient.getMyInfo();
-            hiresOrderDao.CancelCollection(detailCardInfo.get(0).getProject_id(),userInfo.getUserName());
+            hiresOrderDao.CancelCollection(detailCardInfo.get(0).getProject_id(), userInfo.getUserName());
 
         }
     }
 
-    public class InsertCollectionThread extends Thread{
+    public class InsertCollectionThread extends Thread {
 
         @Override
         public void run() {
@@ -619,12 +641,12 @@ public class CardDetailFragment extends BaseFragment {
     }
 
     //收藏的线程
-    public class CollectionsThread extends Thread{
+    public class CollectionsThread extends Thread {
 
         private List<CollectionInfo> collectionInfos = new ArrayList<>();
-        private String  activityId, acountId;
+        private String activityId, acountId;
 
-        public CollectionsThread(String activityId,String acountId){
+        public CollectionsThread(String activityId, String acountId) {
             this.activityId = activityId;
             this.acountId = acountId;
         }
@@ -635,18 +657,18 @@ public class CardDetailFragment extends BaseFragment {
             super.run();
 
             HiresOrderDao hiresOrderDao = new HiresOrderDao();
-            collectionInfos = hiresOrderDao.getAllMyCollectionOnThis(activityId,acountId);
+            collectionInfos = hiresOrderDao.getAllMyCollectionOnThis(activityId, acountId);
         }
     }
 
 
     //设置一个加群的线程，数据库获取数据时需要
-    public class JoinApplyGroupThread extends Thread{
+    public class JoinApplyGroupThread extends Thread {
         private String verification;
         private MaterialDialog dialog;
         private int tips;//提示：1为重复申请，0为未申请过
 
-        public JoinApplyGroupThread(String verification,MaterialDialog dialog){
+        public JoinApplyGroupThread(String verification, MaterialDialog dialog) {
             this.dialog = dialog;
             this.verification = verification;
         }

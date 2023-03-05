@@ -252,4 +252,39 @@ public class HiresInfosDao {
         return project_id;
     }
 
+
+    //更新招聘信息
+    public void UpdateHiresInfo(HiresInfos hiresInfos){
+        String sql = "update hires_infos set project_name = ? , project_owner_team_name = ? , project_type = ? , competition_type = ? , hire_numbers = ? , project_position = ? , project_introduction = ? , team_avatar = ? , team_school = ? , team_intro = ? , project_detail = ? , hire_detail = ? where project_id = ?;";
+        Connection connection = DBOpenHelper.getConnection();
+        PreparedStatement pst;
+
+
+        try {
+            pst = connection.prepareStatement(sql);
+            pst.setString(1,hiresInfos.getProject_name());
+            pst.setString(2,hiresInfos.getProject_owner_team_name());
+            pst.setString(3,hiresInfos.getProject_type());
+            pst.setString(4,hiresInfos.getCompetition_type());
+            pst.setString(5,hiresInfos.getHire_numbers());
+            pst.setString(6,hiresInfos.getProject_position());
+            pst.setString(7,hiresInfos.getProject_introdution());
+            pst.setString(8,hiresInfos.getTeam_avatar());
+            pst.setString(9,hiresInfos.getTeam_school());
+            pst.setString(10,hiresInfos.getTeam_intro());
+            pst.setString(11,hiresInfos.getProject_detail());
+            pst.setString(12,hiresInfos.getHire_detail());
+            pst.setString(13,hiresInfos.getProject_id());
+
+            pst.executeUpdate();
+
+            pst.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
 }
