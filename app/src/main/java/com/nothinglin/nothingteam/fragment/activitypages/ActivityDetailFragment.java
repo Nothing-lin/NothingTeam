@@ -18,7 +18,9 @@ import android.widget.Toast;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.nothinglin.nothingteam.R;
 import com.nothinglin.nothingteam.activity.ActivityDetailActivity;
+import com.nothinglin.nothingteam.activity.ActivityDetailEditActivity;
 import com.nothinglin.nothingteam.activity.CardDetailActivity;
+import com.nothinglin.nothingteam.activity.CardDetailEditActivity;
 import com.nothinglin.nothingteam.adapter.ActivityCommentExpandAdapter;
 import com.nothinglin.nothingteam.adapter.CommentExpandAdapter;
 import com.nothinglin.nothingteam.base.BaseFragment;
@@ -32,6 +34,7 @@ import com.nothinglin.nothingteam.dao.DetailCommentDao;
 import com.nothinglin.nothingteam.fragment.CardDetailFragment;
 import com.nothinglin.nothingteam.widget.CommentExpandableListView;
 import com.xuexiang.xpage.annotation.Page;
+import com.xuexiang.xui.widget.actionbar.TitleBar;
 import com.xuexiang.xutil.data.DateUtils;
 
 import java.io.Serializable;
@@ -67,6 +70,9 @@ public class ActivityDetailFragment extends BaseFragment {
 
     @BindView(R.id.bt_activity_collection)
     Button mBtCollection;
+
+    @BindView(R.id.activity_edit)
+    Button mBtEdit;
 
     //输入框
     @BindView(R.id.detail_page_do_comment)
@@ -132,6 +138,7 @@ public class ActivityDetailFragment extends BaseFragment {
         mDetailTitle.setText(activityInfo.getActivityName());
         mDetailContent.setText(activityInfo.getActivityDetail());
         mDetailPosition.setText(activityInfo.getActivityPosition());
+        mDetailUnion.setText(activityInfo.getActivityUser());
 
         try {
             SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -269,6 +276,22 @@ public class ActivityDetailFragment extends BaseFragment {
                 isColection++;
             }
         });
+
+
+        if (userInfo.getUserName().equals(activityInfo.getActivityManagerId())){
+            mBtEdit.setVisibility(View.VISIBLE);
+
+            mBtEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent();
+                    intent.putExtra("activityInfo",activityInfoList);
+                    intent.setClass(getContext(), ActivityDetailEditActivity.class);
+                    startActivity(intent);
+                }
+            });
+
+        }
 
     }
 

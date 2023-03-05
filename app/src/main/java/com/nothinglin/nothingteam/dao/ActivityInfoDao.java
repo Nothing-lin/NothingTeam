@@ -1,6 +1,7 @@
 package com.nothinglin.nothingteam.dao;
 
 import com.nothinglin.nothingteam.bean.ActivityInfo;
+import com.nothinglin.nothingteam.bean.HiresInfos;
 import com.nothinglin.nothingteam.db.DBOpenHelper;
 
 import java.sql.Connection;
@@ -133,5 +134,49 @@ public class ActivityInfoDao {
 
 
     }
+
+    //更新活动信息
+    public void UpdateActivityInfo(ActivityInfo activityInfo){
+        String sql = "update activity_infos set activity_name = ? , activity_avatar = ? , activity_user = ? , activity_detail = ? , activity_type = ? , activity_start_time = ? , activity_end_time = ? ,activity_position = ? where activity_id = ?;";
+        com.mysql.jdbc.Connection connection = DBOpenHelper.getConnection();
+        PreparedStatement pst;
+
+        //日期转换
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date1 = null;
+        Date date2 = null;
+        try {
+            date1 = sdf.parse(activityInfo.getActivityStartTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        try {
+            date2 = sdf.parse(activityInfo.getActivityEndTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            pst = connection.prepareStatement(sql);
+            pst.setString(1,activityInfo.getActivityName());
+            pst.setString(2,activityInfo.getActivityAvatar());
+            pst.setString(3,activityInfo.getActivityUser());
+            pst.setString(4,activityInfo.getActivityDetail());
+            pst.setString(5,activityInfo.getActivityType());
+            pst.setTimestamp(6,new Timestamp(date1.getTime()));
+            pst.setTimestamp(7,new Timestamp(date2.getTime()));
+            pst.setString(8,activityInfo.getActivityPosition());
+            pst.setString(9,activityInfo.getActivityId());
+            pst.executeUpdate();
+
+            pst.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
 
 }
