@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 
 import com.nothinglin.nothingteam.R;
 import com.nothinglin.nothingteam.activity.ActivityCollectionActivity;
+import com.nothinglin.nothingteam.activity.AnnoucementActivity;
 import com.nothinglin.nothingteam.activity.CommentsTipsActivity;
 import com.nothinglin.nothingteam.activity.GroupVerificationActivity;
 import com.nothinglin.nothingteam.activity.LoginActivity;
@@ -42,6 +43,9 @@ public class MeFragment extends BaseFragment {
 
     @BindView(R.id.ll_comments_tips)
     LinearLayout mCommentsTips;
+
+    @BindView(R.id.annoucement)
+    LinearLayout mAnnoucement;
 
     @Override
     protected int getLayoutId() {
@@ -111,6 +115,16 @@ public class MeFragment extends BaseFragment {
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(getContext(), CommentsTipsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //系统公告
+        mAnnoucement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(getContext(), AnnoucementActivity.class);
                 startActivity(intent);
             }
         });

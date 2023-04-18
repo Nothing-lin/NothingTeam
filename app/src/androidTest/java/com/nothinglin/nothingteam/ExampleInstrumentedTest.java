@@ -15,9 +15,11 @@ import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
 import com.nothinglin.nothingteam.adapter.GroupListAdapter;
 import com.nothinglin.nothingteam.bean.ActivityInfo;
+import com.nothinglin.nothingteam.bean.AnnoucementBean;
 import com.nothinglin.nothingteam.bean.DetailPicture;
 import com.nothinglin.nothingteam.bean.HiresInfos;
 import com.nothinglin.nothingteam.dao.ActivityInfoDao;
+import com.nothinglin.nothingteam.dao.AnnoucementDao;
 import com.nothinglin.nothingteam.dao.HiresInfosDao;
 import com.nothinglin.nothingteam.dao.PictureDao;
 import com.nothinglin.nothingteam.dao.VerificationInfoDao;
@@ -67,10 +69,12 @@ public class ExampleInstrumentedTest {
     public void TestJG(){
 
         List<ActivityInfo> activityInfos = new ArrayList<>();
-        Or
+
+        AnnoucementDao annoucementDao = new AnnoucementDao();
+        List<AnnoucementBean> list = annoucementDao.getAnnoucementAll();
 
 
-        System.out.println(activityInfos);
+        System.out.println(list);
 
     }
 }

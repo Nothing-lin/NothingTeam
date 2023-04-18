@@ -70,6 +70,7 @@
         <activity android:name=".activity.CommentsTipsActivity"/>
         <activity android:name=".activity.CardDetailEditActivity"/>
         <activity android:name=".activity.ActivityDetailEditActivity"/>
+        <activity android:name=".activity.AnnoucementActivity"/>
         <activity
             android:name=".activity.WelcomeActivity"
             android:exported="true">

@@ -136,6 +136,7 @@ public class ActivityListAdapter extends BaseAdapter {
 
                 Intent intent = new Intent();
                 intent.putExtra("activityInfo", (Serializable) activityInfoList1);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.setClass(v.getContext(), ActivityDetailActivity.class);
                 startActivity(intent);
 
