@@ -10,6 +10,7 @@ import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
 import com.nothinglin.nothingteam.bean.HiresInfos;
 import com.nothinglin.nothingteam.bean.HiresInfosTabs;
+import com.nothinglin.nothingteam.bean.IndexListBean;
 import com.nothinglin.nothingteam.bean.TeamLabel;
 import com.nothinglin.nothingteam.dao.table.HiresInfosTable;
 import com.nothinglin.nothingteam.dao.table.HiresInfosTabsTable;
@@ -251,6 +252,30 @@ public class HiresInfosDao {
 
         return project_id;
     }
+
+    public void InsertIndexList(IndexListBean indexListBean){
+        String sql = "insert into index_to_list(project_id,project_name,team_name,reason,picture)value(?,?,?,?,?)";
+        Connection connection = DBOpenHelper.getConnection();
+        PreparedStatement pst = null;
+
+        try {
+            pst.setString(1,"1");
+            pst.setString(2,indexListBean.getProject_name());
+            pst.setString(3,indexListBean.getTeam_name());
+            pst.setString(4,indexListBean.getReason());
+            pst.setString(5,indexListBean.getPicture());
+
+            pst.executeUpdate();
+
+            pst.close();
+            connection.close();
+
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
 
 
     //更新招聘信息

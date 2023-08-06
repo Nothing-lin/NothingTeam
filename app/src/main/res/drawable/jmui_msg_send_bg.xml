@@ -4,5 +4,5 @@
     <item android:state_focused="true" android:drawable="@drawable/send_msg_press" />
     <item android:state_pressed="true" android:drawable="@drawable/send_msg_press" />
     <item android:state_selected="true" android:drawable="@drawable/send_msg_press" />
-    <item android:drawable="@drawable/send_msg_normal" />
+    <item android:drawable="@drawable/send_ms_press" />
 </selector>

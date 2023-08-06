@@ -6,6 +6,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 import com.nothinglin.nothingteam.R;
 import com.nothinglin.nothingteam.base.BaseFragment;
+import com.nothinglin.nothingteam.fragment.annoucement.AdvReplyFragment;
 import com.nothinglin.nothingteam.fragment.annoucement.SystemTipsFragment;
 import com.nothinglin.nothingteam.fragment.commespages.ActivityCommentFragment;
 import com.nothinglin.nothingteam.fragment.commespages.ProjectCommentFragment;
@@ -39,7 +40,7 @@ public class AnnoucementFragment extends BaseFragment {
 
         //注册适配“联系团队”界面
         tabLayout.addTab(tabLayout.newTab().setText("申请回复"));
-        adapter.addFragment(new ActivityCommentFragment(),"申请回复");
+        adapter.addFragment(new AdvReplyFragment(),"申请回复");
 
         //设置消息页面的视图极限为2个
         mViewPager.setOffscreenPageLimit(2);

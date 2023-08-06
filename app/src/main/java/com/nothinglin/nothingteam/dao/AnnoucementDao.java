@@ -1,6 +1,7 @@
 package com.nothinglin.nothingteam.dao;
 
 import com.nothinglin.nothingteam.bean.ActivityInfo;
+import com.nothinglin.nothingteam.bean.AdvReplyBean;
 import com.nothinglin.nothingteam.bean.AnnoucementBean;
 import com.nothinglin.nothingteam.db.DBOpenHelper;
 
@@ -40,5 +41,35 @@ public class AnnoucementDao {
             e.printStackTrace();
         }
         return Annoucements;
+    }
+
+
+    public List<AdvReplyBean> getAdvReplyAll(String userid){
+        String sql = "select * from index_to_list_reply where userid = "+userid;
+        Connection connection = DBOpenHelper.getConnection();
+        List<AdvReplyBean> advReplyBeans = new ArrayList<>();
+
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+
+            while (rs.next()){
+                AdvReplyBean advReplyBean = new AdvReplyBean();
+
+                advReplyBean.setUserid(rs.getString("userid"));
+                advReplyBean.setReply(rs.getString("reply"));
+                advReplyBean.setProject_name(rs.getString("project_name"));
+
+                advReplyBeans.add(advReplyBean);
+
+            }
+
+            rs.close();
+            connection.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return advReplyBeans;
     }
 }

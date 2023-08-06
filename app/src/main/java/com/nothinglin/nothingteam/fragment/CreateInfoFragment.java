@@ -18,6 +18,7 @@ import com.nothinglin.nothingteam.activity.MainActivity;
 import com.nothinglin.nothingteam.base.BaseFragment;
 import com.nothinglin.nothingteam.bean.DetailPicture;
 import com.nothinglin.nothingteam.bean.HiresInfos;
+import com.nothinglin.nothingteam.bean.IndexListBean;
 import com.nothinglin.nothingteam.dao.HiresInfosDao;
 import com.nothinglin.nothingteam.dao.LabelDao;
 import com.nothinglin.nothingteam.dao.PictureDao;
@@ -96,6 +97,15 @@ public class CreateInfoFragment extends BaseFragment {
     @BindView(R.id.team_label)
     ClearEditText getTeamLabel;
 
+    @BindView(R.id.is_index)
+    ClearEditText getIs_index;
+
+    @BindView(R.id.index_content)
+    ClearEditText getIndex_content;
+
+    IndexListBean indexListBean = new IndexListBean();
+
+
     public Uri uri;
 
     public HiresInfos hiresInfos = new HiresInfos();
@@ -168,6 +178,9 @@ public class CreateInfoFragment extends BaseFragment {
                 hiresInfos.setTeam_intro(String.valueOf(getTeamIntro.getContentText()));
                 hiresInfos.setHire_detail(String.valueOf(getHireDetail.getContentText()));
 
+
+
+
                 //设置创建时间
                 Date currentTime = new Date();
                 hiresInfos.setProject_create_date(currentTime);
@@ -227,6 +240,9 @@ public class CreateInfoFragment extends BaseFragment {
 //            Toast.makeText(getContext(), "添加成功", Toast.LENGTH_SHORT).show();
 //            Looper.loop();
 
+
+
+
             //插入数据库转码后的图片，详情页的图片插入mysql
             if (detailPicture1 != null){
                 PictureDao pictureDao = new PictureDao();
@@ -273,6 +289,17 @@ public class CreateInfoFragment extends BaseFragment {
                 TeamlabelDao.InsertTeamLabel(hiresInfos.getProject_id(),teamlabelArray[i]);
             }
 
+            if (String.valueOf(getIs_index.getText()).equals("是")){
+
+                indexListBean.setReason(String.valueOf(getIndex_content.getText()));
+                indexListBean.setProject_name(hiresInfos.getProject_name());
+                indexListBean.setTeam_name(hiresInfos.getProject_owner_team_name());
+                indexListBean.setPicture(detailPicture1.getDetail_picture());
+                indexListBean.setProject_id(hiresInfos.getProject_id());
+
+                HiresInfosDao hiresInfosDao = new HiresInfosDao();
+                hiresInfosDao.InsertIndexList(indexListBean);
+            }
 
         }
     }

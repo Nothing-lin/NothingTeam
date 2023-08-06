@@ -235,6 +235,32 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp" />
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="是否发布首页广告（非必填）:" />
+                <com.xuexiang.xui.widget.edittext.ClearEditText
+                    android:id="@+id/is_index"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:hint="示例：是 | 否"
+                    android:textAlignment="viewStart" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="申请原因（非必填）:" />
+                <com.xuexiang.xui.widget.edittext.ClearEditText
+                    android:id="@+id/index_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:hint="输入原因..."
+                    android:textAlignment="viewStart" />
+
                 <Button
                     android:id="@+id/create_project"
                     android:layout_width="match_parent"
